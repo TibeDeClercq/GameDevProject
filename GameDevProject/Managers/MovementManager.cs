@@ -18,8 +18,6 @@ namespace GameDevProject.Managers
 
             var afstand = direction * movable.Speed;
             movable.Position += afstand;
-
-            //helo
         }
     }   
 }
