@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace GameDevProject.Entities
 {
-    class Player : IMovable
+    class Player : Entity, IMovable
     {
         #region IMovable implementation
         public Vector2 Position { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
