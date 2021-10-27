@@ -53,10 +53,10 @@ namespace GameDevProject
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
+            _spriteBatch.Begin();
             // TODO: Add your drawing code here
             player.Draw(_spriteBatch);
-
+            _spriteBatch.End();
             base.Draw(gameTime);
         }
     }
