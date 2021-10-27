@@ -13,9 +13,9 @@ namespace GameDevProject.Entities
     class Player : Entity, IMovable
     {
         #region IMovable implementation
-        public Vector2 Position { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public Vector2 Speed { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public IInputReader InputReader { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public Vector2 Position { get; set; }
+        public Vector2 Speed { get; set; }
+        public IInputReader InputReader { get; set; }
 
         public void Move()
         {
