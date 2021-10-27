@@ -14,7 +14,6 @@ namespace GameDevProject.Entities
         protected Texture2D texture;
         protected Animation animation;
         protected IInputReader inputReader;
-        public Vector2 Speed { get; set; }
         public Vector2 Position { get; set; }
 
         public void Draw(SpriteBatch spriteBatch)
