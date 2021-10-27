@@ -2,12 +2,18 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
+using GameDevProject.Entities;
+using GameDevProject.Input;
+
 namespace GameDevProject
 {
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+
+        private Texture2D _playerTexture;
+        private Player player;
 
         public Game1()
         {
@@ -21,12 +27,15 @@ namespace GameDevProject
             // TODO: Add your initialization logic here
 
             base.Initialize();
+
+            player = new Player(_playerTexture, new KeyboardReader());
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            _playerTexture = Content.Load<Texture2D>("SpritesheetHero");
             // TODO: use this.Content to load your game content here
         }
 
@@ -36,6 +45,7 @@ namespace GameDevProject
                 Exit();
 
             // TODO: Add your update logic here
+            player.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -45,6 +55,7 @@ namespace GameDevProject
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            player.Draw(_spriteBatch);
 
             base.Draw(gameTime);
         }

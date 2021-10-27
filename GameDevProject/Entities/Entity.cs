@@ -11,9 +11,9 @@ namespace GameDevProject.Entities
 {
     abstract class Entity
     {
-        private Texture2D texture;
-        private Animation animation;
-        private IInputReader inputReader;
+        protected Texture2D texture;
+        protected Animation animation;
+        protected IInputReader inputReader;
         public Vector2 Speed { get; set; }
         public Vector2 Position { get; set; }
 

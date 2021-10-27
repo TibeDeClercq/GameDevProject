@@ -4,9 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+using GameDevProject.Interfaces;
+
 namespace GameDevProject.Input
 {
-    class KeyboardReader
+    class KeyboardReader : IInputReader
     {
         public bool IsDestinationInput => false;
         public Vector2 ReadInput()
