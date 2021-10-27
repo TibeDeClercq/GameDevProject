@@ -21,10 +21,9 @@ namespace GameDevProject.Entities
             spriteBatch.Draw(texture, Position, animation.CurrentFrame.SourceRectangle, Color.White);
         }
 
-        public void Update(GameTime gameTime)
+        virtual public void Update(GameTime gameTime)
         {
             animation.Update(gameTime);
         }
-
     }
 }

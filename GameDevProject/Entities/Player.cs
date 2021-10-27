@@ -41,7 +41,12 @@ namespace GameDevProject.Entities
         #endregion
 
         #region Player methods
+        override public void Update(GameTime gameTime)
+        {
+            Move();
 
+            animation.Update(gameTime);
+        }
         #endregion
     }
 }
