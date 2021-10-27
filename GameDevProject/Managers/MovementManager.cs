@@ -10,12 +10,6 @@ namespace GameDevProject.Managers
         public void Move(IMovable movable)
         {
             var direction = movable.InputReader.ReadInput();
-            if (movable.InputReader.IsDestinationInput)
-            {
-                direction -= movable.Position;
-                direction.Normalize();
-            }
-
             var afstand = direction * movable.Speed;
             movable.Position += afstand;
         }
