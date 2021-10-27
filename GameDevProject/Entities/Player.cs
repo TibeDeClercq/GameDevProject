@@ -12,6 +12,12 @@ namespace GameDevProject.Entities
         public Vector2 Position { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public Vector2 Speed { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IInputReader InputReader { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public void Move()
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
 
