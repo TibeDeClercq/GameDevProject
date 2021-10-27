@@ -10,8 +10,15 @@ namespace GameDevProject.Managers
         public void Move(IMovable movable)
         {
             var direction = movable.InputReader.ReadInput();
-            var afstand = direction * movable.Speed;
-            movable.Position += afstand;
+            if (direction.X == -1 || direction.X == 1)
+            {
+                var afstand = direction * movable.Speed;
+                movable.Position += afstand;
+            }
+            //else if (direction.Y == 1)
+            //{
+            //    movable.Position -= new Microsoft.Xna.Framework.Vector2(0, 20);
+            //}
         }
     }   
 }
