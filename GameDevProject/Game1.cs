@@ -15,6 +15,7 @@ namespace GameDevProject
         private Texture2D _playerTexture;
         private Player player;
 
+        private Texture2D _worldTileset;
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -36,6 +37,7 @@ namespace GameDevProject
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             _playerTexture = Content.Load<Texture2D>("SpritesheetPlayer");
+            _worldTileset = Content.Load<Texture2D>("TilesetWorld");
             // TODO: use this.Content to load your game content here
         }
 
