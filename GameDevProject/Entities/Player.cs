@@ -32,10 +32,13 @@ namespace GameDevProject.Entities
         {
             this.texture = texture;
             this.InputReader = inputReader;
-            this.animation = new Animation();
-            this.Position = new Vector2(1, 1);
-            this.Speed = new Vector2(2, 2);
             this.movementManager = new MovementManager();
+            this.animation = new Animation();
+            
+            this.Position = new Vector2(1, 1);
+            this.Speed = new Vector2(2, 2); //horizontal , vertical
+            
+            //TODO: changes with character spritesheet
             this.animation.GetFramesFromTextureProperties(texture.Width, texture.Height, 5, 2);
         }
         #endregion
