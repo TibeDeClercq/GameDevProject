@@ -9,7 +9,7 @@ using GameDevProject.Entities.Animations;
 
 namespace GameDevProject.Entities
 {
-    abstract class Entity
+    abstract class Entity : Interfaces.IDrawable
     {
         protected Texture2D texture;
         protected Animation animation;
