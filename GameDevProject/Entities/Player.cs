@@ -33,7 +33,7 @@ namespace GameDevProject.Entities
             this.texture = texture;
             this.InputReader = inputReader;
             this.movementManager = new MovementManager();
-            this.animation = new Animation();
+            this.animation = new Animation(15);
             
             this.Position = new Vector2(1, 1);
             this.Speed = new Vector2(2, 2); //horizontal , vertical
