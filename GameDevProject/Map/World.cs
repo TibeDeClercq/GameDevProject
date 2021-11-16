@@ -6,7 +6,7 @@ using System.Text;
 
 namespace GameDevProject.Map
 {
-    class World //op betere locatie zetten?
+    class World : Interfaces.IDrawable //op betere locatie zetten?
     {
         private string name;
         private int id;
