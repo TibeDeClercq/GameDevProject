@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -14,6 +16,11 @@ namespace GameDevProject.Map
         public World(char[][] worldTiles)
         {
             this.worldTiles = worldTiles;
+        }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            
         }
 
     }
