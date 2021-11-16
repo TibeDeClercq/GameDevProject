@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 
 using GameDevProject.Entities;
 using GameDevProject.Input;
+using GameDevProject.Map;
 
 namespace GameDevProject
 {
@@ -12,9 +13,10 @@ namespace GameDevProject
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        private Texture2D _playerTexture;
         private Player player;
+        private Texture2D _playerTexture;
 
+        private World world1;
         private Texture2D _worldTileset;
         public Game1()
         {
@@ -57,6 +59,7 @@ namespace GameDevProject
             GraphicsDevice.Clear(Color.CornflowerBlue);
             _spriteBatch.Begin();
             // TODO: Add your drawing code here
+            world1.Draw(_spriteBatch);
             player.Draw(_spriteBatch);
             _spriteBatch.End();
             base.Draw(gameTime);
