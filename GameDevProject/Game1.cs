@@ -35,7 +35,7 @@ namespace GameDevProject
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            _playerTexture = Content.Load<Texture2D>("SpritesheetHero");
+            _playerTexture = Content.Load<Texture2D>("SpritesheetPlayer");
             // TODO: use this.Content to load your game content here
         }
 
