@@ -11,16 +11,22 @@ namespace GameDevProject.Map
         private string name;
         private int id;
 
-        private char[][] worldTiles;
+        private char[,] worldTiles;
 
-        public World(char[][] worldTiles)
+        public World(char[,] worldTiles)
         {
             this.worldTiles = worldTiles;
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            
+            for(int row = 0; row < worldTiles.GetLength(0); row++)
+            {
+                for (int tile = 0; tile < worldTiles.GetLength(row); tile++)
+                {
+                    Console.WriteLine(tile);
+                }
+            }
         }
 
     }

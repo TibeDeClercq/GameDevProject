@@ -32,6 +32,12 @@ namespace GameDevProject
             base.Initialize();
 
             player = new Player(_playerTexture, new KeyboardReader());
+            
+            //test to make world
+            char[,] test = { { 'A', 'B', 'A', 'B', 'A', 'B' }, 
+                             { 'A', 'B', 'A', 'B', 'A', 'B' }
+                            };
+            world1 = new World(test);
         }
 
         protected override void LoadContent()
