@@ -12,28 +12,45 @@ namespace GameDevProject.Map
         private string name;
         private int id;
 
-        private char[,] worldTiles;
+        private char[,] worldTilesTemplate;
 
-        private List<WorldTile> tiles;
+        private List<WorldTile> tiles; //List with all different textures
+        private WorldTile[,] worldTiles; //The actual world tiles
 
-        public World(char[,] worldTiles)
+        private Texture2D texture;
+
+        public World(char[,] worldTilesTemplate)
         {
-            this.worldTiles = worldTiles;
-        }
+            this.worldTilesTemplate = worldTilesTemplate;
 
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            for (int row = 0; row < worldTiles.GetLength(0); row++)
+            GetTilesFromTexture(136, 136, 8, 8);
+
+            for (int row = 0; row < worldTilesTemplate.GetLength(0); row++)
             {
-                for (int tile = 0; tile < worldTiles.GetLength(1); tile++)
+                for (int tile = 0; tile < worldTilesTemplate.GetLength(1); tile++)
                 {
-                    Debug.WriteLine(worldTiles[row, tile]);
-
+                    //if(worldTilesTemplate[row, tile] == 'A')
+                    //{
+                    //    worldTiles[row, tile] = tiles[1];
+                    //}
+                    worldTiles[row, tile] = tiles[1];
                 }
             }
         }
 
-        public void GetTilesFromTextureProperties(int width, int height, int numberOfWidthTiles, int numberOfHeightTiles)
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            for (int row = 0; row < worldTilesTemplate.GetLength(0); row++)
+            {
+                for (int tile = 0; tile < worldTilesTemplate.GetLength(1); tile++)
+                {
+                    Debug.WriteLine(worldTilesTemplate[row, tile]);
+                    spriteBatch.Draw(texture, new Vector2(10,10), worldTiles[row, tile].SourceRectangle, Color.White);
+                }
+            }
+        }
+
+        public void GetTilesFromTexture(int width, int height, int numberOfWidthTiles, int numberOfHeightTiles)
         {
             int widthOfFrame = width / numberOfWidthTiles;
             int heightOfFrame = height / numberOfHeightTiles;
@@ -42,7 +59,7 @@ namespace GameDevProject.Map
             {
                 for (int x = 0; x <= width - widthOfFrame; x += widthOfFrame)
                 {
-                    tiles.Add(new WorldTile(new Rectangle(x, y, widthOfFrame, heightOfFrame)));
+                    tiles.Add(new WorldTile(new Rectangle(x, y, widthOfFrame , heightOfFrame)));
                 }
             }
         }
