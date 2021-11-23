@@ -34,11 +34,11 @@ namespace GameDevProject
             player = new Player(_playerTexture, new KeyboardReader());
             
             //test to make world
-            char[,] test = { { 'A', 'B', 'A', 'B', 'A', 'B' }, 
-                             { 'A', 'B', 'A', 'B', 'A', 'B' },
-                             { 'A', 'C', 'A', 'B', 'A', 'B' }
+            char[,] test = { { 'A', 'A', 'A', 'A', 'A', 'A' }, 
+                             { 'A', 'A', 'A', 'A', 'A', 'A' },
+                             { 'A', 'A', 'A', 'A', 'A', 'A' }
                             };
-            world1 = new World(test);
+            world1 = new World(_worldTileset, test);
         }
 
         protected override void LoadContent()
@@ -64,6 +64,11 @@ namespace GameDevProject
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+            //var scaleX = (float)this.GraphicsDevice.Viewport.Width / 300;
+            //var scaleY = (float)this.GraphicsDevice.Viewport.Height / 200;
+            //var matrix = Matrix.CreateScale(scaleX, scaleY, 1.0f);
+
+            //_spriteBatch.Begin(transformMatrix: matrix);
             _spriteBatch.Begin();
             // TODO: Add your drawing code here
             world1.Draw(_spriteBatch);
