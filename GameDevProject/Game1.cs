@@ -34,10 +34,16 @@ namespace GameDevProject
             player = new Player(_playerTexture, new KeyboardReader());
             
             //test to make world
-            char[,] test = { { 'A', 'A', 'A', 'A', 'A', 'A' }, 
-                             { 'A', 'A', 'A', 'A', 'A', 'A' },
-                             { 'A', 'A', 'A', 'A', 'A', 'A' }
-                            };
+            string[,] test = {
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "A2", "A2", "A2", "A2", "A2", "A2","A2", "A2", "A2", "A2", "A2", "A2"},
+                                { "E3", "E3", "E3", "E3", "E3", "E3","E3", "E3", "E3", "E3", "E3", "E3"}
+                             };
             world1 = new World(_worldTileset, test);
         }
 
