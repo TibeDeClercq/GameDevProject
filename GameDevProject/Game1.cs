@@ -35,7 +35,8 @@ namespace GameDevProject
             
             //test to make world
             char[,] test = { { 'A', 'B', 'A', 'B', 'A', 'B' }, 
-                             { 'A', 'B', 'A', 'B', 'A', 'B' }
+                             { 'A', 'B', 'A', 'B', 'A', 'B' },
+                             { 'A', 'C', 'A', 'B', 'A', 'B' }
                             };
             world1 = new World(test);
         }
