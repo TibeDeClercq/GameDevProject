@@ -4,10 +4,10 @@ using System.Text;
 
 namespace GameDevProject.States
 {
-    enum States { Walking, Idle}
+    enum playerStates { Walking, Idle}
 
     class PlayerStates
     {
-        public States state;
+        public playerStates state;
     }
 }
