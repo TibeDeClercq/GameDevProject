@@ -10,11 +10,13 @@ namespace GameDevProject.Map
     {
         public Vector2 Position = new Vector2(0, 0);
         public Rectangle SourceRectangle { get; set; }
+        public int identifier { get; set; }
 
-        public Tile(Rectangle sourceRectangle, Vector2 position)
+        public Tile(Rectangle sourceRectangle, Vector2 position, int identifier)
         {
             this.SourceRectangle = sourceRectangle;
             this.Position = position;
+            this.identifier = identifier;
         }
     }
 }

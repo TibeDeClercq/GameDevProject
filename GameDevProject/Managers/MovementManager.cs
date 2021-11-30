@@ -11,14 +11,18 @@ namespace GameDevProject.Managers
         public void Move(IMovable movable)
         {
             var direction = movable.InputReader.ReadInput();
-            if (direction.X == -1 || direction.X == 1)
+
+            if (direction.X == -1)
             {
-                var distance = direction * movable.Speed;
-                movable.Position += distance;
+                PhysicsManager.MoveLeft(movable);
             }
-            else if (direction.Y == 1)
+            if (direction.X == 1)
             {
-                movable.Position -= new Vector2(0, 20);
+                PhysicsManager.MoveRight(movable);
+            }
+            if (direction.Y == 1)
+            {
+                PhysicsManager.Jump(movable);
             }
         }
     }   

@@ -25,7 +25,6 @@ namespace GameDevProject.Entities
 
         #region Player properties
         public MovementManager movementManager;
-        public PhysicsManager physicsManager;
         #endregion
 
         #region Player constructors
@@ -48,7 +47,6 @@ namespace GameDevProject.Entities
         override public void Update(GameTime gameTime)
         {
             Move();
-
             animation.Update(gameTime);
         }
         #endregion
