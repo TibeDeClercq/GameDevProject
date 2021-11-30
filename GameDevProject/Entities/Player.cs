@@ -15,6 +15,8 @@ namespace GameDevProject.Entities
         #region IMovable implementation
         public Vector2 Speed { get; set; }
         public IInputReader InputReader { get; set; }
+        public float MaxVelocity { get; set; }
+        public float MaxJumpHeight { get; set; }
 
         public void Move()
         {

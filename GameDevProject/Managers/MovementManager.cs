@@ -24,6 +24,7 @@ namespace GameDevProject.Managers
             {
                 PhysicsManager.Jump(movable);
             }
+            PhysicsManager.AddGravity(movable);
         }
     }   
 }
