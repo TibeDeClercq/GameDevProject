@@ -11,19 +11,19 @@ namespace GameDevProject.Entities
 {
     abstract class Entity : Interfaces.IDrawable
     {
-        protected Texture2D texture;
-        protected Animation animation;
+        protected List<Texture2D> textures;
+        protected List<Animation> animations = new List<Animation>();
         protected IInputReader inputReader;
         public Vector2 Position { get; set; }
 
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(texture, Position, animation.CurrentFrame.SourceRectangle, Color.White);
-        }
+        abstract public void Draw(SpriteBatch spriteBatch);
+        //{
+        //    spriteBatch.Draw(texture, Position, animation[0].CurrentFrame.SourceRectangle, Color.White);
+        //}
 
-        virtual public void Update(GameTime gameTime)
-        {
-            animation.Update(gameTime);
-        }
+        abstract public void Update(GameTime gameTime);
+        //{
+        //    animation.Update(gameTime);
+        //}
     }
 }

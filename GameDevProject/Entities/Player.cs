@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 using GameDevProject.Entities.Animations;
 using GameDevProject.Managers;
+using GameDevProject.States.PlayerStates;
 
 namespace GameDevProject.Entities
 {
@@ -27,32 +28,54 @@ namespace GameDevProject.Entities
 
         #region Player properties
         public MovementManager movementManager;
+
+        private PlayerState playerState;
         #endregion
 
         #region Player constructors
-        public Player(Texture2D texture, IInputReader inputReader)
+        public Player(List<Texture2D> textures, IInputReader inputReader)
         {
-            this.texture = texture;
+            this.textures = textures;
             this.InputReader = inputReader;
             this.movementManager = new MovementManager();
-            this.animation = new Animation(10);
             
             this.Position = new Vector2(1, 100);
             this.MaxVelocity = new Vector2(2, 2); //horizontal , vertical
             this.MaxAcceleration = 5;
             this.MaxJumpHeight = 5;
-            
-            //TODO: changes with character spritesheet
-            this.animation.GetFramesFromTextureProperties(texture.Width, texture.Height, 4, 1);
+
+            AddAnimations();
+            SetAnimations();
+
+            playerState = new PlayerIdleState();
         }
         #endregion
 
         #region Player methods
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            //Draw the animation
+            playerState.Draw(spriteBatch, this.textures, this.Position, this.animations);
+        }
+
         override public void Update(GameTime gameTime)
         {
             Move();
-            animation.Update(gameTime);
+            //Update the animation
+            playerState.Update(gameTime, animations);
         }
         #endregion
+
+        private void AddAnimations()
+        {
+            this.animations.Add(new Animation(10));
+            this.animations.Add(new Animation(10));
+        }
+
+        private void SetAnimations()
+        {
+            this.animations[0].GetFramesFromTextureProperties(textures[0].Width, textures[0].Height, 4, 1);
+            this.animations[1].GetFramesFromTextureProperties(textures[1].Width, textures[1].Height, 2, 1);
+        }
     }
 }

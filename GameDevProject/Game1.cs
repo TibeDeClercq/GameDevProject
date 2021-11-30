@@ -19,7 +19,7 @@ namespace GameDevProject
 
         private List<Entity> entities;
         //private Player player;
-        private Texture2D _playerTexture;
+        private List<Texture2D> _playerTextures;
 
         private World world1;
         private Texture2D _worldTileset;
@@ -38,7 +38,7 @@ namespace GameDevProject
             base.Initialize();
 
             entities = new List<Entity>();
-            entities.Add(new Player(_playerTexture, new KeyboardReader()));
+            entities.Add(new Player(_playerTextures, new KeyboardReader()));
             
             //test to make world
             string[,] test = {
@@ -65,7 +65,11 @@ namespace GameDevProject
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            _playerTexture = Content.Load<Texture2D>("SpritesheetPlayer");
+            _playerTextures = new List<Texture2D>();
+
+            _playerTextures.Add(Content.Load<Texture2D>("SpritesheetsPlayer/PlayerWalking"));
+            _playerTextures.Add(Content.Load<Texture2D>("SpritesheetsPlayer/PlayerIdle"));
+
             _worldTileset = Content.Load<Texture2D>("TilesetWorld");
             // TODO: use this.Content to load your game content here
         }
