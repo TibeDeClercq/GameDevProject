@@ -25,6 +25,7 @@ namespace GameDevProject.Entities
 
         #region Player properties
         public MovementManager movementManager;
+        public PhysicsManager physicsManager;
         #endregion
 
         #region Player constructors
