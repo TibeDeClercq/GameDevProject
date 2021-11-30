@@ -70,7 +70,7 @@ namespace GameDevProject
             _playerTextures.Add(Content.Load<Texture2D>("SpritesheetsPlayer/PlayerWalking"));
             _playerTextures.Add(Content.Load<Texture2D>("SpritesheetsPlayer/PlayerIdle"));
 
-            _worldTileset = Content.Load<Texture2D>("TilesetWorld");
+            _worldTileset = Content.Load<Texture2D>("TileSetsWorld/TilesetWorld");
             // TODO: use this.Content to load your game content here
         }
 
