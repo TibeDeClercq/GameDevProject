@@ -10,6 +10,9 @@ namespace GameDevProject
 {
     public class Game1 : Game
     {
+        private RenderTarget2D _gameRenderTarget;
+        private int scale = 3;
+
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
@@ -50,8 +53,10 @@ namespace GameDevProject
 
             world1 = new World(_worldTileset, test);
 
-            _graphics.PreferredBackBufferHeight = world1.GetWorldHeight(); //getWorldHeight
-            _graphics.PreferredBackBufferWidth = world1.GetWorldWidth(); //getWorldWidth
+            _gameRenderTarget = new RenderTarget2D(GraphicsDevice, world1.GetWorldWidth(), world1.GetWorldHeight());
+
+            _graphics.PreferredBackBufferHeight = scale * world1.GetWorldHeight(); //getWorldHeight
+            _graphics.PreferredBackBufferWidth = scale * world1.GetWorldWidth(); //getWorldWidth
             _graphics.ApplyChanges();
         }
 
@@ -77,14 +82,27 @@ namespace GameDevProject
 
         protected override void Draw(GameTime gameTime)
         {
+            GraphicsDevice.SetRenderTarget(_gameRenderTarget);
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            _spriteBatch.Begin();
             // TODO: Add your drawing code here
+            _spriteBatch.Begin();
             world1.Draw(_spriteBatch);
             player.Draw(_spriteBatch);
             _spriteBatch.End();
+
+            //renders to window
+            DrawToScreen();
+
             base.Draw(gameTime);
+        }
+
+        private void DrawToScreen()
+        {
+            GraphicsDevice.SetRenderTarget(null);
+            _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+            _spriteBatch.Draw(_gameRenderTarget, new Rectangle(0, 0, scale * world1.GetWorldWidth(), scale * world1.GetWorldHeight()), Color.White);
+            _spriteBatch.End();
         }
     }
 }
