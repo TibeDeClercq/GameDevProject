@@ -90,6 +90,8 @@ namespace GameDevProject
             base.Draw(gameTime);
         }
 
+
+
         private void DrawToFrame()
         {
             GraphicsDevice.SetRenderTarget(_gameRenderTarget);
