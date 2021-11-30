@@ -13,9 +13,9 @@ namespace GameDevProject.Entities
     class Player : Entity, IMovable
     {
         #region IMovable implementation
-        public Vector2 Speed { get; set; }
+        public Vector2 MaxVelocity { get; set; }
         public IInputReader InputReader { get; set; }
-        public float MaxVelocity { get; set; }
+        public float MaxAcceleration { get; set; }
         public float MaxJumpHeight { get; set; }
 
         public void Move()
@@ -38,7 +38,9 @@ namespace GameDevProject.Entities
             this.animation = new Animation(10);
             
             this.Position = new Vector2(1, 100);
-            this.Speed = new Vector2(2, 2); //horizontal , vertical
+            this.MaxVelocity = new Vector2(2, 2); //horizontal , vertical
+            this.MaxAcceleration = 5;
+            this.MaxJumpHeight = 5;
             
             //TODO: changes with character spritesheet
             this.animation.GetFramesFromTextureProperties(texture.Width, texture.Height, 4, 1);
