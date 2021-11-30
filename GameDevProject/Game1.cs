@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Input;
 using GameDevProject.Entities;
 using GameDevProject.Input;
 using GameDevProject.Map;
+using System.Collections.Generic;
 
 namespace GameDevProject
 {
@@ -16,7 +17,8 @@ namespace GameDevProject
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        private Player player;
+        private List<Entity> entities;
+        //private Player player;
         private Texture2D _playerTexture;
 
         private World world1;
@@ -33,11 +35,10 @@ namespace GameDevProject
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-
             base.Initialize();
 
-            player = new Player(_playerTexture, new KeyboardReader());
+            entities = new List<Entity>();
+            entities.Add(new Player(_playerTexture, new KeyboardReader()));
             
             //test to make world
             string[,] test = {
@@ -74,27 +75,31 @@ namespace GameDevProject
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
-            player.Update(gameTime);
+            //Update entities
+            UpdateEntities(gameTime);
 
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
+            //Draw all objects to a frame
+            DrawToFrame();
+            //Draw frame to window => rescale
+            DrawToScreen();
+            base.Draw(gameTime);
+        }
+
+        private void DrawToFrame()
+        {
             GraphicsDevice.SetRenderTarget(_gameRenderTarget);
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
             _spriteBatch.Begin();
+            //Draw world
             world1.Draw(_spriteBatch);
-            player.Draw(_spriteBatch);
+            //Draw entities
+            DrawEntities();
             _spriteBatch.End();
-
-            //renders to window
-            DrawToScreen();
-
-            base.Draw(gameTime);
         }
 
         private void DrawToScreen()
@@ -103,6 +108,22 @@ namespace GameDevProject
             _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             _spriteBatch.Draw(_gameRenderTarget, new Rectangle(0, 0, scale * world1.GetWorldWidth(), scale * world1.GetWorldHeight()), Color.White);
             _spriteBatch.End();
+        }
+
+        private void DrawEntities()
+        {
+            foreach (Entity entity in entities)
+            {
+                entity.Draw(_spriteBatch);
+            }
+        }
+
+        private void UpdateEntities(GameTime gameTime)
+        {
+            foreach (Entity entity in entities)
+            {
+                entity.Update(gameTime);
+            }
         }
     }
 }
