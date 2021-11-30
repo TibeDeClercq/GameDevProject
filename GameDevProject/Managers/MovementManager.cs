@@ -11,6 +11,7 @@ namespace GameDevProject.Managers
         public void Move(IMovable movable)
         {
             var direction = movable.InputReader.ReadInput();
+            PhysicsManager.AddGravity(movable);
 
             if (direction.X == -1)
             {
@@ -24,7 +25,6 @@ namespace GameDevProject.Managers
             {
                 PhysicsManager.Jump(movable);
             }
-            PhysicsManager.AddGravity(movable);
         }
     }   
 }
