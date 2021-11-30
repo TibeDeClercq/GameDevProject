@@ -38,6 +38,22 @@ namespace GameDevProject.Map
         #endregion
 
         #region Methods
+        public int GetWorldWidth()
+        {
+            int width = tiles.GetLength(1) * 16;
+
+            return width;
+        }
+
+        public int GetWorldHeight()
+        {
+            int height = tiles.GetLength(0) * 16;
+
+            return height;
+        }
+
+
+        
         public void Draw(SpriteBatch spriteBatch)
         {
             foreach (Tile tile in tiles)

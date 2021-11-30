@@ -21,8 +21,11 @@ namespace GameDevProject
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
+
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+
+            _graphics.IsFullScreen = false;
         }
 
         protected override void Initialize()
@@ -44,7 +47,12 @@ namespace GameDevProject
                                 { "A2", "A2", "A2", "A2", "A2", "A2","A2", "A2", "A2", "A2", "A2", "A2"},
                                 { "E3", "E3", "E3", "E3", "E3", "E3","E3", "E3", "E3", "E3", "E3", "E3"}
                              };
+
             world1 = new World(_worldTileset, test);
+
+            _graphics.PreferredBackBufferHeight = world1.GetWorldHeight(); //getWorldHeight
+            _graphics.PreferredBackBufferWidth = world1.GetWorldWidth(); //getWorldWidth
+            _graphics.ApplyChanges();
         }
 
         protected override void LoadContent()
@@ -70,11 +78,7 @@ namespace GameDevProject
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            //var scaleX = (float)this.GraphicsDevice.Viewport.Width / 300;
-            //var scaleY = (float)this.GraphicsDevice.Viewport.Height / 200;
-            //var matrix = Matrix.CreateScale(scaleX, scaleY, 1.0f);
 
-            //_spriteBatch.Begin(transformMatrix: matrix);
             _spriteBatch.Begin();
             // TODO: Add your drawing code here
             world1.Draw(_spriteBatch);
