@@ -75,12 +75,18 @@ namespace GameDevProject.Entities
         {
             this.animations.Add(new Animation(10));
             this.animations.Add(new Animation(10));
+            this.animations.Add(new Animation(10));
+            this.animations.Add(new Animation(10));
+            this.animations.Add(new Animation(10));
         }
 
         private void SetAnimations()
         {
-            this.animations[0].GetFramesFromTextureProperties(textures[0].Width, textures[0].Height, 4, 1);
-            this.animations[1].GetFramesFromTextureProperties(textures[1].Width, textures[1].Height, 2, 1);
+            this.animations[0].GetFramesFromTextureProperties(textures[0].Width, textures[0].Height, 2, 1);
+            this.animations[1].GetFramesFromTextureProperties(textures[1].Width, textures[1].Height, 4, 1);
+            this.animations[2].GetFramesFromTextureProperties(textures[2].Width, textures[2].Height, 9, 1);
+            this.animations[3].GetFramesFromTextureProperties(textures[3].Width, textures[3].Height, 12, 1);
+            this.animations[4].GetFramesFromTextureProperties(textures[4].Width, textures[4].Height, 6, 1);
         }
     }
 }

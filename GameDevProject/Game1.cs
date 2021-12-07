@@ -37,47 +37,24 @@ namespace GameDevProject
         {
             base.Initialize();
 
-            entities = new List<Entity>();
-            entities.Add(new Player(_playerTextures, new KeyboardReader()));
-            
-            //test to make world
-            string[,] test = {
-                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
-                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
-                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
-                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
-                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
-                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
-                                { "A2", "A2", "A2", "A2", "A2", "A2","A2", "A2", "A2", "A2", "A2", "A2"},
-                                { "E3", "E3", "E3", "E3", "E3", "E3","E3", "E3", "E3", "E3", "E3", "E3"}
-                             };
-
-            world1 = new World(_worldTileset, test);
-
-            _gameRenderTarget = new RenderTarget2D(GraphicsDevice, world1.GetWorldWidth(), world1.GetWorldHeight());
-
-            _graphics.PreferredBackBufferHeight = scale * world1.GetWorldHeight(); //getWorldHeight
-            _graphics.PreferredBackBufferWidth = scale * world1.GetWorldWidth(); //getWorldWidth
-            _graphics.ApplyChanges();
+            AddEntities();
+            AddWorld();
+            SetRenderer();
         }
 
         protected override void LoadContent()
         {
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            _playerTextures = new List<Texture2D>();
-
-            _playerTextures.Add(Content.Load<Texture2D>("SpritesheetsPlayer/PlayerWalking"));
-            _playerTextures.Add(Content.Load<Texture2D>("SpritesheetsPlayer/PlayerIdle"));
-
-            _worldTileset = Content.Load<Texture2D>("TileSetsWorld/TilesetWorld");
+            AddSpriteBatch();
+            AddTextures();
             // TODO: use this.Content to load your game content here
         }
 
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            {
                 Exit();
+            }
 
             //Update entities
             UpdateEntities(gameTime);
@@ -94,8 +71,80 @@ namespace GameDevProject
             base.Draw(gameTime);
         }
 
+        #region Initialize
+        private void AddEntities()
+        {
+            entities = new List<Entity>();
 
+            entities.Add(new Player(_playerTextures, new KeyboardReader()));
+        }
 
+        private void AddWorld()
+        {
+            string[,] test = {
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "A2", "A2", "A2", "A2", "A2", "A2","A2", "A2", "A2", "A2", "A2", "A2"},
+                                { "E3", "E3", "E3", "E3", "E3", "E3","E3", "E3", "E3", "E3", "E3", "E3"}
+                             };
+
+            world1 = new World(_worldTileset, test);
+        }
+
+        private void SetRenderer()
+        {
+            _gameRenderTarget = new RenderTarget2D(GraphicsDevice, world1.GetWorldWidth(), world1.GetWorldHeight());
+
+            _graphics.PreferredBackBufferHeight = scale * world1.GetWorldHeight(); //getWorldHeight
+            _graphics.PreferredBackBufferWidth = scale * world1.GetWorldWidth(); //getWorldWidth
+            _graphics.ApplyChanges();
+        }
+        #endregion
+
+        #region LoadContent
+        private void AddSpriteBatch()
+        {
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
+        }
+
+        private void AddTextures()
+        {
+            AddPlayerTextures();
+            AddWorldTextures();
+        }
+
+        private void AddPlayerTextures()
+        {
+            _playerTextures = new List<Texture2D>();
+
+            _playerTextures.Add(Content.Load<Texture2D>("SpritesheetsPlayer/PlayerIdle"));
+            _playerTextures.Add(Content.Load<Texture2D>("SpritesheetsPlayer/PlayerWalk"));
+            _playerTextures.Add(Content.Load<Texture2D>("SpritesheetsPlayer/PlayerJump"));
+            _playerTextures.Add(Content.Load<Texture2D>("SpritesheetsPlayer/PlayerSpin"));
+            _playerTextures.Add(Content.Load<Texture2D>("SpritesheetsPlayer/PlayerSleep"));
+        }
+
+        private void AddWorldTextures()
+        {
+            _worldTileset = Content.Load<Texture2D>("TileSetsWorld/TilesetWorld");
+        }
+        #endregion
+
+        #region Update
+        private void UpdateEntities(GameTime gameTime)
+        {
+            foreach (Entity entity in entities)
+            {
+                entity.Update(gameTime);
+            }
+        }
+        #endregion
+
+        #region Draw
         private void DrawToFrame()
         {
             GraphicsDevice.SetRenderTarget(_gameRenderTarget);
@@ -123,13 +172,6 @@ namespace GameDevProject
                 entity.Draw(_spriteBatch);
             }
         }
-
-        private void UpdateEntities(GameTime gameTime)
-        {
-            foreach (Entity entity in entities)
-            {
-                entity.Update(gameTime);
-            }
-        }
+        #endregion
     }
 }
