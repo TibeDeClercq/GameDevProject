@@ -52,7 +52,7 @@ namespace GameDevProject.Entities
             AddAnimations();
             SetAnimations();
 
-            playerState = new PlayerWalkingState();
+            playerState = new PlayerWalkState();
         }
         #endregion
 
