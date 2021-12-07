@@ -90,17 +90,40 @@ namespace GameDevProject.Entities
             this.animations[4].GetFramesFromTextureProperties(textures[4].Width, textures[4].Height, 6, 1);
         }
 
+        #region StateChanges
         private void ChangeState()
         {
-            if (IsWalking())
+            if (IsIdle())
             {
-
+                this.playerState = new PlayerIdleState();
             }
+            else if (IsWalking())
+            {
+                this.playerState = new PlayerWalkState();
+            }
+            else
+            {
+                this.playerState = new PlayerSleepState();
+            }
+        }
+
+        private bool IsIdle()
+        {
+            if (this.Velocity == Vector2.Zero)
+            {
+                return true;
+            }
+            return false;
         }
 
         private bool IsWalking()
         {
-            return true;
+            if (this.Velocity != Vector2.Zero)
+            {
+                return true;
+            }
+            return false;
         }
+        #endregion
     }
 }
