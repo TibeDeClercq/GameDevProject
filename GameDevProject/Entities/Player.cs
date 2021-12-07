@@ -42,7 +42,7 @@ namespace GameDevProject.Entities
             this.InputReader = inputReader;
             this.movementManager = new MovementManager();
             
-            this.Position = new Vector2(1, 50);
+            this.Position = new Vector2(1, 0);
             this.MaxVelocity = new Vector2(2, 2); //horizontal , vertical
             this.MaxAcceleration = 5;
             this.MaxJumpHeight = 5;

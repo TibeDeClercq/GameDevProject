@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace GameDevProject.Managers
@@ -15,35 +16,44 @@ namespace GameDevProject.Managers
 
         public static void MoveRight(IMovable movable)
         {
-            var distance = new Vector2(1,0) * movable.MaxVelocity;
-            movable.Position += distance;
+            //var distance = new Vector2(1,0) * movable.MaxVelocity;
+            //movable.Position += distance;
+            movable.Velocity = new Vector2(movable.MaxVelocity.X, 0);
         }
 
         public static void MoveLeft(IMovable movable)
         {
-            var distance = new Vector2(-1,0) * movable.MaxVelocity;
-            movable.Position += distance;
+            //var distance = new Vector2(-1,0) * movable.MaxVelocity;
+            //movable.Position += distance;
+            movable.Velocity = new Vector2(-movable.MaxVelocity.X, 0);
+
         }
 
         public static void Jump(IMovable movable, GameTime gameTime)
         {
             if (canJump)
             {
-                // while jump
-                movable.Velocity = new Vector2(0, movable.MaxJumpHeight);
-                var distance = new Vector2(0, -1) * movable.MaxJumpHeight;
-                movable.Position += distance;
-                //jump done
-            }            
+                canJump = false;
+                movable.Velocity = new Vector2(0, 50);
+                movable.Position += movable.Velocity * new Vector2(0, -1);
+                movable.Velocity = new Vector2(0);
+            }
+            canJump = CheckCollision(movable);
         }
 
         public static void AddGravity(IMovable movable, GameTime gameTime)
         {
             if (!CheckCollision(movable))
             {
-                movable.Velocity += gravity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                movable.Velocity += new Vector2(0, movable.Acceleration * (float)gameTime.ElapsedGameTime.TotalSeconds);
                 movable.Position += movable.Velocity;
-            }           
+                Debug.WriteLine(movable.Velocity);
+
+            }
+            else
+            {
+                movable.Velocity = new Vector2(0);
+            }
         }
 
         private static bool CheckCollision(IMovable movable)
