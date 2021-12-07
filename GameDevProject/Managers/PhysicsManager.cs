@@ -1,4 +1,5 @@
-﻿using GameDevProject.Interfaces;
+﻿using GameDevProject.Entities;
+using GameDevProject.Interfaces;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace GameDevProject.Managers
     class PhysicsManager
     {
         private static bool canJump = true;
-        private static Vector2 gravity = new Vector2(0, 1);
+        private List<Entity> entities;
         //https://stackoverflow.com/questions/43024877/xna-monogame-platformer-jumping-physics-and-collider-issue
 
         public static void MoveRight(IMovable movable)
@@ -47,7 +48,7 @@ namespace GameDevProject.Managers
         }
 
         private static bool CheckCollision(IMovable movable)
-        {
+        { 
             if (movable.Position.Y >= 50)
                 return true;
             else
