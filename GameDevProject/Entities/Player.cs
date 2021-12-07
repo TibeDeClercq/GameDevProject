@@ -19,10 +19,12 @@ namespace GameDevProject.Entities
         public float MaxAcceleration { get; set; }
         public float MaxJumpHeight { get; set; }
         public SpriteEffects spriteEffects { get; set; }
+        public Vector2 Velocity { get; set; }
+        public float Acceleration { get; set; }
 
-        public void Move()
+        public void Move(GameTime gameTime)
         {
-            movementManager.Move(this);
+            movementManager.Move(this, gameTime);
         }
 
         #endregion
@@ -40,10 +42,12 @@ namespace GameDevProject.Entities
             this.InputReader = inputReader;
             this.movementManager = new MovementManager();
             
-            this.Position = new Vector2(1, 100);
+            this.Position = new Vector2(1, 50);
             this.MaxVelocity = new Vector2(2, 2); //horizontal , vertical
             this.MaxAcceleration = 5;
             this.MaxJumpHeight = 5;
+            this.Acceleration = 9.81f;
+            this.Velocity = new Vector2(0,0);
 
             AddAnimations();
             SetAnimations();
@@ -61,7 +65,7 @@ namespace GameDevProject.Entities
 
         override public void Update(GameTime gameTime)
         {
-            Move();
+            Move(gameTime);
             //Update the animation
             playerState.Update(gameTime, animations);
         }

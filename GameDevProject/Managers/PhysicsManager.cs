@@ -8,8 +8,9 @@ namespace GameDevProject.Managers
 {
     class PhysicsManager
     {
-        private bool canJump = true;
-        private Vector2 gravity = new Vector2(0, 5);
+        private static bool canJump = true;
+        private static bool isJumping = false;
+        private static Vector2 gravity = new Vector2(0, 1);
         //https://stackoverflow.com/questions/43024877/xna-monogame-platformer-jumping-physics-and-collider-issue
 
         public static void MoveRight(IMovable movable)
@@ -24,24 +25,33 @@ namespace GameDevProject.Managers
             movable.Position += distance;
         }
 
-        public static void Jump(IMovable movable)
+        public static void Jump(IMovable movable, GameTime gameTime)
         {
-            var distance = new Vector2(0, -1) * movable.MaxJumpHeight;
-            movable.Position += distance;
-        }
-
-        public static void AddGravity(IMovable movable)
-        {
-            if (!CheckCollision())
+            if (canJump)
             {
-                var force = new Vector2(0, 1);
-                movable.Position += force;
+                // while jump
+                movable.Velocity = new Vector2(0, movable.MaxJumpHeight);
+                var distance = new Vector2(0, -1) * movable.MaxJumpHeight;
+                movable.Position += distance;
+                //jump done
             }            
         }
 
-        private static bool CheckCollision()
+        public static void AddGravity(IMovable movable, GameTime gameTime)
         {
-            return false;
+            if (!CheckCollision(movable))
+            {
+                movable.Velocity += gravity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                movable.Position += movable.Velocity;
+            }           
+        }
+
+        private static bool CheckCollision(IMovable movable)
+        {
+            if (movable.Position.Y >= 50)
+                return true;
+            else
+                return false;
         }
     }
 }

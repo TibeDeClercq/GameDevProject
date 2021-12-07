@@ -9,10 +9,10 @@ namespace GameDevProject.Managers
 {
     class MovementManager
     {
-        public void Move(IMovable movable)
+        public void Move(IMovable movable, GameTime gameTime)
         {
             var direction = movable.InputReader.ReadInput();
-            PhysicsManager.AddGravity(movable);
+            PhysicsManager.AddGravity(movable, gameTime);
 
             if (direction.X == -1)
             {
@@ -26,7 +26,7 @@ namespace GameDevProject.Managers
             }
             if (direction.Y == 1)
             {
-                PhysicsManager.Jump(movable);
+                PhysicsManager.Jump(movable, gameTime);
             }
         }
     }   
