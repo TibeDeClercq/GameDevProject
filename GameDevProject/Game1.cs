@@ -6,6 +6,7 @@ using GameDevProject.Entities;
 using GameDevProject.Input;
 using GameDevProject.Map;
 using System.Collections.Generic;
+using GameDevProject.Managers;
 
 namespace GameDevProject
 {
@@ -40,6 +41,9 @@ namespace GameDevProject
             AddEntities();
             AddWorld();
             SetRenderer();
+
+            PhysicsManager.entities = this.entities;
+            //PhysicsManager.tiles = this.world1. GETTILES
         }
 
         protected override void LoadContent()
