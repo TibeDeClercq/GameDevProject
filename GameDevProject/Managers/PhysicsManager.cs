@@ -11,7 +11,7 @@ namespace GameDevProject.Managers
     class PhysicsManager
     {
         private static bool canJump = true;
-        private List<Entity> entities;
+        public List<Entity> entities;
         //https://stackoverflow.com/questions/43024877/xna-monogame-platformer-jumping-physics-and-collider-issue
 
         public static void MoveRight(IMovable movable)
