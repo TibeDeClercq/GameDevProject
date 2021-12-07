@@ -28,7 +28,7 @@ namespace GameDevProject.Managers
             if (canJump)
             {
                 canJump = false;
-                movable.Velocity = new Vector2(0, -3);
+                movable.Velocity = new Vector2(0, -movable.MaxJumpHeight);
             }
             canJump = CheckCollision(movable);
         }
