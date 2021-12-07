@@ -28,6 +28,7 @@ namespace GameDevProject.Managers
             {
                 PhysicsManager.Jump(movable, gameTime);
             }
+            movable.Position += movable.Velocity;
         }
     }   
 }
