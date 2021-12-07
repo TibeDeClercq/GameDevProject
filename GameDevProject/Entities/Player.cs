@@ -52,7 +52,7 @@ namespace GameDevProject.Entities
             AddAnimations();
             SetAnimations();
 
-            playerState = new PlayerWalkState();
+            playerState = new PlayerSleepState();
         }
         #endregion
 
@@ -66,6 +66,7 @@ namespace GameDevProject.Entities
         override public void Update(GameTime gameTime)
         {
             Move(gameTime);
+            ChangeState();
             //Update the animation
             playerState.Update(gameTime, animations);
         }
@@ -87,6 +88,19 @@ namespace GameDevProject.Entities
             this.animations[2].GetFramesFromTextureProperties(textures[2].Width, textures[2].Height, 9, 1);
             this.animations[3].GetFramesFromTextureProperties(textures[3].Width, textures[3].Height, 12, 1);
             this.animations[4].GetFramesFromTextureProperties(textures[4].Width, textures[4].Height, 6, 1);
+        }
+
+        private void ChangeState()
+        {
+            if (IsWalking())
+            {
+
+            }
+        }
+
+        private bool IsWalking()
+        {
+            return true;
         }
     }
 }
