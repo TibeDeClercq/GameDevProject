@@ -7,11 +7,12 @@ using System.Text;
 
 namespace GameDevProject.States.PlayerStates
 {
-    class PlayerIdleState : PlayerState
+    class PlayerIdleState : IPlayerState
     {
-        public void Draw(SpriteBatch spriteBatch, List<Texture2D> textures, Vector2 Position, List<Animation> animations)
+        public void Draw(SpriteBatch spriteBatch, List<Texture2D> textures, Vector2 Position, List<Animation> animations, SpriteEffects spriteEffects)
         {
-            spriteBatch.Draw(textures[1], Position, animations[1].CurrentFrame.SourceRectangle, Color.White);
+            spriteBatch.Draw(textures[1], Position, animations[1].CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0, 0), new Vector2(1, 1), spriteEffects, 0f);
+            //spriteBatch.Draw(textures[1], Position, animations[1].CurrentFrame.SourceRectangle, Color.White);
         }
 
         public void Update(GameTime gameTime, List<Animation> animations)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using GameDevProject.Interfaces;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace GameDevProject.Managers
 {
@@ -15,10 +16,12 @@ namespace GameDevProject.Managers
 
             if (direction.X == -1)
             {
+                movable.spriteEffects = SpriteEffects.FlipHorizontally;
                 PhysicsManager.MoveLeft(movable);
             }
             if (direction.X == 1)
             {
+                movable.spriteEffects = SpriteEffects.None;
                 PhysicsManager.MoveRight(movable);
             }
             if (direction.Y == 1)

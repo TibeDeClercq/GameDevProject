@@ -18,6 +18,7 @@ namespace GameDevProject.Entities
         public IInputReader InputReader { get; set; }
         public float MaxAcceleration { get; set; }
         public float MaxJumpHeight { get; set; }
+        public SpriteEffects spriteEffects { get; set; }
 
         public void Move()
         {
@@ -29,7 +30,7 @@ namespace GameDevProject.Entities
         #region Player properties
         public MovementManager movementManager;
 
-        private PlayerState playerState;
+        private IPlayerState playerState;
         #endregion
 
         #region Player constructors
@@ -47,7 +48,7 @@ namespace GameDevProject.Entities
             AddAnimations();
             SetAnimations();
 
-            playerState = new PlayerIdleState();
+            playerState = new PlayerWalkingState();
         }
         #endregion
 
@@ -55,7 +56,7 @@ namespace GameDevProject.Entities
         public override void Draw(SpriteBatch spriteBatch)
         {
             //Draw the animation
-            playerState.Draw(spriteBatch, this.textures, this.Position, this.animations);
+            playerState.Draw(spriteBatch, this.textures, this.Position, this.animations, this.spriteEffects);
         }
 
         override public void Update(GameTime gameTime)

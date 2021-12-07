@@ -8,9 +8,9 @@ using System.Text;
 
 namespace GameDevProject.States.PlayerStates
 {
-    interface PlayerState
+    interface IPlayerState
     {
-        public void Draw(SpriteBatch spriteBatch, List<Texture2D> textures, Vector2 Position, List<Animation> animations);
+        public void Draw(SpriteBatch spriteBatch, List<Texture2D> textures, Vector2 Position, List<Animation> animations, SpriteEffects spriteEffects);
         public void Update(GameTime gameTime, List<Animation> animations);
     }
 }
