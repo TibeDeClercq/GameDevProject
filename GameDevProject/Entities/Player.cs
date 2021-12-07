@@ -21,6 +21,7 @@ namespace GameDevProject.Entities
         public SpriteEffects spriteEffects { get; set; }
         public Vector2 Velocity { get; set; }
         public float Acceleration { get; set; }
+        public Rectangle hitBox { get; set; }
 
         public void Move(GameTime gameTime)
         {
@@ -48,6 +49,7 @@ namespace GameDevProject.Entities
             this.MaxJumpHeight = 5;
             this.Acceleration = 9.81f;
             this.Velocity = new Vector2(0,0);
+            this.hitBox = new Rectangle(0, 0, 45, 45);
 
             AddAnimations();
             SetAnimations();
