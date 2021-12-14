@@ -45,7 +45,7 @@ namespace GameDevProject.Entities
             this.movementManager = new MovementManager();
             
             this.Position = new Vector2(1, 50);
-            this.MaxVelocity = new Vector2(2, 2); //horizontal , vertical
+            this.MaxVelocity = new Vector2(1, 1); //horizontal , vertical
             this.MaxAcceleration = 5;
             this.MaxJumpHeight = 3;
             this.Acceleration = 9.81f;
@@ -77,7 +77,7 @@ namespace GameDevProject.Entities
 
         private void AddAnimations()
         {
-            this.animations.Add(new Animation(10));
+            this.animations.Add(new Animation(5));
             this.animations.Add(new Animation(10));
             this.animations.Add(new Animation(10));
             this.animations.Add(new Animation(10));

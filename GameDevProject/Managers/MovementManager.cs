@@ -15,6 +15,8 @@ namespace GameDevProject.Managers
         {
             var direction = movable.InputReader.ReadInput().directionInput;
             PhysicsManager.AddGravity(movable, gameTime);
+            //Niet de beste oplossing
+            movable.Velocity = new Vector2(0, movable.Velocity.Y);
 
             if (direction.X == -1)
             {
@@ -38,6 +40,7 @@ namespace GameDevProject.Managers
         private void WriteDiagnostics(IMovable movable)
         {
             Debug.WriteLine(movable.Velocity);
+            Debug.WriteLine(movable.Position);
         }
     }   
 }
