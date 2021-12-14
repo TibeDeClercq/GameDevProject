@@ -15,7 +15,7 @@ namespace GameDevProject.Managers
         {
             var input = movable.InputReader.ReadInput();
 
-            PhysicsManager.AddGravity(movable, gameTime);
+            PhysicsManager.AddGravity(movable, world, gameTime);
             
             //Niet de beste oplossing
             movable.Velocity = new Vector2(0, movable.Velocity.Y);
@@ -23,21 +23,21 @@ namespace GameDevProject.Managers
             if (input.directionInput.X == -1)
             {
                 movable.spriteEffects = SpriteEffects.FlipHorizontally;
-                PhysicsManager.MoveLeft(movable);
+                PhysicsManager.MoveLeft(movable, world);
             }
             if (input.directionInput.X == 1)
             {
                 movable.spriteEffects = SpriteEffects.None;
-                PhysicsManager.MoveRight(movable);
+                PhysicsManager.MoveRight(movable, world);
             }
             if (input.directionInput.Y == 1)
             {
-                PhysicsManager.Jump(movable, gameTime);
+                PhysicsManager.Jump(movable, world, gameTime);
             }
 
             movable.Position += movable.Velocity;
 
-            WriteDiagnostics(movable);
+            //WriteDiagnostics(movable);
         }
 
         private void WriteDiagnostics(IMovable movable)
