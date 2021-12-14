@@ -13,25 +13,28 @@ namespace GameDevProject.Managers
     {
         public void Move(IMovable movable, GameTime gameTime, World world)
         {
-            var direction = movable.InputReader.ReadInput().directionInput;
+            var input = movable.InputReader.ReadInput();
+
             PhysicsManager.AddGravity(movable, gameTime);
+            
             //Niet de beste oplossing
             movable.Velocity = new Vector2(0, movable.Velocity.Y);
 
-            if (direction.X == -1)
+            if (input.directionInput.X == -1)
             {
                 movable.spriteEffects = SpriteEffects.FlipHorizontally;
                 PhysicsManager.MoveLeft(movable);
             }
-            if (direction.X == 1)
+            if (input.directionInput.X == 1)
             {
                 movable.spriteEffects = SpriteEffects.None;
                 PhysicsManager.MoveRight(movable);
             }
-            if (direction.Y == 1)
+            if (input.directionInput.Y == 1)
             {
                 PhysicsManager.Jump(movable, gameTime);
             }
+
             movable.Position += movable.Velocity;
 
             WriteDiagnostics(movable);
