@@ -32,13 +32,22 @@ namespace GameDevProject.Entities
         #endregion
 
         #region IAttacker implementation
+        public TimeSpan AttackCooldown { get; set; }
+        public bool CanAttack { get; set; }
         public bool IsAttacking { get; set; }
 
-        public void Attack() { }
+        public void Attack(GameTime gameTime)
+        {
+            attackManager.Attack(this, gameTime);
+        }
+
+        private const int IDLE_FPS = 5;
         #endregion
 
         #region Player properties
         public MovementManager movementManager;
+
+        public AttackManager attackManager;
 
         private IPlayerState playerState;
         #endregion
@@ -58,6 +67,10 @@ namespace GameDevProject.Entities
             this.Velocity = new Vector2(0,0);
             this.hitBox = new Rectangle(0, 0, 45, 45);
 
+            this.AttackCooldown = TimeSpan.FromSeconds(5);
+            this.CanAttack = true;
+            this.IsAttacking = false;
+
             AddAnimations();
             SetAnimations();
 
@@ -75,6 +88,7 @@ namespace GameDevProject.Entities
         override public void Update(GameTime gameTime, World world)
         {
             Move(gameTime, world);
+            Attack(gameTime);
             ChangeState();
             //Update the animation
             playerState.Update(gameTime, animations);
@@ -83,7 +97,7 @@ namespace GameDevProject.Entities
 
         private void AddAnimations()
         {
-            this.animations.Add(new Animation(5));
+            this.animations.Add(new Animation(IDLE_FPS));
             this.animations.Add(new Animation(10));
             this.animations.Add(new Animation(10));
             this.animations.Add(new Animation(10));
