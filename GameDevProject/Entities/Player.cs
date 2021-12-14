@@ -82,6 +82,8 @@ namespace GameDevProject.Entities
             this.Velocity = new Vector2(0,0);
             this.hitBox = new Rectangle(0, 0, 45, 45);
 
+            this.attackManager = new AttackManager();
+
             this.AttackCooldown = TimeSpan.FromSeconds(5);
             this.CanAttack = true;
             this.IsAttacking = false;
