@@ -11,23 +11,27 @@ namespace GameDevProject.Input
     class KeyboardReader : IInputReader
     {
         public bool IsDestinationInput => false;
-        public Vector2 ReadInput()
+        public InputParameters ReadInput()
         {
             KeyboardState state = Keyboard.GetState();
-            Vector2 direction = Vector2.Zero;
+            InputParameters inputParameters = new InputParameters();
+            //Vector2 direction = Vector2.Zero;
             if (state.IsKeyDown(Keys.Left))
             {
-                direction.X -= 1;
+                inputParameters.directionInput.X -= 1;
+                //direction.X -= 1;
             }
             if (state.IsKeyDown(Keys.Right))
             {
-                direction.X += 1;
+                inputParameters.directionInput.X += 1;
+                //direction.X += 1;
             }
             if (state.IsKeyDown(Keys.Space))
             {
-                direction.Y += 1;
+                inputParameters.directionInput.Y += 1;
+                //direction.Y += 1;
             }
-            return direction;
+            return inputParameters;
         }
     }
 }

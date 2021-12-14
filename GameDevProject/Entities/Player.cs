@@ -105,7 +105,7 @@ namespace GameDevProject.Entities
             }
             else
             {
-                this.playerState = new PlayerSleepState();
+                this.playerState = new PlayerIdleState();
             }
         }
 
@@ -120,7 +120,7 @@ namespace GameDevProject.Entities
 
         private bool IsWalking()
         {
-            if (this.Velocity != Vector2.Zero)
+            if (this.Velocity.X != 0)
             {
                 return true;
             }

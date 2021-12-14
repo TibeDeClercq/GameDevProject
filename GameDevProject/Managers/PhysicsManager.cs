@@ -41,7 +41,6 @@ namespace GameDevProject.Managers
             if (!CheckCollision(movable))
             {
                 movable.Velocity += new Vector2(0, movable.Acceleration * (float)gameTime.ElapsedGameTime.TotalSeconds);
-                Debug.WriteLine(movable.Velocity);
             }
             else
             {

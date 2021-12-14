@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using GameDevProject.Interfaces;
 using Microsoft.Xna.Framework;
@@ -11,7 +12,7 @@ namespace GameDevProject.Managers
     {
         public void Move(IMovable movable, GameTime gameTime)
         {
-            var direction = movable.InputReader.ReadInput();
+            var direction = movable.InputReader.ReadInput().directionInput;
             PhysicsManager.AddGravity(movable, gameTime);
 
             if (direction.X == -1)
@@ -29,6 +30,13 @@ namespace GameDevProject.Managers
                 PhysicsManager.Jump(movable, gameTime);
             }
             movable.Position += movable.Velocity;
+
+            WriteDiagnostics(movable);
+        }
+
+        private void WriteDiagnostics(IMovable movable)
+        {
+            Debug.WriteLine(movable.Velocity);
         }
     }   
 }
