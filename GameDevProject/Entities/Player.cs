@@ -9,11 +9,35 @@ using GameDevProject.Entities.Animations;
 using GameDevProject.Managers;
 using GameDevProject.States.PlayerStates;
 using GameDevProject.Map;
+using System.Diagnostics;
 
 namespace GameDevProject.Entities
 {
     class Player : Entity, IMovable, IAttacker
     {
+        #region Player properties
+        public MovementManager movementManager;
+
+        public AttackManager attackManager;
+
+        private IPlayerState playerState;
+
+        private const int IDLE_FRAMES = 2;
+        private const int WALK_FRAMES = 4;
+        private const int JUMP_FRAMES = 9;
+        private const int SPIN_FRAMES = 12;
+        private const int SLEEP_FRAMES = 6;
+
+        private const int IDLE_FPS = 5;
+        private const int WALK_FPS = 10;
+        private const int JUMP_FPS = 10;
+        private const int SPIN_FPS = SPIN_FRAMES / ATTACK_DURATION;
+        private const int SLEEP_FPS = 10;
+
+        private const int ATTACK_COOLDOWN = 5;
+        private const int ATTACK_DURATION = 2;
+        #endregion
+
         #region IMovable implementation
         public Vector2 MaxVelocity { get; set; }
         public IInputReader InputReader { get; set; }
@@ -33,38 +57,40 @@ namespace GameDevProject.Entities
 
         #region IAttacker implementation
         public TimeSpan AttackCooldown { get; set; }
+        public TimeSpan AttackDuration { get; set; }
         public bool CanAttack { get; set; }
         public bool IsAttacking { get; set; }
 
         public void Attack(GameTime gameTime)
         {
-            attackManager.Attack(this, gameTime);
-
-
-            if (CanAttack)
+            if (IsAttacking)
             {
-                this.CanAttack = false;
-                this.playerState = new PlayerSpinState();
+                this.AttackDuration -= gameTime.ElapsedGameTime;
+                
+                if(this.AttackDuration < TimeSpan.Zero)
+                {
+                    this.IsAttacking = false;
+                }
             }
             else
             {
-                this.AttackCooldown -= gameTime.ElapsedGameTime;
-            }
-            if (this.AttackCooldown < TimeSpan.Zero)
-            {
-                this.CanAttack = true;
+                this.AttackDuration = TimeSpan.FromSeconds(ATTACK_DURATION);
+
+                if (CanAttack)
+                {
+                    attackManager.Attack(this, gameTime, ATTACK_COOLDOWN);
+                }
+                else
+                {
+                    this.AttackCooldown -= gameTime.ElapsedGameTime;
+                    
+                    if (this.AttackCooldown < TimeSpan.Zero)
+                    {
+                        this.CanAttack = true;
+                    }
+                }
             }
         }
-
-        private const int IDLE_FPS = 5;
-        #endregion
-
-        #region Player properties
-        public MovementManager movementManager;
-
-        public AttackManager attackManager;
-
-        private IPlayerState playerState;
         #endregion
 
         #region Player constructors
@@ -73,7 +99,8 @@ namespace GameDevProject.Entities
             this.textures = textures;
             this.InputReader = inputReader;
             this.movementManager = new MovementManager();
-            
+            this.attackManager = new AttackManager();
+
             this.Position = new Vector2(1, 50);
             this.MaxVelocity = new Vector2(1, 1); //horizontal , vertical
             this.MaxAcceleration = 5;
@@ -81,10 +108,8 @@ namespace GameDevProject.Entities
             this.Acceleration = 9.81f;
             this.Velocity = new Vector2(0,0);
             this.hitBox = new Rectangle(0, 0, 45, 45);
-
-            this.attackManager = new AttackManager();
-
-            this.AttackCooldown = TimeSpan.FromSeconds(5);
+            this.AttackCooldown = TimeSpan.FromSeconds(ATTACK_COOLDOWN);
+            this.AttackDuration = TimeSpan.FromSeconds(ATTACK_DURATION);
             this.CanAttack = true;
             this.IsAttacking = false;
 
@@ -115,28 +140,32 @@ namespace GameDevProject.Entities
         private void AddAnimations()
         {
             this.animations.Add(new Animation(IDLE_FPS));
-            this.animations.Add(new Animation(10));
-            this.animations.Add(new Animation(10));
-            this.animations.Add(new Animation(10));
-            this.animations.Add(new Animation(10));
+            this.animations.Add(new Animation(WALK_FPS));
+            this.animations.Add(new Animation(JUMP_FPS));
+            this.animations.Add(new Animation(SPIN_FPS));
+            this.animations.Add(new Animation(SLEEP_FPS));
         }
 
         private void SetAnimations()
         {
-            this.animations[0].GetFramesFromTextureProperties(textures[0].Width, textures[0].Height, 2, 1);
-            this.animations[1].GetFramesFromTextureProperties(textures[1].Width, textures[1].Height, 4, 1);
-            this.animations[2].GetFramesFromTextureProperties(textures[2].Width, textures[2].Height, 9, 1);
-            this.animations[3].GetFramesFromTextureProperties(textures[3].Width, textures[3].Height, 12, 1);
-            this.animations[4].GetFramesFromTextureProperties(textures[4].Width, textures[4].Height, 6, 1);
+            this.animations[0].GetFramesFromTextureProperties(textures[0].Width, textures[0].Height, IDLE_FRAMES, 1);
+            this.animations[1].GetFramesFromTextureProperties(textures[1].Width, textures[1].Height, WALK_FRAMES, 1);
+            this.animations[2].GetFramesFromTextureProperties(textures[2].Width, textures[2].Height, JUMP_FRAMES, 1);
+            this.animations[3].GetFramesFromTextureProperties(textures[3].Width, textures[3].Height, SPIN_FRAMES, 1);
+            this.animations[4].GetFramesFromTextureProperties(textures[4].Width, textures[4].Height, SLEEP_FRAMES, 1);
         }
 
         #region StateChanges
         private void ChangeState()
         {
-            if (IsIdle())
+            if (IsSpinning())
             {
-                this.playerState = new PlayerIdleState();
+                this.playerState = new PlayerSpinState();
             }
+            //else if (IsIdle())
+            //{
+            //    this.playerState = new PlayerIdleState();
+            //}
             else if (IsWalking())
             {
                 this.playerState = new PlayerWalkState();
@@ -159,6 +188,15 @@ namespace GameDevProject.Entities
         private bool IsWalking()
         {
             if (this.Velocity.X != 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool IsSpinning()
+        {
+            if (this.IsAttacking == true)
             {
                 return true;
             }

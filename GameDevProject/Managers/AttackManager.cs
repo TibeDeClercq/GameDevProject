@@ -8,13 +8,15 @@ namespace GameDevProject.Managers
 {
     class AttackManager
     {
-        public void Attack(IAttacker attacker, GameTime gameTime)
+        public void Attack(IAttacker attacker, GameTime gameTime, int cooldown)
         {
             var input = attacker.InputReader.ReadInput();
 
             if (input.Attack == true)
             {
                 attacker.IsAttacking = true;
+                attacker.CanAttack = false;
+                attacker.AttackCooldown = TimeSpan.FromSeconds(cooldown);
             }
         }
     }

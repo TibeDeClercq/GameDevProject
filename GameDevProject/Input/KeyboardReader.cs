@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 
 using GameDevProject.Interfaces;
+using System.Diagnostics;
 
 namespace GameDevProject.Input
 {
@@ -34,6 +35,7 @@ namespace GameDevProject.Input
             if (state.IsKeyDown(Keys.C))
             {
                 inputParameters.Attack = true;
+                //Debug.WriteLine("pressed C");
                 //direction.Y += 1;
             }
             return inputParameters;
