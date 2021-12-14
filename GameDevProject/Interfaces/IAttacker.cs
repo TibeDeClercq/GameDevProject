@@ -11,6 +11,8 @@ namespace GameDevProject.Interfaces
         public bool CanAttack { get; set; }
         public bool IsAttacking { get; set; }
 
+        public IInputReader InputReader { get; set; }
+
         public void Attack(GameTime gameTime) { }
     }
 }

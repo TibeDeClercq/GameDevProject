@@ -39,6 +39,21 @@ namespace GameDevProject.Entities
         public void Attack(GameTime gameTime)
         {
             attackManager.Attack(this, gameTime);
+
+
+            if (CanAttack)
+            {
+                this.CanAttack = false;
+                this.playerState = new PlayerSpinState();
+            }
+            else
+            {
+                this.AttackCooldown -= gameTime.ElapsedGameTime;
+            }
+            if (this.AttackCooldown < TimeSpan.Zero)
+            {
+                this.CanAttack = true;
+            }
         }
 
         private const int IDLE_FPS = 5;

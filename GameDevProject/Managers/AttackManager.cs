@@ -10,19 +10,11 @@ namespace GameDevProject.Managers
     {
         public void Attack(IAttacker attacker, GameTime gameTime)
         {
-            if (CanAttack)
+            var input = attacker.InputReader.ReadInput();
+
+            if (input.Attack == true)
             {
-                this.CanAttack = false;
-                this.IsAttacking = true;
-                this.Cooldown = TimeSpan.FromSeconds(5);
-            }
-            else
-            {
-                this.Cooldown -= gameTime.ElapsedGameTime;
-            }
-            if (this.Cooldown < TimeSpan.Zero)
-            {
-                this.CanAttack = true;
+                attacker.IsAttacking = true;
             }
         }
     }
