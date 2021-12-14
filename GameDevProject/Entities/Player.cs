@@ -99,6 +99,7 @@ namespace GameDevProject.Entities
             this.textures = textures;
             this.InputReader = inputReader;
             this.movementManager = new MovementManager();
+            this.attackManager = new AttackManager();
             
             this.Position = new Vector2(1, 50);
             this.MaxVelocity = new Vector2(1, 1); //horizontal , vertical
