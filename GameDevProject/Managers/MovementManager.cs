@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using GameDevProject.Interfaces;
+using GameDevProject.Map;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -10,7 +11,7 @@ namespace GameDevProject.Managers
 {
     class MovementManager
     {
-        public void Move(IMovable movable, GameTime gameTime)
+        public void Move(IMovable movable, GameTime gameTime, World world)
         {
             var direction = movable.InputReader.ReadInput().directionInput;
             PhysicsManager.AddGravity(movable, gameTime);

@@ -143,7 +143,7 @@ namespace GameDevProject
         {
             foreach (Entity entity in entities)
             {
-                entity.Update(gameTime);
+                entity.Update(gameTime, world1);
             }
         }
         #endregion

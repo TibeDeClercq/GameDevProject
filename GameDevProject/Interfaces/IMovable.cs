@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameDevProject.Map;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,6 @@ namespace GameDevProject.Interfaces
         public SpriteEffects spriteEffects { get; set; }
         public Rectangle hitBox { get; set; }
 
-        public void Move(GameTime gameTime);
+        public void Move(GameTime gameTime, World world);
     }
 }

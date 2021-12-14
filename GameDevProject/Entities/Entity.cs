@@ -6,6 +6,7 @@ using System.Text;
 
 using GameDevProject.Interfaces;
 using GameDevProject.Entities.Animations;
+using GameDevProject.Map;
 
 namespace GameDevProject.Entities
 {
@@ -21,7 +22,7 @@ namespace GameDevProject.Entities
         //    spriteBatch.Draw(texture, Position, animation[0].CurrentFrame.SourceRectangle, Color.White);
         //}
 
-        abstract public void Update(GameTime gameTime);
+        abstract public void Update(GameTime gameTime, World world);
         //{
         //    animation.Update(gameTime);
         //}

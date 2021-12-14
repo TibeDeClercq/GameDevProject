@@ -33,7 +33,8 @@ namespace GameDevProject.Map
 
             this.tiles = new Tile[worldTemplate.GetLength(0), worldTemplate.GetLength(1)];
 
-            CreateTiles(136, 136, 8, 8);            
+            CreateRectangles(136, 136, 8, 8);
+            AddTiles();
         }
         #endregion
 
@@ -61,7 +62,7 @@ namespace GameDevProject.Map
             }
         }
 
-        private void CreateTiles(int width, int height, int numberOfWidthTiles, int numberOfHeightTiles)
+        private void CreateRectangles(int width, int height, int numberOfWidthTiles, int numberOfHeightTiles)
         {
             int widthOfFrame = width / numberOfWidthTiles; //17
             int heightOfFrame = height / numberOfHeightTiles; //17
@@ -73,9 +74,10 @@ namespace GameDevProject.Map
                     tileRectangles.Add(new Rectangle(x, y, 16, 16));
                     //tileTextures.Add(new Texture2D());
                 }
-            }
-
-            //niewe methode?
+            }            
+        }
+        private void AddTiles()
+        {
             for (int y = 0; y < worldTemplate.GetLength(0); y++)
             {
                 for (int x = 0; x < worldTemplate.GetLength(1); x++)
@@ -84,6 +86,15 @@ namespace GameDevProject.Map
                     tiles[y, x] = new Tile(tileRectangles[index], new Vector2(x * 16, y * 16), index);
                 }
             }
+        }
+        public List<Tile> GetTiles()
+        {
+            List<Tile> tileList = new List<Tile>();
+            foreach (Tile tile in tiles)
+            {
+                tileList.Add(tile);
+            }
+            return tileList;
         }
         #endregion
     }

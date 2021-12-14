@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using GameDevProject.Entities.Animations;
 using GameDevProject.Managers;
 using GameDevProject.States.PlayerStates;
+using GameDevProject.Map;
 
 namespace GameDevProject.Entities
 {
@@ -23,9 +24,9 @@ namespace GameDevProject.Entities
         public float Acceleration { get; set; }
         public Rectangle hitBox { get; set; }
 
-        public void Move(GameTime gameTime)
+        public void Move(GameTime gameTime, World world)
         {
-            movementManager.Move(this, gameTime);
+            movementManager.Move(this, gameTime, world);
         }
 
         #endregion
@@ -65,9 +66,9 @@ namespace GameDevProject.Entities
             playerState.Draw(spriteBatch, this.textures, this.Position, this.animations, this.spriteEffects);
         }
 
-        override public void Update(GameTime gameTime)
+        override public void Update(GameTime gameTime, World world)
         {
-            Move(gameTime);
+            Move(gameTime, world);
             ChangeState();
             //Update the animation
             playerState.Update(gameTime, animations);
