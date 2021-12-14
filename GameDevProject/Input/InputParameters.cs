@@ -9,9 +9,12 @@ namespace GameDevProject.Input
     {
         public Vector2 directionInput;
 
+        public bool Attack;
+
         public InputParameters()
         {
             directionInput = new Vector2();
+            Attack = false;
         }
     }
 }

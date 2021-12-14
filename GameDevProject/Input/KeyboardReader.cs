@@ -31,6 +31,11 @@ namespace GameDevProject.Input
                 inputParameters.directionInput.Y += 1;
                 //direction.Y += 1;
             }
+            if (state.IsKeyDown(Keys.C))
+            {
+                inputParameters.Attack = true;
+                //direction.Y += 1;
+            }
             return inputParameters;
         }
     }

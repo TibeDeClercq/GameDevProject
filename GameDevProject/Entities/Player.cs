@@ -12,7 +12,7 @@ using GameDevProject.Map;
 
 namespace GameDevProject.Entities
 {
-    class Player : Entity, IMovable
+    class Player : Entity, IMovable, IAttacker
     {
         #region IMovable implementation
         public Vector2 MaxVelocity { get; set; }
@@ -29,6 +29,12 @@ namespace GameDevProject.Entities
             movementManager.Move(this, gameTime, world);
         }
 
+        #endregion
+
+        #region IAttacker implementation
+        public bool IsAttacking { get; set; }
+
+        public void Attack() { }
         #endregion
 
         #region Player properties
