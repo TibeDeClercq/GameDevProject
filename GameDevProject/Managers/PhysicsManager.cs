@@ -53,7 +53,8 @@ namespace GameDevProject.Managers
                 {
                     if (tile.isFloor && tile.SourceRectangle.Intersects(movable.hitBox))
                     {
-                        Debug.WriteLine("Touching floor");
+                    //Debug.WriteLine("Touching floor");
+                        //Debug.WriteLine($"{movable.Position.X}, {movable.Position.Y}");
                         return true;
                     }
                 }
