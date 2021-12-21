@@ -11,7 +11,7 @@ namespace GameDevProject.Entities.Animations
 
         public AnimationFrame(Rectangle sourceRectangle)
         {
-            SourceRectangle = sourceRectangle;
+            this.SourceRectangle = sourceRectangle;
         }
 
     }

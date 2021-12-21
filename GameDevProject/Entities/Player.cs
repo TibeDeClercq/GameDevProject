@@ -16,9 +16,9 @@ namespace GameDevProject.Entities
     class Player : Entity, IMovable, IAttacker
     {
         #region Player properties
-        public MovementManager movementManager;
+        public MovementManager MovementManager;
 
-        public AttackManager attackManager;
+        public AttackManager AttackManager;
 
         private IPlayerState playerState;
 
@@ -43,14 +43,14 @@ namespace GameDevProject.Entities
         public IInputReader InputReader { get; set; }
         public float MaxAcceleration { get; set; }
         public float MaxJumpHeight { get; set; }
-        public SpriteEffects spriteEffects { get; set; }
+        public SpriteEffects SpriteEffects { get; set; }
         public Vector2 Velocity { get; set; }
         public float Acceleration { get; set; }
-        public Rectangle hitBox { get; set; }
+        public Rectangle Hitbox { get; set; }
 
         public void Move(GameTime gameTime, World world)
         {
-            movementManager.Move(this, gameTime, world);
+            this.MovementManager.Move(this, gameTime, world);
         }
 
         #endregion
@@ -63,7 +63,7 @@ namespace GameDevProject.Entities
 
         public void Attack(GameTime gameTime)
         {
-            if (IsAttacking)
+            if (this.IsAttacking)
             {
                 this.AttackDuration -= gameTime.ElapsedGameTime;
                 
@@ -78,7 +78,7 @@ namespace GameDevProject.Entities
 
                 if (CanAttack)
                 {
-                    attackManager.Attack(this, gameTime, ATTACK_COOLDOWN);
+                    this.AttackManager.Attack(this, gameTime, ATTACK_COOLDOWN);
                 }
                 else
                 {
@@ -98,8 +98,8 @@ namespace GameDevProject.Entities
         {
             this.textures = textures;
             this.InputReader = inputReader;
-            this.movementManager = new MovementManager();
-            this.attackManager = new AttackManager();
+            this.MovementManager = new MovementManager();
+            this.AttackManager = new AttackManager();
             
             this.Position = new Vector2(40, 10);
             this.MaxVelocity = new Vector2(1, 1); //horizontal , vertical
@@ -107,7 +107,7 @@ namespace GameDevProject.Entities
             this.MaxJumpHeight = 3;
             this.Acceleration = 9.81f;
             this.Velocity = new Vector2(0,0);
-            this.hitBox = new Rectangle(0, 0, 45, 45);
+            this.Hitbox = new Rectangle(0, 0, 45, 45);
             this.AttackCooldown = TimeSpan.FromSeconds(ATTACK_COOLDOWN);
             this.AttackDuration = TimeSpan.FromSeconds(ATTACK_DURATION);
             this.CanAttack = true;
@@ -116,7 +116,7 @@ namespace GameDevProject.Entities
             AddAnimations();
             SetAnimations();
 
-            playerState = new PlayerSleepState();
+            this.playerState = new PlayerSleepState();
         }
         #endregion
 
@@ -124,16 +124,16 @@ namespace GameDevProject.Entities
         public override void Draw(SpriteBatch spriteBatch)
         {
             //Draw the animation
-            playerState.Draw(spriteBatch, this.textures, this.Position, this.animations, this.spriteEffects);
+            this.playerState.Draw(spriteBatch, this.textures, this.Position, this.animations, this.SpriteEffects);
         }
 
         override public void Update(GameTime gameTime, World world)
         {
-            Move(gameTime, world);
-            Attack(gameTime);
-            ChangeState();
+            this.Move(gameTime, world);
+            this.Attack(gameTime);
+            this.ChangeState();
             //Update the animation
-            playerState.Update(gameTime, animations);
+            this.playerState.Update(gameTime, animations);
         }
         #endregion
 

@@ -51,7 +51,7 @@ namespace GameDevProject.Managers
         {
             foreach (Tile tile in world.GetTiles())
             {                
-                if (tile.isFloor && movable.hitBox.Intersects(tile.hitbox))
+                if (tile.isFloor && movable.Hitbox.Intersects(tile.hitbox))
                 {
                     //Debug.WriteLine($"Colliding with rectangle {tile.hitbox.X}, {tile.hitbox.Y}");
                     return true;                    
