@@ -17,33 +17,33 @@ namespace GameDevProject.Entities.Animations
         public Animation(int fps)
         {
             this.fps = fps;
-            frames = new List<AnimationFrame>();
+            this.frames = new List<AnimationFrame>();
         }
 
         public void AddFrame(AnimationFrame frame)
         {
-            frames.Add(frame);
-            CurrentFrame = frames[0];
+            this.frames.Add(frame);
+            this.CurrentFrame = frames[0];
         }
 
         public void Update(GameTime gameTime)
         {
-            CurrentFrame = frames[counter];
+            this.CurrentFrame = this.frames[counter];
 
-            secondCounter += gameTime.ElapsedGameTime.TotalSeconds;
+            this.secondCounter += gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (secondCounter >= 1d / fps)
+            if (this.secondCounter >= 1d / this.fps)
             {
-                counter++;
-                secondCounter = 0;
+                this.counter++;
+                this.secondCounter = 0;
             }
-            if (counter >= frames.Count)
+            if (this.counter >= this.frames.Count)
             {
-                counter = 0;
+                this.counter = 0;
             }
         }
 
-            public void GetFramesFromTextureProperties(int width, int height, int numberOfWidthSprites, int numberOfHeightSprites)
+        public void GetFramesFromTextureProperties(int width, int height, int numberOfWidthSprites, int numberOfHeightSprites)
         {
             int widthOfFrame = width / numberOfWidthSprites;
             int heightOfFrame = height / numberOfHeightSprites;
@@ -52,7 +52,7 @@ namespace GameDevProject.Entities.Animations
             {
                 for (int x = 0; x <= width - widthOfFrame; x += widthOfFrame)
                 {
-                    frames.Add(new AnimationFrame(new Rectangle(x, y, widthOfFrame, heightOfFrame)));
+                    this.frames.Add(new AnimationFrame(new Rectangle(x, y, widthOfFrame, heightOfFrame)));
                 }
             }
         }

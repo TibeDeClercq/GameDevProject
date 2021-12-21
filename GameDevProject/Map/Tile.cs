@@ -10,12 +10,12 @@ namespace GameDevProject.Map
     {
         public Vector2 Position = new Vector2(0, 0);
         public Rectangle SourceRectangle { get; set; }
-        public Rectangle hitbox { get; set;}
-        public int identifier { get; set; }
-        public bool isCollidable { get; set; }
-        public bool isFloor { get; set; }
-        public bool isCeiling { get; set; } 
-        public bool isBackground { get; set; }
+        public Rectangle Hitbox { get; set;}
+        public int Identifier { get; set; }
+        public bool IsCollidable { get; set; }
+        public bool IsFloor { get; set; }
+        public bool IsCeiling { get; set; } 
+        public bool IsBackground { get; set; }
         private int[] collidable = {8, 10, 11, 16, 18, 19, 24, 26, 27};
         private int[] floors = { 0, 1, 2, 3, 24, 25, 26, 27, 28, 29, 30, 32, 33, 38, 39, 40, 41, 46, 47};
         private int[] ceilings = { 16, 17, 18, 19, 24, 25, 26, 27};
@@ -23,25 +23,25 @@ namespace GameDevProject.Map
         public Tile(Rectangle sourceRectangle, Vector2 position, int identifier)
         {
             this.SourceRectangle = sourceRectangle;
-            this.hitbox = new Rectangle((int)position.X, (int)position.Y, sourceRectangle.Width, sourceRectangle.Height);
+            this.Hitbox = new Rectangle((int)position.X, (int)position.Y, sourceRectangle.Width, sourceRectangle.Height);
             this.Position = position;
-            this.identifier = identifier;
+            this.Identifier = identifier;
 
             if (Array.IndexOf(collidable, identifier) != -1)
             {
-                this.isCollidable = true;
+                this.IsCollidable = true;
             }
             else if (Array.IndexOf(floors, identifier) != -1)
             {
-                this.isFloor = true;
+                this.IsFloor = true;
             }
             else if (Array.IndexOf(ceilings, identifier) != -1)
             {
-                this.isCeiling = true;
+                this.IsCeiling = true;
             }
             else
             {
-                this.isBackground = true;
+                this.IsBackground = true;
             }
         }
     }

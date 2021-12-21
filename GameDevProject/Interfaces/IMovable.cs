@@ -16,8 +16,8 @@ namespace GameDevProject.Interfaces
         public float MaxAcceleration { get; set; }
         public float MaxJumpHeight { get; set; }
         public IInputReader InputReader { get; set; }
-        public SpriteEffects spriteEffects { get; set; }
-        public Rectangle hitBox { get; set; }
+        public SpriteEffects SpriteEffects { get; set; }
+        public Rectangle Hitbox { get; set; }
 
         public void Move(GameTime gameTime, World world);
     }

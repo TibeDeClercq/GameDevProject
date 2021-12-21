@@ -7,14 +7,14 @@ namespace GameDevProject.Input
 {
     class InputParameters
     {
-        public Vector2 directionInput;
+        public Vector2 DirectionInput;
 
         public bool Attack;
 
         public InputParameters()
         {
-            directionInput = new Vector2();
-            Attack = false;
+            this.DirectionInput = new Vector2();
+            this.Attack = false;
         }
     }
 }
