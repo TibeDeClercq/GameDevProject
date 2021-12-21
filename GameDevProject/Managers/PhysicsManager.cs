@@ -51,10 +51,10 @@ namespace GameDevProject.Managers
         {
             foreach (Tile tile in world.GetTiles())
             {                
-                if (tile.isFloor && movable.hitBox.Intersects(tile.hitbox))
+                if (tile.IsFloor && IntersectsFromTop(movable.Hitbox, tile.Hitbox))
                 {
                     //Debug.WriteLine($"Colliding with rectangle {tile.hitbox.X}, {tile.hitbox.Y}");
-                    movable.Position = new Vector2(movable.Position.X, tile.hitbox.Y - movable.hitBox.Height + 1f);                    
+                    movable.Position = new Vector2(movable.Position.X, tile.Hitbox.Y - movable.Hitbox.Height + 1f);                    
                     return true;                  
                 }
             }
