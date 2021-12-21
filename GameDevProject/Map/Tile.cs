@@ -10,6 +10,7 @@ namespace GameDevProject.Map
     {
         public Vector2 Position = new Vector2(0, 0);
         public Rectangle SourceRectangle { get; set; }
+        public Rectangle hitbox { get; set;}
         public int identifier { get; set; }
         public bool isCollidable { get; set; }
         public bool isFloor { get; set; }
@@ -22,6 +23,7 @@ namespace GameDevProject.Map
         public Tile(Rectangle sourceRectangle, Vector2 position, int identifier)
         {
             this.SourceRectangle = sourceRectangle;
+            this.hitbox = new Rectangle((int)position.X, (int)position.Y, sourceRectangle.Width, sourceRectangle.Height);
             this.Position = position;
             this.identifier = identifier;
 

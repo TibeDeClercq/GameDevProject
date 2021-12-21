@@ -32,12 +32,12 @@ namespace GameDevProject.Managers
                 canJump = false;
                 movable.Velocity = new Vector2(0, -movable.MaxJumpHeight);
             }
-            canJump = CheckCollision(movable, world);
+            canJump = CheckFloorCollision(movable, world);
         }
 
         public static void AddGravity(IMovable movable, World world, GameTime gameTime)
         {
-            if (!CheckCollision(movable, world))
+            if (!CheckFloorCollision(movable, world))
             {
                 movable.Velocity += new Vector2(0, movable.Acceleration * (float)gameTime.ElapsedGameTime.TotalSeconds);
             }
@@ -47,20 +47,17 @@ namespace GameDevProject.Managers
             }
         }
 
-        private static bool CheckCollision(IMovable movable, World world)
+        private static bool CheckFloorCollision(IMovable movable, World world)
         {
-                foreach (Tile tile in world.GetTiles())
+            foreach (Tile tile in world.GetTiles())
+            {                
+                if (tile.isFloor && movable.hitBox.Intersects(tile.hitbox))
                 {
-                    if (tile.isFloor && tile.SourceRectangle.Intersects(movable.hitBox))
-                    {
-                    //Debug.WriteLine("Touching floor");
-                        //Debug.WriteLine($"{movable.Position.X}, {movable.Position.Y}");
-                        return true;
-                    }
+                    //Debug.WriteLine($"Colliding with rectangle {tile.hitbox.X}, {tile.hitbox.Y}");
+                    return true;                    
                 }
-            Debug.WriteLine("No collisions");
+            }
             return false;
-            //return movable.Position.Y >= 50;
         }
     }
 }

@@ -51,6 +51,10 @@ namespace GameDevProject.Map
                     Debug.WriteLine($"tile {tile.identifier} is a background");
                 }
             }
+            foreach(Tile tile in GetTiles())
+            {
+                Debug.WriteLine($"{tile.SourceRectangle.X}, {tile.SourceRectangle.Y}");
+            }
         }
         #endregion
 
