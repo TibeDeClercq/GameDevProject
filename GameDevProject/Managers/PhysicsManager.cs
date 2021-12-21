@@ -11,7 +11,6 @@ namespace GameDevProject.Managers
 {
     class PhysicsManager
     {
-        public static bool check = true;
         private static bool canJump = true;
         public static List<Entity> entities;
         //https://stackoverflow.com/questions/43024877/xna-monogame-platformer-jumping-physics-and-collider-issue
@@ -50,36 +49,16 @@ namespace GameDevProject.Managers
 
         private static bool CheckCollision(IMovable movable, World world)
         {
-            if (check)
-            {
                 foreach (Tile tile in world.GetTiles())
                 {
-                    if (tile.isFloor)
+                    if (tile.isFloor && tile.SourceRectangle.Intersects(movable.hitBox))
                     {
-                        Debug.WriteLine($"tile {tile.identifier} is a floor");
-
+                        Debug.WriteLine("Touching floor");
+                        return true;
                     }
-                    if (tile.isCeiling)
-                    {
-                        Debug.WriteLine($"tile {tile.identifier} is a ceiling");
-
-                    }
-                    if (tile.isBackground)
-                    {
-                        Debug.WriteLine($"tile {tile.identifier} is a background");
-
-                    }
-                    //if (tile.isFloor && tile.SourceRectangle.Intersects(movable.hitBox))
-                    //{
-                    //    Debug.WriteLine("Touching floor");
-                    //    return true;
-                    //}
                 }
-                check = false;
-            }
-            
-            //Debug.WriteLine("No collisions");
-            return true;
+            Debug.WriteLine("No collisions");
+            return false;
             //return movable.Position.Y >= 50;
         }
     }

@@ -41,7 +41,6 @@ namespace GameDevProject.Map
             {
                 this.isBackground = true;
             }
-
         }
     }
 }

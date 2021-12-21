@@ -35,6 +35,22 @@ namespace GameDevProject.Map
 
             CreateRectangles(136, 136, 8, 8);
             AddTiles();
+
+            foreach (Tile tile in GetTiles())
+            {
+                if (tile.isFloor)
+                {
+                    Debug.WriteLine($"tile {tile.identifier} is a floor");
+                }
+                if (tile.isCeiling)
+                {
+                    Debug.WriteLine($"tile {tile.identifier} is a ceiling");
+                }
+                if (tile.isBackground)
+                {
+                    Debug.WriteLine($"tile {tile.identifier} is a background");
+                }
+            }
         }
         #endregion
 
