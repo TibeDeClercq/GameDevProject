@@ -107,7 +107,7 @@ namespace GameDevProject.Entities
             this.MaxJumpHeight = 3;
             this.Acceleration = 9.81f;
             this.Velocity = new Vector2(0,0);
-            this.Hitbox = new Rectangle(0, 0, 45, 45);
+            this.Hitbox = new Rectangle(0, 0, 45, 46);
             this.AttackCooldown = TimeSpan.FromSeconds(ATTACK_COOLDOWN);
             this.AttackDuration = TimeSpan.FromSeconds(ATTACK_DURATION);
             this.CanAttack = true;
