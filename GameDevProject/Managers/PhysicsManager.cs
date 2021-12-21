@@ -51,13 +51,42 @@ namespace GameDevProject.Managers
         {
             foreach (Tile tile in world.GetTiles())
             {                
-                if (tile.isFloor && movable.hitBox.Intersects(tile.hitbox))
+                if (tile.isFloor && IntersectsFromTop(movable.hitBox, tile.hitbox))
                 {
                     //Debug.WriteLine($"Colliding with rectangle {tile.hitbox.X}, {tile.hitbox.Y}");
-                    return true;                    
+                    movable.Position = new Vector2(movable.Position.X, tile.hitbox.Y - movable.hitBox.Height + 1f);                    
+                    return true;                  
                 }
             }
             return false;
+        }
+
+        private static bool IntersectsFromTop(Rectangle player, Rectangle target)
+        {
+            var intersection = Rectangle.Intersect(player, target);
+            return player.Intersects(target) && intersection.Y == target.Y && intersection.Width >= intersection.Height;
+        }
+
+        private static bool IntersectsFromRight(Rectangle player, Rectangle target)
+        {
+            var intersection = Rectangle.Intersect(player, target);
+            return player.Intersects(target) && intersection.X + intersection.Width == target.X + target.Width && intersection.Width <= intersection.Height;
+
+            //if (IntersectsFromRight(movable.hitBox, tile.hitbox))
+            //{
+            //    movable.Position = new Vector2(tile.hitbox.X + tile.hitbox.Width, movable.Position.Y);
+            //}
+        }
+
+        private static bool IntersectsFromLeft(Rectangle player, Rectangle target)
+        {
+            var intersection = Rectangle.Intersect(player, target);
+            return player.Intersects(target) && intersection.X == target.X && target.Width >= intersection.Height;
+
+            //if (IntersectsFromRight(movable.hitBox, tile.hitbox))
+            //{
+            //    movable.Position = new Vector2(tile.hitbox.X + tile.hitbox.Width, movable.Position.Y);
+            //}
         }
     }
 }
