@@ -158,6 +158,9 @@ namespace GameDevProject
             this.world1.Draw(this.spriteBatch);
             //Draw entities
             this.DrawEntities();
+
+            this.DrawHitboxes();
+
             this.spriteBatch.End();
         }
 
@@ -166,6 +169,7 @@ namespace GameDevProject
             this.GraphicsDevice.SetRenderTarget(null);
             this.spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             this.spriteBatch.Draw(this.gameRenderTarget, new Rectangle(0, 0, this.scale * this.world1.GetWorldWidth(), this.scale * this.world1.GetWorldHeight()), Color.White);
+            
             this.spriteBatch.End();
         }
 
@@ -175,6 +179,29 @@ namespace GameDevProject
             {
                 entity.Draw(this.spriteBatch);
             }
+        }
+
+        private void DrawHitboxes()
+        {
+            List<Texture2D> hitboxes = new List<Texture2D>();
+            hitboxes.Add(new Texture2D(graphics.GraphicsDevice, 45, 46));
+            
+            Color[] data = new Color[45 * 46];
+            for (int i = 0; i < data.Length; ++i)
+            {
+                if(i % 45 == 0 || i % 45 == 44 || i < 45 || i > data.Length - 45)
+                {
+                    data[i] = Color.White;
+                }
+                else
+                {
+                    data[i] = Color.Transparent;
+                }
+            }
+            
+            hitboxes[0].SetData(data);
+            
+            spriteBatch.Draw(hitboxes[0], entities[0].Position, Color.White);
         }
         #endregion
     }
