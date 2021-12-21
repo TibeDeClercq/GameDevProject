@@ -20,17 +20,17 @@ namespace GameDevProject.Managers
             //Niet de beste oplossing
             movable.Velocity = new Vector2(0, movable.Velocity.Y);
 
-            if (input.directionInput.X == -1)
+            if (input.DirectionInput.X == -1)
             {
                 movable.SpriteEffects = SpriteEffects.FlipHorizontally;
                 PhysicsManager.MoveLeft(movable, world);
             }
-            if (input.directionInput.X == 1)
+            if (input.DirectionInput.X == 1)
             {
                 movable.SpriteEffects = SpriteEffects.None;
                 PhysicsManager.MoveRight(movable, world);
             }
-            if (input.directionInput.Y == 1)
+            if (input.DirectionInput.Y == 1)
             {
                 PhysicsManager.Jump(movable, world, gameTime);
             }

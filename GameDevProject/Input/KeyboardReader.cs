@@ -19,17 +19,17 @@ namespace GameDevProject.Input
             //Vector2 direction = Vector2.Zero;
             if (state.IsKeyDown(Keys.Left))
             {
-                inputParameters.directionInput.X -= 1;
+                inputParameters.DirectionInput.X -= 1;
                 //direction.X -= 1;
             }
             if (state.IsKeyDown(Keys.Right))
             {
-                inputParameters.directionInput.X += 1;
+                inputParameters.DirectionInput.X += 1;
                 //direction.X += 1;
             }
             if (state.IsKeyDown(Keys.Space))
             {
-                inputParameters.directionInput.Y += 1;
+                inputParameters.DirectionInput.Y += 1;
                 //direction.Y += 1;
             }
             if (state.IsKeyDown(Keys.C))
