@@ -33,22 +33,22 @@ namespace GameDevProject.Map
 
             this.tiles = new Tile[worldTemplate.GetLength(0), worldTemplate.GetLength(1)];
 
-            CreateRectangles(136, 136, 8, 8);
-            AddTiles();
+            this.CreateRectangles(136, 136, 8, 8);
+            this.AddTiles();
 
             foreach (Tile tile in GetTiles())
             {
-                if (tile.isFloor)
+                if (tile.IsFloor)
                 {
-                    Debug.WriteLine($"tile {tile.identifier} is a floor");
+                    Debug.WriteLine($"tile {tile.Identifier} is a floor");
                 }
-                if (tile.isCeiling)
+                if (tile.IsCeiling)
                 {
-                    Debug.WriteLine($"tile {tile.identifier} is a ceiling");
+                    Debug.WriteLine($"tile {tile.Identifier} is a ceiling");
                 }
-                if (tile.isBackground)
+                if (tile.IsBackground)
                 {
-                    Debug.WriteLine($"tile {tile.identifier} is a background");
+                    Debug.WriteLine($"tile {tile.Identifier} is a background");
                 }
             }
             foreach(Tile tile in GetTiles())
@@ -61,21 +61,21 @@ namespace GameDevProject.Map
         #region Methods
         public int GetWorldWidth()
         {
-            int width = tiles.GetLength(1) * 16;
+            int width = this.tiles.GetLength(1) * 16;
 
             return width;
         }
 
         public int GetWorldHeight()
         {
-            int height = tiles.GetLength(0) * 16;
+            int height = this.tiles.GetLength(0) * 16;
 
             return height;
         }
         
         public void Draw(SpriteBatch spriteBatch)
         {
-            foreach (Tile tile in tiles)
+            foreach (Tile tile in this.tiles)
             {
                 spriteBatch.Draw(tilesheet, tile.Position, tile.SourceRectangle, Color.White);
                 //spriteBatch.Draw(tilesheet, tile.Position, tile.SourceRectangle, Color.White, 0f, Vector2.Zero, 5.0f, SpriteEffects.None, 0f);
@@ -91,26 +91,26 @@ namespace GameDevProject.Map
             {
                 for (int x = 0; x <= width - widthOfFrame; x += widthOfFrame)
                 {
-                    tileRectangles.Add(new Rectangle(x, y, 16, 16));
+                    this.tileRectangles.Add(new Rectangle(x, y, 16, 16));
                     //tileTextures.Add(new Texture2D());
                 }
             }            
         }
         private void AddTiles()
         {
-            for (int y = 0; y < worldTemplate.GetLength(0); y++)
+            for (int y = 0; y < this.worldTemplate.GetLength(0); y++)
             {
-                for (int x = 0; x < worldTemplate.GetLength(1); x++)
+                for (int x = 0; x < this.worldTemplate.GetLength(1); x++)
                 {
-                    int index = (worldTemplate[y, x].ToCharArray()[0] - 'A') * 8 + (worldTemplate[y, x].ToCharArray()[1] - '1');
-                    tiles[y, x] = new Tile(tileRectangles[index], new Vector2(x * 16, y * 16), index);
+                    int index = (this.worldTemplate[y, x].ToCharArray()[0] - 'A') * 8 + (this.worldTemplate[y, x].ToCharArray()[1] - '1');
+                    this.tiles[y, x] = new Tile(this.tileRectangles[index], new Vector2(x * 16, y * 16), index);
                 }
             }
         }
         public List<Tile> GetTiles()
         {
             List<Tile> tileList = new List<Tile>();
-            foreach (Tile tile in tiles)
+            foreach (Tile tile in this.tiles)
             {
                 tileList.Add(tile);
             }
