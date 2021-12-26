@@ -16,8 +16,15 @@ namespace GameDevProject.Managers
         //https://stackoverflow.com/questions/43024877/xna-monogame-platformer-jumping-physics-and-collider-issue
 
         public static void MoveRight(IMovable movable, World world)
-        {            
-            movable.Velocity = new Vector2(movable.MaxVelocity.X, movable.Velocity.Y);            
+        {
+            //begin test Tibe
+            if (!IntersectsFromLeft(movable, world))
+            {
+                movable.Velocity = new Vector2(movable.MaxVelocity.X, movable.Velocity.Y);
+                Debug.WriteLine("intersection player with leftCollide");
+            }
+            //einde test Tibe
+                        
         }
 
         public static void MoveLeft(IMovable movable, World world)
@@ -72,7 +79,7 @@ namespace GameDevProject.Managers
                 {
                     movable.Position = new Vector2(tile.HitboxRectangle.X + tile.HitboxRectangle.Width, movable.Position.Y);
                     return true;
-                }                
+                }
             }
             return false;
         }
@@ -103,6 +110,21 @@ namespace GameDevProject.Managers
             //{
             //    movable.Position = new Vector2(tile.hitbox.X + player.Hitbox.Width, movable.Position.Y);
             //}
+        }
+
+
+        //Tibe tests
+
+        private static bool IntersectsFromLeft(IMovable movable, World world)
+        {
+            foreach (Tile tile in world.GetTiles())
+            {
+                if (tile.IsLeftCollide && movable.HitboxRectangle.Intersects(tile.HitboxRectangle))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

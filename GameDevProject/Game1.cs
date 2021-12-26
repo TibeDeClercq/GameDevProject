@@ -98,8 +98,8 @@ namespace GameDevProject
                                 { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
                                 { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
                                 { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
-                                { "G1", "G1", "G1", "G1", "G1", "G1","A2", "G1", "A2", "G1", "G1", "G1"},
-                                { "G1", "G1", "G1", "G1", "G1", "G1","A2", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","B1", "G1", "A2", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","B1", "G1", "G1", "G1", "G1", "G1"},
                                 { "A2", "A2", "A2", "A2", "A2", "A2","A2", "A2", "A2", "A2", "A2", "A2"},
                                 { "E3", "E3", "E3", "E3", "E3", "E3","E3", "E3", "E3", "E3", "E3", "E3"}
                              };
@@ -243,7 +243,7 @@ namespace GameDevProject
             foreach (IHitbox tile in world1.GetTiles())
             {
                 Tile test = (Tile)tile;
-                if (test.IsFloor)
+                if (test.IsLeftCollide)
                 {
                     items.Add(tile);
                 }
