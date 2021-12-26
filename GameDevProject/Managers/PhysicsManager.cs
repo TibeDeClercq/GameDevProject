@@ -21,7 +21,6 @@ namespace GameDevProject.Managers
             if (!IntersectsFromLeft(movable, world))
             {
                 movable.Velocity = new Vector2(movable.MaxVelocity.X, movable.Velocity.Y);
-                Debug.WriteLine("intersection player with leftCollide");
             }
             //einde test Tibe
                         

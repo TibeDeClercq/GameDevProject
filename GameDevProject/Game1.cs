@@ -243,7 +243,7 @@ namespace GameDevProject
             foreach (IHitbox tile in world1.GetTiles())
             {
                 Tile test = (Tile)tile;
-                if (test.IsLeftCollide)
+                if (test.IsTopCollide)
                 {
                     items.Add(tile);
                 }

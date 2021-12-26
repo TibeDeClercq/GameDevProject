@@ -31,11 +31,8 @@ namespace GameDevProject.Entities
         private const int IDLE_FPS = 5;
         private const int WALK_FPS = 10;
         private const int JUMP_FPS = 10;
-        private const int SPIN_FPS = SPIN_FRAMES / ATTACK_DURATION;
+        private const int SPIN_FPS = SPIN_FRAMES / 2; //fixen
         private const int SLEEP_FPS = 10;
-
-        private const int ATTACK_COOLDOWN = 5;
-        private const int ATTACK_DURATION = 2;
         #endregion
 
         #region IMovable implementation
@@ -58,38 +55,13 @@ namespace GameDevProject.Entities
         #region IAttacker implementation
         public TimeSpan AttackCooldown { get; set; }
         public TimeSpan AttackDuration { get; set; }
+        public TimeSpan Timer { get; set; }
         public bool CanAttack { get; set; }
         public bool IsAttacking { get; set; }
 
         public void Attack(GameTime gameTime)
         {
-            if (this.IsAttacking)
-            {
-                this.AttackDuration -= gameTime.ElapsedGameTime;
-                
-                if(this.AttackDuration < TimeSpan.Zero)
-                {
-                    this.IsAttacking = false;
-                }
-            }
-            else
-            {
-                this.AttackDuration = TimeSpan.FromSeconds(ATTACK_DURATION);
-
-                if (CanAttack)
-                {
-                    this.AttackManager.Attack(this, gameTime, ATTACK_COOLDOWN);
-                }
-                else
-                {
-                    this.AttackCooldown -= gameTime.ElapsedGameTime;
-                    
-                    if (this.AttackCooldown < TimeSpan.Zero)
-                    {
-                        this.CanAttack = true;
-                    }
-                }
-            }
+            this.AttackManager.Attack(this, gameTime);
         }
         #endregion
 
@@ -108,8 +80,11 @@ namespace GameDevProject.Entities
             this.Acceleration = 9.81f;
             this.HitboxRectangle = new Rectangle(0, 0, 45, 46);
             this.Velocity = new Vector2(0,0);
-            this.AttackCooldown = TimeSpan.FromSeconds(ATTACK_COOLDOWN);
-            this.AttackDuration = TimeSpan.FromSeconds(ATTACK_DURATION);
+
+            this.AttackCooldown = TimeSpan.FromSeconds(5);
+            this.AttackDuration = TimeSpan.FromSeconds(2);
+            this.Timer = TimeSpan.Zero;
+
             this.CanAttack = true;
             this.IsAttacking = false;
 
