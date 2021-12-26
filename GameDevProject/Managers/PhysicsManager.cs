@@ -54,10 +54,10 @@ namespace GameDevProject.Managers
         {
             foreach (Tile tile in world.GetTiles())
             {                
-                if (tile.IsFloor && IntersectsFromTop(movable.Hitbox, tile.Hitbox))
+                if (tile.IsFloor && IntersectsFromTop(movable.HitboxRectangle, tile.HitboxRectangle))
                 {
                     //Debug.WriteLine($"Colliding with rectangle {tile.hitbox.X}, {tile.hitbox.Y}");
-                    movable.Position = new Vector2(movable.Position.X, tile.Hitbox.Y - movable.Hitbox.Height + 1f);                    
+                    movable.Position = new Vector2(movable.Position.X, tile.HitboxRectangle.Y - movable.HitboxRectangle.Height + 1f);                    
                     return true;                  
                 }
             }
@@ -68,9 +68,9 @@ namespace GameDevProject.Managers
         {
             foreach(Tile tile in world.GetTiles())
             {
-                if (tile.IsFloor && IntersectsFromRight(movable.Hitbox, tile.Hitbox))
+                if (tile.IsFloor && IntersectsFromRight(movable.HitboxRectangle, tile.HitboxRectangle))
                 {
-                    movable.Position = new Vector2(tile.Hitbox.X + tile.Hitbox.Width, movable.Position.Y);
+                    movable.Position = new Vector2(tile.HitboxRectangle.X + tile.HitboxRectangle.Width, movable.Position.Y);
                     return true;
                 }                
             }

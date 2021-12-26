@@ -7,6 +7,8 @@ using GameDevProject.Input;
 using GameDevProject.Map;
 using System.Collections.Generic;
 using GameDevProject.Managers;
+using GameDevProject.Interfaces;
+using System.Diagnostics;
 
 namespace GameDevProject
 {
@@ -24,6 +26,10 @@ namespace GameDevProject
 
         private World world1;
         private Texture2D worldTileset;
+
+        private List<IHitbox> items;
+        private List<Hitbox> hitboxes;
+
         public Game1()
         {
             this.graphics = new GraphicsDeviceManager(this);
@@ -44,6 +50,8 @@ namespace GameDevProject
 
             PhysicsManager.entities = this.entities;
             //PhysicsManager.tiles = this.world1. GETTILES
+
+            this.hitboxes = new List<Hitbox>();
         }
 
         protected override void LoadContent()
@@ -183,25 +191,63 @@ namespace GameDevProject
 
         private void DrawHitboxes()
         {
-            List<Texture2D> hitboxes = new List<Texture2D>();
-            hitboxes.Add(new Texture2D(graphics.GraphicsDevice, 45, 46));
-            
-            Color[] data = new Color[45 * 46];
-            for (int i = 0; i < data.Length; ++i)
+            this.GetHitboxes();
+
+            foreach (Hitbox hitbox in hitboxes)
             {
-                if(i % 45 == 0 || i % 45 == 44 || i < 45 || i > data.Length - 45)
+                spriteBatch.Draw(hitbox.Texture, hitbox.Position, Color.White);
+            }
+        }
+
+        private void GetHitboxes()
+        {
+            this.hitboxes = new List<Hitbox>();
+            this.items = new List<IHitbox>();
+
+            this.AddWantedHitboxes();
+
+            foreach (IHitbox item in items)
+            {
+                int itemWidth = item.HitboxRectangle.Width;
+                int itemHeight = item.HitboxRectangle.Height;
+                Vector2 position = new Vector2(item.HitboxRectangle.X, item.HitboxRectangle.Y);
+
+                Texture2D texture = new Texture2D(graphics.GraphicsDevice, itemWidth, itemHeight);
+                int pixels = itemWidth * itemHeight;
+                Color[] outline = new Color[pixels];
+
+                for (int i = 0; i < pixels; i++)
                 {
-                    data[i] = Color.White;
+                    if (i < itemWidth || i % itemWidth == 0 || i % itemWidth == itemWidth - 1 || i > pixels - itemWidth)
+                    {
+                        outline[i] = Color.White;
+                    }
+                    else
+                    {
+                        outline[i] = Color.Transparent;
+                    }
                 }
-                else
+
+                texture.SetData(outline);
+
+                hitboxes.Add(new Hitbox(texture, position));
+            }
+        }
+
+        public void AddWantedHitboxes()
+        {
+            foreach (IHitbox entity in entities)
+            {
+                items.Add(entity);
+            }
+            foreach (IHitbox tile in world1.GetTiles())
+            {
+                Tile test = (Tile)tile;
+                if (test.IsFloor)
                 {
-                    data[i] = Color.Transparent;
+                    items.Add(tile);
                 }
             }
-            
-            hitboxes[0].SetData(data);
-            
-            spriteBatch.Draw(hitboxes[0], entities[0].Position, Color.White);
         }
         #endregion
     }

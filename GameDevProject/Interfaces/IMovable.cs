@@ -7,7 +7,7 @@ using System.Text;
 
 namespace GameDevProject.Interfaces
 {
-    interface IMovable
+    interface IMovable : IHitbox
     {
         public Vector2 Position { get; set; }
         public Vector2 Velocity { get; set; }
@@ -17,7 +17,8 @@ namespace GameDevProject.Interfaces
         public float MaxJumpHeight { get; set; }
         public IInputReader InputReader { get; set; }
         public SpriteEffects SpriteEffects { get; set; }
-        public Rectangle Hitbox { get; set; }
+        
+        //public Rectangle HitboxRectangle { get; set; }
 
         public void Move(GameTime gameTime, World world);
     }

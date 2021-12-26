@@ -13,7 +13,7 @@ using System.Diagnostics;
 
 namespace GameDevProject.Entities
 {
-    class Player : Entity, IMovable, IAttacker
+    class Player : Entity, IMovable, IAttacker, IHitbox
     {
         #region Player properties
         public MovementManager MovementManager;
@@ -46,7 +46,7 @@ namespace GameDevProject.Entities
         public SpriteEffects SpriteEffects { get; set; }
         public Vector2 Velocity { get; set; }
         public float Acceleration { get; set; }
-        public Rectangle Hitbox { get; set; }
+        public Rectangle HitboxRectangle { get; set; }
 
         public void Move(GameTime gameTime, World world)
         {
@@ -106,8 +106,8 @@ namespace GameDevProject.Entities
             this.MaxAcceleration = 5;
             this.MaxJumpHeight = 3;
             this.Acceleration = 9.81f;
+            this.HitboxRectangle = new Rectangle(0, 0, 45, 46);
             this.Velocity = new Vector2(0,0);
-            this.Hitbox = new Rectangle(0, 0, 45, 46);
             this.AttackCooldown = TimeSpan.FromSeconds(ATTACK_COOLDOWN);
             this.AttackDuration = TimeSpan.FromSeconds(ATTACK_DURATION);
             this.CanAttack = true;

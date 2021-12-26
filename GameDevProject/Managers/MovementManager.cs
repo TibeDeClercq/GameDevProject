@@ -36,7 +36,7 @@ namespace GameDevProject.Managers
             }
 
             movable.Position += movable.Velocity;
-            movable.Hitbox = new Rectangle((int)movable.Position.X, (int)movable.Position.Y, movable.Hitbox.Width, movable.Hitbox.Height);
+            movable.HitboxRectangle = new Rectangle((int)movable.Position.X, (int)movable.Position.Y, movable.HitboxRectangle.Width, movable.HitboxRectangle.Height);
 
             //WriteDiagnostics(movable);
         }
