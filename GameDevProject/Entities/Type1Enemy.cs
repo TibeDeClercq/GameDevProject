@@ -1,4 +1,5 @@
 ﻿using GameDevProject.Entities.Animations;
+using GameDevProject.Input;
 using GameDevProject.Interfaces;
 using GameDevProject.Managers;
 using GameDevProject.Map;
@@ -21,17 +22,17 @@ namespace GameDevProject.Entities
         private const int IDLE_FRAMES = 2;
 
         private const int IDLE_FPS = 5;
-        public SpriteEffects spriteEffects { get; set; }
         #endregion
 
         #region Constructor
-        public Type1Enemy(List<Texture2D> textures)
+        public Type1Enemy(List<Texture2D> textures, Player player)
         {
             this.textures = textures;
             this.Position = new Vector2(150, 10);
-            this.MaxVelocity = new Vector2(0.5f, 1);
+            this.MaxVelocity = new Vector2(1, 2);
             this.Velocity = new Vector2(0, 0);
             this.HitboxRectangle = new Rectangle((int)this.Position.X, (int)this.Position.Y, 45, 45);
+            this.InputReader = new Type1EnemyAI(player, this);
 
             this.MovementManager = new MovementManager();
             this.enemyState = new Type1EnemyIdleState();
@@ -60,7 +61,7 @@ namespace GameDevProject.Entities
         #region Enemy Methods
         public override void Draw(SpriteBatch spriteBatch)
         {
-            this.enemyState.Draw(spriteBatch, this.textures, this.Position, this.animations, this.spriteEffects);
+            this.enemyState.Draw(spriteBatch, this.textures, this.Position, this.animations, this.SpriteEffects);
         }
         public override void Update(GameTime gameTime, World world)
         {

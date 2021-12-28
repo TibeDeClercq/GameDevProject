@@ -90,13 +90,10 @@ namespace GameDevProject
             this.entities = new List<Entity>();
 
             Player player = new Player(this.playerTextures, new KeyboardReader());
-            Type1Enemy type1Enemy = new Type1Enemy(this.type1EnemyTextures);
-            type1Enemy.InputReader = new Type1EnemyAI(player, type1Enemy);
+            Type1Enemy type1Enemy = new Type1Enemy(this.type1EnemyTextures, player);            
 
-
-            this.entities.Add(player);
             this.entities.Add(type1Enemy);
-            
+            this.entities.Add(player);
         }
 
         private void AddWorld()

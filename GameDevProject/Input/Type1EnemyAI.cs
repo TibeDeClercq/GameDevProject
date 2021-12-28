@@ -11,6 +11,9 @@ namespace GameDevProject.Input
         private Player player;
         private Type1Enemy enemy;
 
+        private const int MOVEMENT_LIMITER = 2;
+        private int timer = 0;
+
         public Type1EnemyAI(Player player, Type1Enemy enemy)
         {
             this.player = player;
@@ -23,15 +26,20 @@ namespace GameDevProject.Input
         {
             InputParameters inputParameters = new InputParameters();
 
-            switch (LocatePlayer(this.player, this.enemy))
+            if (timer >= MOVEMENT_LIMITER)
             {
-                case 1:
-                    inputParameters.DirectionInput.X -= 1;
-                    break;
-                case -1:
-                    inputParameters.DirectionInput.X += 1;
-                    break;
+                switch (LocatePlayer(this.player, this.enemy))
+                {
+                    case 1:
+                        inputParameters.DirectionInput.X -= 1;
+                        break;
+                    case -1:
+                        inputParameters.DirectionInput.X += 1;
+                        break;
+                }
+                timer = 0;
             }
+            timer++;                      
 
             return inputParameters;
         }

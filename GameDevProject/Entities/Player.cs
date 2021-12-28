@@ -20,6 +20,8 @@ namespace GameDevProject.Entities
 
         public AttackManager AttackManager;
 
+        public HealthManager HealthManager;
+
         private IPlayerState playerState;
 
         private const int IDLE_FRAMES = 2;
@@ -74,10 +76,12 @@ namespace GameDevProject.Entities
             this.MovementManager = new MovementManager();
             this.AttackManager = new AttackManager();
 
+            this.HealthManager = new HealthManager(1, this);
+
             this.CanJump = true;
 
             this.Position = new Vector2(40, 10);
-            this.MaxVelocity = new Vector2(2, 1); //horizontal , vertical
+            this.MaxVelocity = new Vector2(1, 1); //horizontal , vertical
             this.Acceleration = new Vector2(0, 0);
             this.HitboxRectangle = new Rectangle(0, 0, 45, 45);
             this.Velocity = new Vector2(0,0);
@@ -108,6 +112,7 @@ namespace GameDevProject.Entities
             this.Move(gameTime, world);
             this.Attack(gameTime);
             this.ChangeState();
+            HealthManager.Update(PhysicsManager.entities);
             //Update the animation
             this.playerState.Update(gameTime, animations);
         }
