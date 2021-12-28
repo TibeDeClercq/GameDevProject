@@ -40,19 +40,17 @@ namespace GameDevProject.Managers
                 
             }
 
-            //Debug.WriteLine($"acceleration? {movable.Acceleration.Y} | jumping? {movable.IsJumping} | Can jump? {movable.CanJump}");
-
             movable.Velocity += movable.Acceleration;
             movable.Position += movable.Velocity;
-            movable.HitboxRectangle = new Rectangle((int)movable.Position.X, (int)movable.Position.Y, movable.HitboxRectangle.Width, movable.HitboxRectangle.Height);
+            movable.HitboxRectangle = new Rectangle((int)movable.Position.X, (int)movable.Position.Y + 1, movable.HitboxRectangle.Width, movable.HitboxRectangle.Height);
 
-            //WriteDiagnostics(movable);
+            WriteDiagnostics(movable);
         }
 
         private void WriteDiagnostics(IMovable movable)
         {
-            Debug.WriteLine(movable.Velocity);
-            Debug.WriteLine(movable.Position);
+            //Debug.WriteLine($"a: {movable.Acceleration.Y} | v: {movable.Velocity} | jumping? {movable.IsJumping} | Can jump? {movable.CanJump}");
+            Debug.WriteLine($"jumping? {movable.IsJumping}");
         }
     }   
 }

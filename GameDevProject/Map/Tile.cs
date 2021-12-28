@@ -14,22 +14,16 @@ namespace GameDevProject.Map
         public Rectangle SourceRectangle { get; set; }
         public Rectangle HitboxRectangle { get; set;}
         public int Identifier { get; set; }
-        public bool IsCollidable { get; set; }
-        public bool IsFloor { get; set; }
-        public bool IsCeiling { get; set; } 
         public bool IsBackground { get; set; }
-        public bool IsLeftCollide { get; set; } //tibe code
-        public bool IsRightCollide { get; set; } //tibe code
-        public bool IsTopCollide { get; set; } //tibe code
-        public bool IsBottomCollide { get; set; } //tibe code
+        public bool IsLeftCollide { get; set; }
+        public bool IsRightCollide { get; set; }
+        public bool IsTopCollide { get; set; }
+        public bool IsBottomCollide { get; set; }
 
-        private int[] collidable = {8, 10, 11, 16, 18, 19, 24, 26, 27};
-        private int[] floors = { 0, 1, 2, 3, 24, 25, 26, 27, 28, 29, 30, 32, 33, 38, 39, 40, 41, 46, 47};
-        private int[] ceilings = { 16, 17, 18, 19, 24, 25, 26, 27};
-        private int[] leftCOllidable = { 8 }; //tibe code
-        private int[] rightCOllidable = { 10 }; //tibe code
-        private int[] topCollidable = { 1 }; //tibe code
-        private int[] bottomCollidable = { 17 }; //tibe code
+        private int[] leftCollidable = { 0, 3, 8, 11, 16, 19 };
+        private int[] rightCollidable = {2, 10, 11, 18, 19 };
+        private int[] topCollidable = { 0, 1, 2, 3 };
+        private int[] bottomCollidable = { 16, 17, 18, 19 };
 
         public Tile(Rectangle sourceRectangle, Vector2 position, int identifier)
         {
@@ -38,35 +32,22 @@ namespace GameDevProject.Map
             this.Position = position;
             this.Identifier = identifier;
 
-            if (Array.IndexOf(leftCOllidable, identifier) != -1) //tibe code
+            if (Array.IndexOf(leftCollidable, identifier) != -1)
             {
                 this.IsLeftCollide = true;
             }
-            if (Array.IndexOf(rightCOllidable, identifier) != -1) //tibe code
+            if (Array.IndexOf(rightCollidable, identifier) != -1)
             {
                 this.IsRightCollide = true;
             }
-            if (Array.IndexOf(topCollidable, identifier) != -1) //tibe code
+            if (Array.IndexOf(topCollidable, identifier) != -1)
             {
                 this.IsTopCollide = true;
             }
-            if (Array.IndexOf(bottomCollidable, identifier) != -1) //tibe code
+            if (Array.IndexOf(bottomCollidable, identifier) != -1)
             {
                 this.IsBottomCollide = true;
             }
-
-            //if (Array.IndexOf(collidable, identifier) != -1)
-            //{
-            //    this.IsCollidable = true;
-            //}
-            //else if (Array.IndexOf(floors, identifier) != -1)
-            //{
-            //    this.IsFloor = true;
-            //}
-            //else if (Array.IndexOf(ceilings, identifier) != -1)
-            //{
-            //    this.IsCeiling = true;
-            //}
             else
             {
                 this.IsBackground = true;

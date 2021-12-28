@@ -36,25 +36,7 @@ namespace GameDevProject.Map
             this.CreateRectangles(136, 136, 8, 8);
             this.AddTiles();
 
-            foreach (Tile tile in GetTiles())
-            {
-                if (tile.IsFloor)
-                {
-                    Debug.WriteLine($"tile {tile.Identifier} is a floor");
-                }
-                if (tile.IsCeiling)
-                {
-                    Debug.WriteLine($"tile {tile.Identifier} is a ceiling");
-                }
-                if (tile.IsBackground)
-                {
-                    Debug.WriteLine($"tile {tile.Identifier} is a background");
-                }
-            }
-            foreach(Tile tile in GetTiles())
-            {
-                Debug.WriteLine($"{tile.SourceRectangle.X}, {tile.SourceRectangle.Y}");
-            }
+            this.WriteDiagnostics();
         }
         #endregion
 
@@ -78,7 +60,6 @@ namespace GameDevProject.Map
             foreach (Tile tile in this.tiles)
             {
                 spriteBatch.Draw(tilesheet, tile.Position, tile.SourceRectangle, Color.White);
-                //spriteBatch.Draw(tilesheet, tile.Position, tile.SourceRectangle, Color.White, 0f, Vector2.Zero, 5.0f, SpriteEffects.None, 0f);
             }
         }
 
@@ -92,7 +73,6 @@ namespace GameDevProject.Map
                 for (int x = 0; x <= width - widthOfFrame; x += widthOfFrame)
                 {
                     this.tileRectangles.Add(new Rectangle(x, y, 16, 16));
-                    //tileTextures.Add(new Texture2D());
                 }
             }            
         }
@@ -115,6 +95,38 @@ namespace GameDevProject.Map
                 tileList.Add(tile);
             }
             return tileList;
+        }
+
+        private void WriteDiagnostics()
+        {
+            foreach (Tile tile in GetTiles())
+            {
+                if (tile.IsLeftCollide)
+                {
+                    Debug.WriteLine($"tile {tile.Identifier} is a floor");
+                }
+                if (tile.IsRightCollide)
+                {
+                    Debug.WriteLine($"tile {tile.Identifier} is a ceiling");
+                }
+                if (tile.IsBottomCollide)
+                {
+                    Debug.WriteLine($"tile {tile.Identifier} is a floor");
+                }
+                if (tile.IsTopCollide)
+                {
+                    Debug.WriteLine($"tile {tile.Identifier} is a ceiling");
+                }
+                if (tile.IsBackground)
+                {
+                    Debug.WriteLine($"tile {tile.Identifier} is a background");
+                }
+            }
+
+            foreach (Tile tile in GetTiles())
+            {
+                Debug.WriteLine($"{tile.SourceRectangle.X}, {tile.SourceRectangle.Y}");
+            }
         }
         #endregion
     }
