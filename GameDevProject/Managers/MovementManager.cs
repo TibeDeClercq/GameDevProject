@@ -11,6 +11,7 @@ namespace GameDevProject.Managers
 {
     class MovementManager
     {
+        #region Public methods
         public void Move(IMovable movable, GameTime gameTime, World world)
         {
             var input = movable.InputReader.ReadInput();
@@ -18,7 +19,7 @@ namespace GameDevProject.Managers
             movable.Velocity = new Vector2(0, 0);
             PhysicsManager.AddGravity(movable, world);
             PhysicsManager.AddJump(movable, world);
-            
+
             if (input.DirectionInput.X == -1)
             {
                 movable.SpriteEffects = SpriteEffects.FlipHorizontally;
@@ -37,7 +38,7 @@ namespace GameDevProject.Managers
                     movable.Acceleration = new Vector2(0, -2.7f); // power of the jump
                     movable.IsJumping = true;
                 }
-                
+
             }
 
             movable.Velocity += movable.Acceleration;
@@ -46,11 +47,14 @@ namespace GameDevProject.Managers
 
             WriteDiagnostics(movable);
         }
+        #endregion
 
+        #region Private methods
         private void WriteDiagnostics(IMovable movable)
         {
             //Debug.WriteLine($"a: {movable.Acceleration.Y} | v: {movable.Velocity} | jumping? {movable.IsJumping} | Can jump? {movable.CanJump}");
-            Debug.WriteLine($"jumping? {movable.IsJumping}");
+            //Debug.WriteLine($"jumping? {movable.IsJumping}");
         }
+        #endregion
     }   
 }
