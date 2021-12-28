@@ -11,43 +11,47 @@ namespace GameDevProject.Managers
 {
     class PhysicsManager
     {
-        private static bool canJump = true;
         public static List<Entity> entities;
         //https://stackoverflow.com/questions/43024877/xna-monogame-platformer-jumping-physics-and-collider-issue
 
         public static void MoveRight(IMovable movable, World world)
         {
-            //begin test Tibe
-            if (!IntersectsFromLeft(movable, world))
+            if (IntersectsFromLeft(movable, world))
+            {
+
+            }
+            else
             {
                 movable.Velocity = new Vector2(movable.MaxVelocity.X, movable.Velocity.Y);
             }
-            //einde test Tibe
-                        
         }
         public static void MoveLeft(IMovable movable, World world)
         {
-            //begin test Tibe
-            if (!IntersectsFromRight(movable, world))
+            if (IntersectsFromRight(movable, world))
+            {
+                
+            }
+            else
             {
                 movable.Velocity = new Vector2(-movable.MaxVelocity.X, movable.Velocity.Y);
             }
-            //einde test Tibe
-
         }
 
         public static void AddGravity(IMovable movable, World world)
         {
-            if(!IntersectsFromTop(movable, world))
-            {
-                movable.CanJump = false;
-                movable.Acceleration += new Vector2(0, 0.1f);
-            }
-            else
+            if (IntersectsFromTop(movable, world))
             {
                 movable.IsJumping = false;
                 movable.CanJump = true;
-                movable.Acceleration = Vector2.Zero;
+                if(movable.Acceleration.Y > 0)
+                {
+                    movable.Acceleration = Vector2.Zero;
+                }
+            }
+            else
+            {
+                movable.CanJump = false;
+                movable.Acceleration += new Vector2(0, 0.1f);
             }
         }
 
@@ -69,9 +73,13 @@ namespace GameDevProject.Managers
         {
             foreach (Tile tile in world.GetTiles())
             {
-                if (tile.IsLeftCollide && movable.HitboxRectangle.Intersects(tile.HitboxRectangle))
+                if (movable.HitboxRectangle.Intersects(tile.HitboxRectangle))
                 {
-                    return true;
+                    if (tile.IsLeftCollide && !MovableLowerThanTile(movable, tile))
+                    {
+                        Debug.WriteLine("Collided with a tile from the left");
+                        return true;
+                    }
                 }
             }
             return false;
@@ -81,10 +89,13 @@ namespace GameDevProject.Managers
         {
             foreach (Tile tile in world.GetTiles())
             {
-                if (tile.IsRightCollide && movable.HitboxRectangle.Intersects(tile.HitboxRectangle))
+                if (movable.HitboxRectangle.Intersects(tile.HitboxRectangle))
                 {
-                    Debug.WriteLine("Collided with a tile from the right");
-                    return true;
+                    if (tile.IsRightCollide && !MovableLowerThanTile(movable, tile))
+                    {
+                        Debug.WriteLine("Collided with a tile from the right");
+                        return true;
+                    }
                 }
             }
             return false;
@@ -94,9 +105,14 @@ namespace GameDevProject.Managers
         {
             foreach (Tile tile in world.GetTiles())
             {
-                if (tile.IsTopCollide && movable.HitboxRectangle.Intersects(tile.HitboxRectangle))
+                if (tile.IsTopCollide && movable.HitboxRectangle.Intersects(tile.HitboxRectangle) && MovableLowerThanTile(movable, tile))
                 {
-                    movable.Position = new Vector2(movable.HitboxRectangle.X, tile.HitboxRectangle.Y - movable.HitboxRectangle.Height + 1);
+                    //Debug.WriteLine("Collided with a tile from the top
+                    if(MovableLowerThanTile(movable, tile))
+                    {
+                        Debug.WriteLine("teleported");
+                        movable.Position = new Vector2(movable.HitboxRectangle.X, tile.HitboxRectangle.Y - movable.HitboxRectangle.Height);
+                    }
                     return true;
                 }
             }
@@ -109,8 +125,19 @@ namespace GameDevProject.Managers
             {
                 if (tile.IsBottomCollide && movable.HitboxRectangle.Intersects(tile.HitboxRectangle))
                 {
+                    Debug.WriteLine("Collided with a tile from the bottom");
                     return true;
                 }
+            }
+            return false;
+        }
+
+
+        private static bool MovableLowerThanTile(IMovable movable, Tile tile)
+        {
+            if(tile.HitboxRectangle.Y >= movable.HitboxRectangle.Y + movable.HitboxRectangle.Height - 3)
+            {
+                return true;
             }
             return false;
         }
