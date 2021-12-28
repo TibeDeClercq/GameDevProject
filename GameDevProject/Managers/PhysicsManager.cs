@@ -16,22 +16,14 @@ namespace GameDevProject.Managers
 
         public static void MoveRight(IMovable movable, World world)
         {
-            if (IntersectsFromLeft(movable, world))
-            {
-
-            }
-            else
+            if (!IntersectsFromLeft(movable, world))
             {
                 movable.Velocity = new Vector2(movable.MaxVelocity.X, movable.Velocity.Y);
             }
         }
         public static void MoveLeft(IMovable movable, World world)
         {
-            if (IntersectsFromRight(movable, world))
-            {
-                
-            }
-            else
+            if (!IntersectsFromRight(movable, world))
             {
                 movable.Velocity = new Vector2(-movable.MaxVelocity.X, movable.Velocity.Y);
             }
@@ -39,19 +31,19 @@ namespace GameDevProject.Managers
 
         public static void AddGravity(IMovable movable, World world)
         {
-            if (IntersectsFromTop(movable, world))
-            {
-                movable.IsJumping = false;
-                movable.CanJump = true;
-                if(movable.Acceleration.Y > 0)
-                {
-                    movable.Acceleration = Vector2.Zero;
-                }
-            }
-            else
+            if (!IntersectsFromTop(movable, world))
             {
                 movable.CanJump = false;
                 movable.Acceleration += new Vector2(0, 0.1f);
+            }
+            else
+            {
+                movable.IsJumping = false;
+                movable.CanJump = true;
+                if (movable.Acceleration.Y > 0)
+                {
+                    movable.Acceleration = Vector2.Zero;
+                }
             }
         }
 
@@ -77,7 +69,7 @@ namespace GameDevProject.Managers
                 {
                     if (tile.IsLeftCollide && !MovableLowerThanTile(movable, tile))
                     {
-                        Debug.WriteLine("Collided with a tile from the left");
+                        //Debug.WriteLine("Collided with a tile from the left");
                         return true;
                     }
                 }
@@ -93,7 +85,7 @@ namespace GameDevProject.Managers
                 {
                     if (tile.IsRightCollide && !MovableLowerThanTile(movable, tile))
                     {
-                        Debug.WriteLine("Collided with a tile from the right");
+                        //Debug.WriteLine("Collided with a tile from the right");
                         return true;
                     }
                 }
@@ -107,10 +99,10 @@ namespace GameDevProject.Managers
             {
                 if (tile.IsTopCollide && movable.HitboxRectangle.Intersects(tile.HitboxRectangle) && MovableLowerThanTile(movable, tile))
                 {
-                    //Debug.WriteLine("Collided with a tile from the top
+                    //Debug.WriteLine("Collided with a tile from the top");
                     if(MovableLowerThanTile(movable, tile))
                     {
-                        Debug.WriteLine("teleported");
+                        //Correct the position
                         movable.Position = new Vector2(movable.HitboxRectangle.X, tile.HitboxRectangle.Y - movable.HitboxRectangle.Height);
                     }
                     return true;
@@ -125,7 +117,7 @@ namespace GameDevProject.Managers
             {
                 if (tile.IsBottomCollide && movable.HitboxRectangle.Intersects(tile.HitboxRectangle))
                 {
-                    Debug.WriteLine("Collided with a tile from the bottom");
+                    //Debug.WriteLine("Collided with a tile from the bottom");
                     return true;
                 }
             }

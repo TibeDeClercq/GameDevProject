@@ -50,7 +50,7 @@ namespace GameDevProject.Managers
         private void WriteDiagnostics(IMovable movable)
         {
             //Debug.WriteLine($"a: {movable.Acceleration.Y} | v: {movable.Velocity} | jumping? {movable.IsJumping} | Can jump? {movable.CanJump}");
-            Debug.WriteLine($"jumping? {movable.IsJumping}");
+            //Debug.WriteLine($"jumping? {movable.IsJumping}");
         }
     }   
 }
