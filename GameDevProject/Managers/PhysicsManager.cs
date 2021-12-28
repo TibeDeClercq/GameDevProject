@@ -11,9 +11,11 @@ namespace GameDevProject.Managers
 {
     class PhysicsManager
     {
+        #region Public properties
         public static List<Entity> entities;
-        //https://stackoverflow.com/questions/43024877/xna-monogame-platformer-jumping-physics-and-collider-issue
+        #endregion
 
+        #region Public methods
         public static void MoveRight(IMovable movable, World world)
         {
             if (!IntersectsFromLeft(movable, world))
@@ -21,6 +23,7 @@ namespace GameDevProject.Managers
                 movable.Velocity = new Vector2(movable.MaxVelocity.X, movable.Velocity.Y);
             }
         }
+
         public static void MoveLeft(IMovable movable, World world)
         {
             if (!IntersectsFromRight(movable, world))
@@ -58,9 +61,11 @@ namespace GameDevProject.Managers
                     movable.Acceleration = Vector2.Zero;
                 }
             }
-            
-        }
 
+        }
+        #endregion
+
+        #region Private methods
         private static bool IntersectsFromLeft(IMovable movable, World world)
         {
             foreach (Tile tile in world.GetTiles())
@@ -100,7 +105,7 @@ namespace GameDevProject.Managers
                 if (tile.IsTopCollide && movable.HitboxRectangle.Intersects(tile.HitboxRectangle) && MovableLowerThanTile(movable, tile))
                 {
                     //Debug.WriteLine("Collided with a tile from the top");
-                    if(MovableLowerThanTile(movable, tile))
+                    if (MovableLowerThanTile(movable, tile))
                     {
                         //Correct the position
                         movable.Position = new Vector2(movable.HitboxRectangle.X, tile.HitboxRectangle.Y - movable.HitboxRectangle.Height);
@@ -124,14 +129,14 @@ namespace GameDevProject.Managers
             return false;
         }
 
-
         private static bool MovableLowerThanTile(IMovable movable, Tile tile)
         {
-            if(tile.HitboxRectangle.Y >= movable.HitboxRectangle.Y + movable.HitboxRectangle.Height - 3)
+            if (tile.HitboxRectangle.Y >= movable.HitboxRectangle.Y + movable.HitboxRectangle.Height - 3)
             {
                 return true;
             }
             return false;
         }
+        #endregion
     }
 }
