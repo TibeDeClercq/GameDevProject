@@ -95,11 +95,11 @@ namespace GameDevProject
         {
             string[,] test = {
                                 { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "C2", "C2", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
                                 { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
                                 { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
-                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
-                                { "G1", "G1", "G1", "G1", "G1", "G1","B1", "G1", "A2", "G1", "G1", "G1"},
-                                { "G1", "G1", "G1", "G1", "G1", "G1","B1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","B1", "B3", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","B1", "B3", "G1", "G1", "G1", "G1"},
                                 { "A2", "A2", "A2", "A2", "A2", "A2","A2", "A2", "A2", "A2", "A2", "A2"},
                                 { "E3", "E3", "E3", "E3", "E3", "E3","E3", "E3", "E3", "E3", "E3", "E3"}
                              };
@@ -243,7 +243,7 @@ namespace GameDevProject
             foreach (IHitbox tile in world1.GetTiles())
             {
                 Tile test = (Tile)tile;
-                if (test.IsTopCollide)
+                if (test.IsTopCollide || test.IsRightCollide || test.IsLeftCollide || test.IsBottomCollide)
                 {
                     items.Add(tile);
                 }

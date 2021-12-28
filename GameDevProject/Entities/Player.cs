@@ -36,13 +36,14 @@ namespace GameDevProject.Entities
         #endregion
 
         #region IMovable implementation
+        public bool CanJump { get; set; }
+        public bool IsJumping { get; set; }
+
         public Vector2 MaxVelocity { get; set; }
         public IInputReader InputReader { get; set; }
-        public float MaxAcceleration { get; set; }
-        public float MaxJumpHeight { get; set; }
         public SpriteEffects SpriteEffects { get; set; }
         public Vector2 Velocity { get; set; }
-        public float Acceleration { get; set; }
+        public Vector2 Acceleration { get; set; }
         public Rectangle HitboxRectangle { get; set; }
 
         public void Move(GameTime gameTime, World world)
@@ -72,13 +73,13 @@ namespace GameDevProject.Entities
             this.InputReader = inputReader;
             this.MovementManager = new MovementManager();
             this.AttackManager = new AttackManager();
-            
+
+            this.CanJump = true;
+
             this.Position = new Vector2(40, 10);
             this.MaxVelocity = new Vector2(1, 1); //horizontal , vertical
-            this.MaxAcceleration = 5;
-            this.MaxJumpHeight = 3;
-            this.Acceleration = 9.81f;
-            this.HitboxRectangle = new Rectangle(0, 0, 45, 46);
+            this.Acceleration = new Vector2(0, 0);
+            this.HitboxRectangle = new Rectangle(0, 0, 45, 45);
             this.Velocity = new Vector2(0,0);
 
             this.AttackCooldown = TimeSpan.FromSeconds(5);

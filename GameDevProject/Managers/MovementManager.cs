@@ -15,10 +15,9 @@ namespace GameDevProject.Managers
         {
             var input = movable.InputReader.ReadInput();
 
-            PhysicsManager.AddGravity(movable, world, gameTime);
-            
-            //Niet de beste oplossing
-            movable.Velocity = new Vector2(0, movable.Velocity.Y);
+            movable.Velocity = new Vector2(0, 0);
+            PhysicsManager.AddGravity(movable, world);
+            PhysicsManager.AddJump(movable, world);
 
             if (input.DirectionInput.X == -1)
             {
@@ -30,11 +29,20 @@ namespace GameDevProject.Managers
                 movable.SpriteEffects = SpriteEffects.None;
                 PhysicsManager.MoveRight(movable, world);
             }
+
             if (input.DirectionInput.Y == 1)
             {
-                PhysicsManager.Jump(movable, world, gameTime);
+                if (movable.CanJump)
+                {
+                    movable.Acceleration = new Vector2(0, -2.7f); // power of the jump
+                    movable.IsJumping = true;
+                }
+                
             }
 
+            //Debug.WriteLine($"acceleration? {movable.Acceleration.Y} | jumping? {movable.IsJumping} | Can jump? {movable.CanJump}");
+
+            movable.Velocity += movable.Acceleration;
             movable.Position += movable.Velocity;
             movable.HitboxRectangle = new Rectangle((int)movable.Position.X, (int)movable.Position.Y, movable.HitboxRectangle.Width, movable.HitboxRectangle.Height);
 

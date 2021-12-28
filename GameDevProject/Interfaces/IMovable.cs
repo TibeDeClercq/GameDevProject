@@ -9,12 +9,13 @@ namespace GameDevProject.Interfaces
 {
     interface IMovable : IHitbox
     {
+        public bool CanJump { get; set; }
+        public bool IsJumping { get; set; }
+
         public Vector2 Position { get; set; }
         public Vector2 Velocity { get; set; }
         public Vector2 MaxVelocity { get; set; }
-        public float Acceleration { get; set; }
-        public float MaxAcceleration { get; set; }
-        public float MaxJumpHeight { get; set; }
+        public Vector2 Acceleration { get; set; }
         public IInputReader InputReader { get; set; }
         public SpriteEffects SpriteEffects { get; set; }
         
