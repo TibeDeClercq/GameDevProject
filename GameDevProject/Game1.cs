@@ -214,7 +214,10 @@ namespace GameDevProject
                 spriteBatch.Draw(hitbox.Texture, hitbox.Position, Color.White);
             }
         }
+        #endregion
 
+        //in hitbox manager??
+        #region Hitbox stuff
         private void GetHitboxes()
         {
             this.hitboxes = new List<Hitbox>();
