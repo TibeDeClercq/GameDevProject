@@ -23,6 +23,7 @@ namespace GameDevProject
         private List<Entity> entities;
         //private Player player;
         private List<Texture2D> playerTextures;
+        private List<Texture2D> type1EnemyTextures;
 
         private World world1;
         private Texture2D worldTileset;
@@ -88,20 +89,27 @@ namespace GameDevProject
         {
             this.entities = new List<Entity>();
 
-            this.entities.Add(new Player(this.playerTextures, new KeyboardReader()));
+            Player player = new Player(this.playerTextures, new KeyboardReader());
+            Type1Enemy type1Enemy = new Type1Enemy(this.type1EnemyTextures);
+            type1Enemy.InputReader = new Type1EnemyAI(player, type1Enemy);
+
+
+            this.entities.Add(player);
+            this.entities.Add(type1Enemy);
+            
         }
 
         private void AddWorld()
         {
             string[,] test = {
-                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
-                                { "C2", "C2", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
-                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
-                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
-                                { "G1", "G1", "G1", "G1", "G1", "G1","B1", "B3", "G1", "G1", "G1", "G1"},
-                                { "G1", "G1", "G1", "G1", "G1", "G1","B1", "B3", "G1", "G1", "G1", "G1"},
-                                { "A2", "A2", "A2", "A2", "A2", "A2","A2", "A2", "A2", "A2", "A2", "A2"},
-                                { "E3", "E3", "E3", "E3", "E3", "E3","E3", "E3", "E3", "E3", "E3", "E3"}
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "C2", "C2", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "A2", "A2", "A2", "A2", "A2", "A2","A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2","A2", "A2", "A2", "A2", "A2", "A2"},
+                                { "E3", "E3", "E3", "E3", "E3", "E3","E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3","E3", "E3", "E3", "E3", "E3", "E3"}
                              };
 
             this.world1 = new World(this.worldTileset, test);
@@ -126,6 +134,7 @@ namespace GameDevProject
         private void AddTextures()
         {
             this.AddPlayerTextures();
+            this.AddEnemyTextures();
             this.AddWorldTextures();
         }
 
@@ -138,6 +147,13 @@ namespace GameDevProject
             this.playerTextures.Add(this.Content.Load<Texture2D>("SpritesheetsPlayer/PlayerJump"));
             this.playerTextures.Add(this.Content.Load<Texture2D>("SpritesheetsPlayer/PlayerSpin"));
             this.playerTextures.Add(this.Content.Load<Texture2D>("SpritesheetsPlayer/PlayerSleep"));
+        }
+
+        private void AddEnemyTextures()
+        {
+            this.type1EnemyTextures = new List<Texture2D>();
+
+            this.type1EnemyTextures.Add(this.Content.Load<Texture2D>("SpritesheetsPlayer/PlayerIdle"));
         }
 
         private void AddWorldTextures()

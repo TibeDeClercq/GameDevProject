@@ -18,7 +18,7 @@ namespace GameDevProject.Managers
             movable.Velocity = new Vector2(0, 0);
             PhysicsManager.AddGravity(movable, world);
             PhysicsManager.AddJump(movable, world);
-
+            
             if (input.DirectionInput.X == -1)
             {
                 movable.SpriteEffects = SpriteEffects.FlipHorizontally;
