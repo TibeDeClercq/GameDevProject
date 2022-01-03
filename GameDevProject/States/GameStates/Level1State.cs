@@ -46,13 +46,14 @@ namespace GameDevProject.States.GameStates
 
         private void ClearDeadEntities(List<Level> levels)
         {
-            List<Entity> entities = new List<Entity>(levels[0].entities);
+            var entities = new List<Entity>(levels[0].entities);
 
             foreach (Entity entity in entities)
             {
                 if(entity.Health <= 0)
                 {
                     levels[0].entities.Remove(entity);
+                    levels[0].collisionManager.entities.Remove(entity);
                 }
             }
         }
