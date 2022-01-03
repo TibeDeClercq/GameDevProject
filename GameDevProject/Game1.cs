@@ -14,6 +14,7 @@ using GameDevProject.States.GameStates;
 
 namespace GameDevProject
 {
+    public enum State { MainMenu, Level1}
     public class Game1 : Game
     {
         private RenderTarget2D gameRenderTarget;
@@ -22,19 +23,20 @@ namespace GameDevProject
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
 
-        //private List<Entity> entities;
-        //private Player player;
         private List<Texture2D> playerTextures;
         private List<Texture2D> type1EnemyTextures;
 
-        //private World world1;
         private List<Level> levels;
         private Texture2D worldTileset;
 
+        private SpriteFont font;
+
+        //hitbox stuff
         private List<IHitbox> items;
         private List<Hitbox> hitboxes;
 
         private IGameState gameState;
+        public static State State;
 
         public Game1()
         {
@@ -50,6 +52,8 @@ namespace GameDevProject
         {
             base.Initialize();
 
+            this.gameState = new MainMenuState(this.font);
+
             this.CreateLevels();
 
             this.SetRenderer();
@@ -57,16 +61,16 @@ namespace GameDevProject
             PhysicsManager.entities = this.levels[0].entities; //aanpassen per level
             //PhysicsManager.tiles = this.world1. GETTILES
 
-            this.hitboxes = new List<Hitbox>();
-
-
-            this.gameState = new Level1State();
+            this.hitboxes = new List<Hitbox>(); //temp
         }
 
         protected override void LoadContent()
         {
             this.AddSpriteBatch();
             this.AddTextures();
+
+            //add font
+            this.font = Content.Load<SpriteFont>("SpriteFonts/font");
             // TODO: use this.Content to load your game content here
         }
 
@@ -75,6 +79,20 @@ namespace GameDevProject
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
                 this.Exit();
+            }
+
+            switch (Game1.State)
+            {
+                case State.MainMenu:
+                    this.gameState = new MainMenuState(font);
+                    this.SetRenderer();
+                    break;
+                case State.Level1:
+                    this.gameState = new Level1State();
+                    this.SetRenderer();
+                    break;
+                default:
+                    break;
             }
 
             //Update depending on gamestate
@@ -96,8 +114,6 @@ namespace GameDevProject
         private void CreateLevels()
         {
             this.levels = new List<Level>();
-            this.levels.Add(new Level());
-            this.levels.Add(new Level());
 
             this.CreateLevel1();
             this.CreateLevel2();
@@ -105,15 +121,15 @@ namespace GameDevProject
 
         private void CreateLevel1()
         {
-            this.levels[0].entities = new List<Entity>();
+            List<Entity> entities = new List<Entity>();
 
             Player player = new Player(this.playerTextures, new KeyboardReader());
             Type1Enemy type1Enemy = new Type1Enemy(this.type1EnemyTextures, player);
 
-            this.levels[0].entities.Add(type1Enemy);
-            this.levels[0].entities.Add(player);
+            entities.Add(type1Enemy);
+            entities.Add(player);
 
-            string[,] test = {
+            string[,] map = {
                                 { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
                                 { "C2", "C2", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
                                 { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
@@ -124,20 +140,39 @@ namespace GameDevProject
                                 { "E3", "E3", "E3", "E3", "E3", "E3","E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3","E3", "E3", "E3", "E3", "E3", "E3"}
                              };
 
-            this.levels[0].world = new World(this.worldTileset, test);
+            this.levels.Add(new Level(this.worldTileset, entities, map));
         }
 
         private void CreateLevel2()
         {
+            List<Entity> entities = new List<Entity>();
 
+            Player player = new Player(this.playerTextures, new KeyboardReader());
+            Type1Enemy type1Enemy = new Type1Enemy(this.type1EnemyTextures, player);
+
+            entities.Add(type1Enemy);
+            entities.Add(player);
+
+            string[,] map = {
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "C2", "C2", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "A2", "A2", "A2", "A2", "A2", "A2","A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2","A2", "A2", "A2", "A2", "A2", "A2"},
+                                { "E3", "E3", "E3", "E3", "E3", "E3","E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3","E3", "E3", "E3", "E3", "E3", "E3"}
+                             };
+
+            this.levels.Add(new Level(this.worldTileset, entities, map));
         }
 
         private void SetRenderer() //aanpassen per wereld
         {
-            this.gameRenderTarget = new RenderTarget2D(this.GraphicsDevice, this.levels[0].world.GetWorldWidth(), this.levels[0].world.GetWorldHeight());
+            this.gameRenderTarget = new RenderTarget2D(this.GraphicsDevice, this.gameState.GetWindowWidth(levels), this.gameState.GetWindowHeight(levels));
 
-            this.graphics.PreferredBackBufferHeight = this.scale * this.levels[0].world.GetWorldHeight(); //getWorldHeight
-            this.graphics.PreferredBackBufferWidth = this.scale * this.levels[0].world.GetWorldWidth(); //getWorldWidth
+            this.graphics.PreferredBackBufferHeight = this.scale * this.gameState.GetWindowHeight(this.levels);
+            this.graphics.PreferredBackBufferWidth = this.scale * this.gameState.GetWindowWidth(this.levels);
             this.graphics.ApplyChanges();
         }
         #endregion
@@ -193,7 +228,7 @@ namespace GameDevProject
             //Draw world and entities depending on gamestate
             this.gameState.Draw(this.levels, this.spriteBatch);
 
-            this.DrawHitboxes();
+            //this.DrawHitboxes();
 
             this.spriteBatch.End();
         }
@@ -202,7 +237,7 @@ namespace GameDevProject
         {
             this.GraphicsDevice.SetRenderTarget(null);
             this.spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-            this.spriteBatch.Draw(this.gameRenderTarget, new Rectangle(0, 0, this.scale * this.levels[0].world.GetWorldWidth(), this.scale * this.levels[0].world.GetWorldHeight()), Color.White);
+            this.spriteBatch.Draw(this.gameRenderTarget, new Rectangle(0, 0, this.scale * this.gameState.GetWindowWidth(this.levels), this.scale * this.gameState.GetWindowHeight(this.levels)), Color.White);
             
             this.spriteBatch.End();
         }

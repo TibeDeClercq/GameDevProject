@@ -13,6 +13,13 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin SpriteFonts/font.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:SpriteFonts/font.spritefont
+
 #begin SpriteSheetsPlayer/PlayerIdle.png
 /importer:TextureImporter
 /processor:TextureProcessor
