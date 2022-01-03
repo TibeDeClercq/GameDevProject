@@ -58,8 +58,6 @@ namespace GameDevProject
             this.CreateLevels();
 
             this.SetRenderer();
-
-            PhysicsManager.entities = this.levels[0].entities; //aanpassen per level
             //PhysicsManager.tiles = this.world1. GETTILES
 
             this.hitboxes = new List<Hitbox>(); //temp
@@ -143,7 +141,7 @@ namespace GameDevProject
             List<Entity> entities = new List<Entity>();
 
             Player player = new Player(this.playerTextures, new KeyboardReader());
-            Type1Enemy type1Enemy = new Type1Enemy(this.type1EnemyTextures, player);
+            Type1Enemy type1Enemy = new Type1Enemy(this.type1EnemyTextures, player);            
 
             entities.Add(type1Enemy);
             entities.Add(player);
@@ -159,7 +157,9 @@ namespace GameDevProject
                                 { "E3", "E3", "E3", "E3", "E3", "E3","E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3","E3", "E3", "E3", "E3", "E3", "E3"}
                              };
 
-            this.levels.Add(new Level(this.worldTileset, entities, map));
+            HealthManager healthManager = new HealthManager();
+            EntityCollisionManager collisionManager = new EntityCollisionManager(entities, player);
+            this.levels.Add(new Level(this.worldTileset, entities, map, healthManager, collisionManager));
         }
 
         private void CreateLevel2()
@@ -183,7 +183,9 @@ namespace GameDevProject
                                 { "E3", "E3", "E3", "E3", "E3", "E3","E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3","E3", "E3", "E3", "E3", "E3", "E3"}
                              };
 
-            this.levels.Add(new Level(this.worldTileset, entities, map));
+            HealthManager healthManager = new HealthManager();
+            EntityCollisionManager collisionManager = new EntityCollisionManager(entities, player);
+            this.levels.Add(new Level(this.worldTileset, entities, map, healthManager, collisionManager));
         }
 
         private void SetRenderer() //aanpassen per wereld

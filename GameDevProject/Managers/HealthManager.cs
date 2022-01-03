@@ -9,34 +9,27 @@ namespace GameDevProject.Managers
 {
     class HealthManager
     {
-        private int health = 1;
-        private IMovable entity;
-
-        public HealthManager(int health, IMovable entity)
+        public void UpdateHealth(EntityCollisionManager collisionManager)
         {
-            this.health = health;
-            this.entity = entity;
-        }
+            Entity entity = collisionManager.CheckCollision();
+            Player player = collisionManager.player as Player;
 
-        public void Update(List<Entity> entities) // in een gamemanager dat alle entities bijhoudt?
-        {            
-            foreach (IMovable other in entities)
+            if (entity != null)
             {
-                if (IsAttackedBy(other) && entity != other)
+                bool collidesFromTop = collisionManager.CheckCollisionFromTop(entity);
+
+                if (entity.Health > 0 && player.IsAttacking)
                 {
-                    health--;
+                    entity.Health--;
+                }
+                else
+                {
+                    if (player.Health > 0 && !player.IsAttacking)
+                    {
+                        player.Health--;
+                    }
                 }
             }
-            //Debug.WriteLine($"Health: {health}");            
-        }
-
-        public bool IsAttackedBy(IMovable attacker)
-        {
-            if (entity.HitboxRectangle.Intersects(attacker.HitboxRectangle))
-            {
-                return true;
-            }
-            return false;
         }
     }
 }

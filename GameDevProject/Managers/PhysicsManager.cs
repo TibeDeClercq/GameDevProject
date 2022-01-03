@@ -11,10 +11,6 @@ namespace GameDevProject.Managers
 {
     class PhysicsManager
     {
-        #region Public properties
-        public static List<Entity> entities;
-        #endregion
-
         #region Public methods
         public static void MoveRight(IMovable movable, World world)
         {
