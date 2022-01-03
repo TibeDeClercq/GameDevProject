@@ -52,8 +52,8 @@ namespace GameDevProject
         {
             base.Initialize();
 
-            Game1.State = State.GameOver;
-            this.gameState = new GameOverState(font);
+            Game1.State = State.MainMenu;
+            this.gameState = new MainMenuState(font);
 
             this.CreateLevels();
 
@@ -254,7 +254,7 @@ namespace GameDevProject
             //Draw world and entities depending on gamestate
             this.gameState.Draw(this.levels, this.spriteBatch);
 
-            //this.DrawHitboxes();
+            this.DrawHitboxes();
 
             this.spriteBatch.End();
         }
