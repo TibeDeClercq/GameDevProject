@@ -6,19 +6,25 @@ using System.Text;
 
 namespace GameDevProject.Managers
 {
-    static class EntityCollisionManager
+    class EntityCollisionManager
     {
-        public static List<Entity> Entities;
-        public static Entity Player;
+        private  List<Entity> entities;
+        public  Entity player;
 
-        public static Entity CheckCollision()
+        public EntityCollisionManager(List<Entity> entities, Entity player)
         {
-            foreach (Entity entity in Entities)
+            this.entities = entities;
+            this.player = player;
+        }
+
+        public  Entity CheckCollision()
+        {
+            foreach (Entity entity in entities)
             {
                 var movableEntity = entity as IMovable;
-                var movablePlayer = Player as IMovable;
+                var movablePlayer = player as IMovable;
 
-                if (movableEntity.HitboxRectangle.Intersects(movablePlayer.HitboxRectangle) && entity != Player)
+                if (movableEntity.HitboxRectangle.Intersects(movablePlayer.HitboxRectangle) && entity != player)
                 {
                     return entity;
                 }                
@@ -26,7 +32,7 @@ namespace GameDevProject.Managers
             return null;
         }
 
-        public static bool CheckCollisionFromTop(Entity entity)
+        public  bool CheckCollisionFromTop(Entity entity)
         {
             return true;
         }

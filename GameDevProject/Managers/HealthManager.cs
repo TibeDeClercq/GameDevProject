@@ -7,16 +7,16 @@ using System.Text;
 
 namespace GameDevProject.Managers
 {
-    static class HealthManager
+    class HealthManager
     {
-        public static void UpdateHealth()
+        public void UpdateHealth(EntityCollisionManager collisionManager)
         {
-            Entity entity = EntityCollisionManager.CheckCollision();
-            Player player = EntityCollisionManager.Player as Player;
+            Entity entity = collisionManager.CheckCollision();
+            Player player = collisionManager.player as Player;
 
             if (entity != null)
             {
-                bool collidesFromTop = EntityCollisionManager.CheckCollisionFromTop(entity);
+                bool collidesFromTop = collisionManager.CheckCollisionFromTop(entity);
 
                 if (entity.Health > 0 && player.IsAttacking)
                 {
@@ -24,7 +24,7 @@ namespace GameDevProject.Managers
                 }
                 else
                 {
-                    if (player.Health > 0)
+                    if (player.Health > 0 && !player.IsAttacking)
                     {
                         player.Health--;
                     }
