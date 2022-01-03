@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 
 using GameDevProject.Entities;
-using GameDevProject.Input;
 using GameDevProject.Interfaces;
 using GameDevProject.Levels;
-using GameDevProject.Map;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -14,6 +12,14 @@ namespace GameDevProject.States.GameStates
 {
     class Level1State : IGameState
     {
+        public void Update(List<Level> levels, GameTime gameTime)
+        {
+            foreach (Entity entity in levels[0].entities)
+            {
+                entity.Update(gameTime, levels[0].world);
+            }
+        }
+
         public void Draw(List<Level> levels, SpriteBatch spriteBatch)
         {
             levels[0].world.Draw(spriteBatch);
@@ -23,13 +29,15 @@ namespace GameDevProject.States.GameStates
                 entity.Draw(spriteBatch);
             }
         }
-        public void Update(List<Level> levels, GameTime gameTime)
+
+        public int GetWindowHeight(List<Level> levels)
         {
-            foreach (Entity entity in levels[0].entities)
-            {
-                entity.Update(gameTime, levels[0].world);
-            }
+            return levels[0].world.GetWorldHeight(); //getWorldHeight
         }
 
+        public int GetWindowWidth(List<Level> levels)
+        {
+            return levels[0].world.GetWorldWidth(); //getWorldWidth
+        }
     }
 }
