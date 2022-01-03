@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using GameDevProject.Managers;
 using GameDevProject.Interfaces;
 using System.Diagnostics;
+using GameDevProject.Levels;
+using GameDevProject.States.GameStates;
 
 namespace GameDevProject
 {
@@ -20,16 +22,19 @@ namespace GameDevProject
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
 
-        private List<Entity> entities;
+        //private List<Entity> entities;
         //private Player player;
         private List<Texture2D> playerTextures;
         private List<Texture2D> type1EnemyTextures;
 
-        private World world1;
+        //private World world1;
+        private List<Level> levels;
         private Texture2D worldTileset;
 
         private List<IHitbox> items;
         private List<Hitbox> hitboxes;
+
+        private IGameState gameState;
 
         public Game1()
         {
@@ -45,14 +50,17 @@ namespace GameDevProject
         {
             base.Initialize();
 
-            this.AddEntities();
-            this.AddWorld();
+            this.CreateLevels();
+
             this.SetRenderer();
 
-            PhysicsManager.entities = this.entities;
+            PhysicsManager.entities = this.levels[0].entities; //aanpassen per level
             //PhysicsManager.tiles = this.world1. GETTILES
 
             this.hitboxes = new List<Hitbox>();
+
+
+            this.gameState = new Level1State();
         }
 
         protected override void LoadContent()
@@ -69,8 +77,8 @@ namespace GameDevProject
                 this.Exit();
             }
 
-            //Update entities
-            this.UpdateEntities(gameTime);
+            //Update depending on gamestate
+            this.gameState.Update(this.levels, gameTime);
 
             base.Update(gameTime);
         }
@@ -85,19 +93,26 @@ namespace GameDevProject
         }
 
         #region Initialize
-        private void AddEntities()
+        private void CreateLevels()
         {
-            this.entities = new List<Entity>();
+            this.levels = new List<Level>();
+            this.levels.Add(new Level());
+            this.levels.Add(new Level());
 
-            Player player = new Player(this.playerTextures, new KeyboardReader());
-            Type1Enemy type1Enemy = new Type1Enemy(this.type1EnemyTextures, player);            
-
-            this.entities.Add(type1Enemy);
-            this.entities.Add(player);
+            this.CreateLevel1();
+            this.CreateLevel2();
         }
 
-        private void AddWorld()
+        private void CreateLevel1()
         {
+            this.levels[0].entities = new List<Entity>();
+
+            Player player = new Player(this.playerTextures, new KeyboardReader());
+            Type1Enemy type1Enemy = new Type1Enemy(this.type1EnemyTextures, player);
+
+            this.levels[0].entities.Add(type1Enemy);
+            this.levels[0].entities.Add(player);
+
             string[,] test = {
                                 { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
                                 { "C2", "C2", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
@@ -109,15 +124,20 @@ namespace GameDevProject
                                 { "E3", "E3", "E3", "E3", "E3", "E3","E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3","E3", "E3", "E3", "E3", "E3", "E3"}
                              };
 
-            this.world1 = new World(this.worldTileset, test);
+            this.levels[0].world = new World(this.worldTileset, test);
         }
 
-        private void SetRenderer()
+        private void CreateLevel2()
         {
-            this.gameRenderTarget = new RenderTarget2D(this.GraphicsDevice, this.world1.GetWorldWidth(), this.world1.GetWorldHeight());
 
-            this.graphics.PreferredBackBufferHeight = this.scale * this.world1.GetWorldHeight(); //getWorldHeight
-            this.graphics.PreferredBackBufferWidth = this.scale * this.world1.GetWorldWidth(); //getWorldWidth
+        }
+
+        private void SetRenderer() //aanpassen per wereld
+        {
+            this.gameRenderTarget = new RenderTarget2D(this.GraphicsDevice, this.levels[0].world.GetWorldWidth(), this.levels[0].world.GetWorldHeight());
+
+            this.graphics.PreferredBackBufferHeight = this.scale * this.levels[0].world.GetWorldHeight(); //getWorldHeight
+            this.graphics.PreferredBackBufferWidth = this.scale * this.levels[0].world.GetWorldWidth(); //getWorldWidth
             this.graphics.ApplyChanges();
         }
         #endregion
@@ -160,13 +180,7 @@ namespace GameDevProject
         #endregion
 
         #region Update
-        private void UpdateEntities(GameTime gameTime)
-        {
-            foreach (Entity entity in this.entities)
-            {
-                entity.Update(gameTime, this.world1);
-            }
-        }
+
         #endregion
 
         #region Draw
@@ -175,10 +189,9 @@ namespace GameDevProject
             this.GraphicsDevice.SetRenderTarget(this.gameRenderTarget);
             this.GraphicsDevice.Clear(Color.CornflowerBlue);
             this.spriteBatch.Begin();
-            //Draw world
-            this.world1.Draw(this.spriteBatch);
-            //Draw entities
-            this.DrawEntities();
+
+            //Draw world and entities depending on gamestate
+            this.gameState.Draw(this.levels, this.spriteBatch);
 
             this.DrawHitboxes();
 
@@ -189,19 +202,13 @@ namespace GameDevProject
         {
             this.GraphicsDevice.SetRenderTarget(null);
             this.spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-            this.spriteBatch.Draw(this.gameRenderTarget, new Rectangle(0, 0, this.scale * this.world1.GetWorldWidth(), this.scale * this.world1.GetWorldHeight()), Color.White);
+            this.spriteBatch.Draw(this.gameRenderTarget, new Rectangle(0, 0, this.scale * this.levels[0].world.GetWorldWidth(), this.scale * this.levels[0].world.GetWorldHeight()), Color.White);
             
             this.spriteBatch.End();
         }
 
-        private void DrawEntities()
-        {
-            foreach (Entity entity in this.entities)
-            {
-                entity.Draw(this.spriteBatch);
-            }
-        }
 
+        //in hitbox thingie
         private void DrawHitboxes()
         {
             this.GetHitboxes();
@@ -252,11 +259,11 @@ namespace GameDevProject
 
         public void AddWantedHitboxes()
         {
-            foreach (IHitbox entity in entities)
+            foreach (IHitbox entity in levels[0].entities)
             {
                 items.Add(entity);
             }
-            foreach (IHitbox tile in world1.GetTiles())
+            foreach (IHitbox tile in levels[0].world.GetTiles())
             {
                 Tile test = (Tile)tile;
                 if (test.IsTopCollide || test.IsRightCollide || test.IsLeftCollide || test.IsBottomCollide)
