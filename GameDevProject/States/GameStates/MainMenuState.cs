@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 using GameDevProject.Entities;
@@ -18,24 +19,42 @@ namespace GameDevProject.States.GameStates
 
         private List<SelectLevelButton> buttons;
 
+        public bool CanClick;
         public MainMenuState(SpriteFont font)
         {
             this.font = font;
 
             this.buttons = new List<SelectLevelButton>();
-            this.buttons.Add(new SelectLevelButton(new Vector2(20, 50), new Vector2(20, 10), "Level 1"));
-            this.buttons.Add(new SelectLevelButton(new Vector2(120, 50), new Vector2(20, 10), "Level 2"));
-
-            
+            this.buttons.Add(new SelectLevelButton(new Vector2(20, 50), new Vector2(45, 10), "Level 1"));
+            this.buttons.Add(new SelectLevelButton(new Vector2(120, 50), new Vector2(45, 10), "Level 2"));
         }
         public void Update(List<Level> levels, GameTime gameTime)
         {
-            KeyboardState state = Keyboard.GetState();
-            if (state.IsKeyDown(Keys.Enter))
+            MouseState mouse = Mouse.GetState();
+            if (mouse.LeftButton == ButtonState.Released)
             {
-                Game1.State = State.Level1;
+                CanClick = true;
             }
-            //throw new NotImplementedException();
+            foreach (SelectLevelButton button in buttons)
+            {
+                if (mouse.X / Game1.scale >= button.Position.X && mouse.X / Game1.scale <= button.Position.X + button.Size.X)
+                {
+                    if (mouse.Y / Game1.scale >= button.Position.Y && mouse.Y / Game1.scale <= button.Position.Y + button.Size.Y)
+                    {
+                        if(mouse.LeftButton == ButtonState.Pressed && CanClick)
+                        {
+                            if(button == buttons[0])
+                            {
+                                Game1.State = State.Level1;
+                            }
+                            else if (button == buttons[1])
+                            {
+                                Game1.State = State.Level2;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         public void Draw(List<Level> levels, SpriteBatch spriteBatch)

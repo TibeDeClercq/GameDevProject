@@ -14,11 +14,11 @@ using GameDevProject.States.GameStates;
 
 namespace GameDevProject
 {
-    public enum State { MainMenu, Level1}
+    public enum State { MainMenu, Level1, Level2, GameOver}
     public class Game1 : Game
     {
         private RenderTarget2D gameRenderTarget;
-        private int scale = 3;
+        public static int scale = 3;
 
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
@@ -52,7 +52,8 @@ namespace GameDevProject
         {
             base.Initialize();
 
-            this.gameState = new MainMenuState(this.font);
+            Game1.State = State.GameOver;
+            this.gameState = new GameOverState(font);
 
             this.CreateLevels();
 
@@ -68,9 +69,7 @@ namespace GameDevProject
         {
             this.AddSpriteBatch();
             this.AddTextures();
-
-            //add font
-            this.font = Content.Load<SpriteFont>("SpriteFonts/font");
+            this.AddFont();
             // TODO: use this.Content to load your game content here
         }
 
@@ -84,12 +83,32 @@ namespace GameDevProject
             switch (Game1.State)
             {
                 case State.MainMenu:
-                    this.gameState = new MainMenuState(font);
-                    this.SetRenderer();
+                    if(this.gameState.GetType() != typeof(MainMenuState))
+                    {
+                        this.gameState = new MainMenuState(font);
+                        this.SetRenderer();
+                    }
                     break;
                 case State.Level1:
-                    this.gameState = new Level1State();
-                    this.SetRenderer();
+                    if (this.gameState.GetType() != typeof(Level1State))
+                    {
+                        this.gameState = new Level1State();
+                        this.SetRenderer();
+                    }
+                    break;
+                case State.Level2:
+                    if (this.gameState.GetType() != typeof(Level2State))
+                    {
+                        this.gameState = new Level2State();
+                        this.SetRenderer();
+                    }
+                    break;
+                case State.GameOver:
+                    if (this.gameState.GetType() != typeof(GameOverState))
+                    {
+                        this.gameState = new GameOverState(font);
+                        this.SetRenderer();
+                    }
                     break;
                 default:
                     break;
@@ -171,8 +190,8 @@ namespace GameDevProject
         {
             this.gameRenderTarget = new RenderTarget2D(this.GraphicsDevice, this.gameState.GetWindowWidth(levels), this.gameState.GetWindowHeight(levels));
 
-            this.graphics.PreferredBackBufferHeight = this.scale * this.gameState.GetWindowHeight(this.levels);
-            this.graphics.PreferredBackBufferWidth = this.scale * this.gameState.GetWindowWidth(this.levels);
+            this.graphics.PreferredBackBufferHeight = Game1.scale * this.gameState.GetWindowHeight(this.levels);
+            this.graphics.PreferredBackBufferWidth = Game1.scale * this.gameState.GetWindowWidth(this.levels);
             this.graphics.ApplyChanges();
         }
         #endregion
@@ -212,6 +231,11 @@ namespace GameDevProject
         {
             this.worldTileset = this.Content.Load<Texture2D>("TileSetsWorld/TilesetWorld");
         }
+
+        private void AddFont()
+        {
+            this.font = Content.Load<SpriteFont>("SpriteFonts/font");
+        }
         #endregion
 
         #region Update
@@ -237,7 +261,7 @@ namespace GameDevProject
         {
             this.GraphicsDevice.SetRenderTarget(null);
             this.spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-            this.spriteBatch.Draw(this.gameRenderTarget, new Rectangle(0, 0, this.scale * this.gameState.GetWindowWidth(this.levels), this.scale * this.gameState.GetWindowHeight(this.levels)), Color.White);
+            this.spriteBatch.Draw(this.gameRenderTarget, new Rectangle(0, 0, Game1.scale * this.gameState.GetWindowWidth(this.levels), Game1.scale * this.gameState.GetWindowHeight(this.levels)), Color.White);
             
             this.spriteBatch.End();
         }

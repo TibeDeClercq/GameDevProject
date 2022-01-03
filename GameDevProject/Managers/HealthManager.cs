@@ -27,7 +27,7 @@ namespace GameDevProject.Managers
                     health--;
                 }
             }
-            Debug.WriteLine($"Health: {health}");            
+            //Debug.WriteLine($"Health: {health}");            
         }
 
         public bool IsAttackedBy(IMovable attacker)
