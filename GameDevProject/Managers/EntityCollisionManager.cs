@@ -8,7 +8,7 @@ namespace GameDevProject.Managers
 {
     class EntityCollisionManager
     {
-        private  List<Entity> entities;
+        public  List<Entity> entities;
         public  Entity player;
 
         public EntityCollisionManager(List<Entity> entities, Entity player)
