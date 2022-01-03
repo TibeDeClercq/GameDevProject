@@ -54,7 +54,7 @@ namespace GameDevProject
 
             this.SetRenderer();
 
-            PhysicsManager.entities = this.levels[0].entities; //aanpassen per level
+            EntityCollisionManager.Entities = this.levels[0].entities; //aanpassen per level
             //PhysicsManager.tiles = this.world1. GETTILES
 
             this.hitboxes = new List<Hitbox>();
@@ -79,6 +79,7 @@ namespace GameDevProject
 
             //Update depending on gamestate
             this.gameState.Update(this.levels, gameTime);
+            HealthManager.UpdateHealth();
 
             base.Update(gameTime);
         }
@@ -109,9 +110,10 @@ namespace GameDevProject
 
             Player player = new Player(this.playerTextures, new KeyboardReader());
             Type1Enemy type1Enemy = new Type1Enemy(this.type1EnemyTextures, player);
-
+            
             this.levels[0].entities.Add(type1Enemy);
             this.levels[0].entities.Add(player);
+            EntityCollisionManager.Player = player;
 
             string[,] test = {
                                 { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},

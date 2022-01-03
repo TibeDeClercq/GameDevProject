@@ -30,29 +30,36 @@ namespace GameDevProject.Input
             {
                 switch (LocatePlayer(this.player, this.enemy))
                 {
-                    case 1:
+                    case -1:
                         inputParameters.DirectionInput.X -= 1;
                         break;
-                    case -1:
+                    case 1:
                         inputParameters.DirectionInput.X += 1;
+                        break;
+                    case 0:
+                        inputParameters.DirectionInput.X = 0;
                         break;
                 }
                 timer = 0;
             }
-            timer++;                      
+            timer++;
 
             return inputParameters;
         }
 
         private int LocatePlayer(Player player, Type1Enemy enemy)
         {
-            if (player.Position.X - enemy.Position.X > 0)
+            if (player.Position.X - enemy.Position.X > 0.01f)
+            {
+                return 1;
+            }
+            else if (enemy.Position.X - player.Position.X > 0.01f)
             {
                 return -1;
             }
             else
             {
-                return 1;
+                return 0;
             }
         }
     }

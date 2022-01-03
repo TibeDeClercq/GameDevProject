@@ -7,36 +7,29 @@ using System.Text;
 
 namespace GameDevProject.Managers
 {
-    class HealthManager
+    static class HealthManager
     {
-        private int health = 1;
-        private IMovable entity;
-
-        public HealthManager(int health, IMovable entity)
+        public static void UpdateHealth()
         {
-            this.health = health;
-            this.entity = entity;
-        }
+            Entity entity = EntityCollisionManager.CheckCollision();
+            Player player = EntityCollisionManager.Player as Player;
 
-        public void Update(List<Entity> entities) // in een gamemanager dat alle entities bijhoudt?
-        {            
-            foreach (IMovable other in entities)
+            if (entity != null)
             {
-                if (IsAttackedBy(other) && entity != other)
+                bool collidesFromTop = EntityCollisionManager.CheckCollisionFromTop(entity);
+
+                if (entity.Health > 0 && player.IsAttacking)
                 {
-                    health--;
+                    entity.Health--;
+                }
+                else
+                {
+                    if (player.Health > 0)
+                    {
+                        player.Health--;
+                    }
                 }
             }
-            Debug.WriteLine($"Health: {health}");            
-        }
-
-        public bool IsAttackedBy(IMovable attacker)
-        {
-            if (entity.HitboxRectangle.Intersects(attacker.HitboxRectangle))
-            {
-                return true;
-            }
-            return false;
         }
     }
 }

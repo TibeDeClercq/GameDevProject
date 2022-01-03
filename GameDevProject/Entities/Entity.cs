@@ -16,6 +16,7 @@ namespace GameDevProject.Entities
         protected List<Animation> animations = new List<Animation>();
         protected IInputReader inputReader;
         public Vector2 Position { get; set; }
+        public int Health { get; set; }
 
         abstract public void Draw(SpriteBatch spriteBatch);
         //{

@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace GameDevProject.Entities
@@ -33,6 +34,7 @@ namespace GameDevProject.Entities
             this.Velocity = new Vector2(0, 0);
             this.HitboxRectangle = new Rectangle((int)this.Position.X, (int)this.Position.Y, 45, 45);
             this.InputReader = new Type1EnemyAI(player, this);
+            this.Health = 1;
 
             this.MovementManager = new MovementManager();
             this.enemyState = new Type1EnemyIdleState();
@@ -67,6 +69,8 @@ namespace GameDevProject.Entities
         {
             this.enemyState.Update(gameTime, this.animations);
             Move(gameTime, world);
+
+            Debug.WriteLine($"Enemy Health: {this.Health}");
         }
         #endregion
 
