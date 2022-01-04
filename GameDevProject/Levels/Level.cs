@@ -31,5 +31,9 @@ namespace GameDevProject.Levels
                 this.entities.Add(entity);
             }
         }
+        public Level(Texture2D worldTileSet, string[,] map)
+        {
+            this.world = new World(worldTileSet, map);
+        }
     }
 }

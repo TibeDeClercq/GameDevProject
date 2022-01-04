@@ -56,6 +56,7 @@ namespace GameDevProject
 
             Game1.State = State.MainMenu;
             this.gameState = new MainMenuState(font);
+            this.LoadMainMenu();
 
             this.SetRenderer();
             //PhysicsManager.tiles = this.world1. GETTILES
@@ -105,6 +106,22 @@ namespace GameDevProject
         }
 
         #region Initialize
+        private void LoadMainMenu()
+        {
+            string[,] map = {
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "A2", "A2", "A2", "A2", "A2", "A2","A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2","A2", "A2", "A2", "A2", "A2", "A2"},
+                                { "E3", "E3", "E3", "E3", "E3", "E3","E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3","E3", "E3", "E3", "E3", "E3", "E3"}
+                             };
+
+            this.ActiveLevel = new Level(this.worldTileset, map);
+        }
+
         private void LoadLevel1()
         {
             List<Entity> entities = new List<Entity>();
@@ -156,7 +173,21 @@ namespace GameDevProject
 
             this.ActiveLevel = new Level(this.worldTileset, entities, map, healthManager, collisionManager);
         }
+        private void LoadGameOver()
+        {
+            string[,] map = {
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "A2", "A2", "A2", "A2", "A2", "A2","A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2","A2", "A2", "A2", "A2", "A2", "A2"},
+                                { "E3", "E3", "E3", "E3", "E3", "E3","E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3","E3", "E3", "E3", "E3", "E3", "E3"}
+                             };
 
+            this.ActiveLevel = new Level(this.worldTileset, map);
+        }
         private void ClearLevel()
         {
             this.ActiveLevel = null;
@@ -224,6 +255,7 @@ namespace GameDevProject
                     if (this.gameState.GetType() != typeof(MainMenuState))
                     {
                         this.ClearLevel();
+                        this.LoadMainMenu();
                         this.gameState = new MainMenuState(font);
                         this.SetRenderer();
                     }
@@ -249,6 +281,7 @@ namespace GameDevProject
                     if (this.gameState.GetType() != typeof(GameOverLevel1State))
                     {
                         this.ClearLevel();
+                        this.LoadGameOver();
                         this.gameState = new GameOverLevel1State(font);
                         this.SetRenderer();
                     }
@@ -274,6 +307,7 @@ namespace GameDevProject
                     if (this.gameState.GetType() != typeof(GameOverLevel2State))
                     {
                         this.ClearLevel();
+                        this.LoadGameOver();
                         this.gameState = new GameOverLevel2State(font);
                         this.SetRenderer();
                     }
