@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using GameDevProject.Entities;
 using GameDevProject.Interfaces;
 using GameDevProject.Map;
 using Microsoft.Xna.Framework;
@@ -22,26 +23,29 @@ namespace GameDevProject.Managers
             PhysicsManager.AddGravity(movable, world);
             PhysicsManager.AddJump(movable, world);
 
-            if (input.DirectionInput.X == -1)
+            var entity = movable as Entity;
+            if (entity.Health > 0)
             {
-                movable.SpriteEffects = SpriteEffects.FlipHorizontally;
-                PhysicsManager.MoveLeft(movable, world);
-            }
-            if (input.DirectionInput.X == 1)
-            {
-                movable.SpriteEffects = SpriteEffects.None;
-                PhysicsManager.MoveRight(movable, world);
-            }
-
-            if (input.DirectionInput.Y == 1)
-            {
-                if (movable.CanJump)
+                if (input.DirectionInput.X == -1)
                 {
-                    movable.Acceleration = new Vector2(0, -2.7f); // power of the jump
-                    movable.IsJumping = true;
+                    movable.SpriteEffects = SpriteEffects.FlipHorizontally;
+                    PhysicsManager.MoveLeft(movable, world);
+                }
+                if (input.DirectionInput.X == 1)
+                {
+                    movable.SpriteEffects = SpriteEffects.None;
+                    PhysicsManager.MoveRight(movable, world);
                 }
 
-            }
+                if (input.DirectionInput.Y == 1)
+                {
+                    if (movable.CanJump)
+                    {
+                        movable.Acceleration = new Vector2(0, -2.7f); // power of the jump
+                        movable.IsJumping = true;
+                    }
+                }
+            }            
 
             movable.Velocity += movable.Acceleration;
             movable.Position += movable.Velocity;

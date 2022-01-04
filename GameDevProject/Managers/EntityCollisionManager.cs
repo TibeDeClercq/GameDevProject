@@ -24,7 +24,7 @@ namespace GameDevProject.Managers
                 var movableEntity = entity as IMovable;
                 var movablePlayer = player as IMovable;
 
-                if (movableEntity.HitboxRectangle.Intersects(movablePlayer.HitboxRectangle) && entity != player)
+                if (movableEntity.HitboxRectangle.Intersects(movablePlayer.HitboxRectangle) && entity != player && entity.Health > 0)
                 {
                     return entity;
                 }                

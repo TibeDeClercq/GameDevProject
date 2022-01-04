@@ -13,12 +13,14 @@ using System.Diagnostics;
 
 namespace GameDevProject.Entities
 {
-    class Player : Entity, IMovable, IAttacker, IHitbox
+    class Player : Entity, IMovable, IAttacker, IHitbox, IKillable
     {
         #region Player properties
         public MovementManager MovementManager;
 
         public AttackManager AttackManager;
+
+        public DeathManager DeathManager;
 
         private IPlayerState playerState;
 
@@ -61,10 +63,22 @@ namespace GameDevProject.Entities
         public TimeSpan AttackTimer { get; set; }
         public bool CanAttack { get; set; }
         public bool IsAttacking { get; set; }
+        
 
         public void Attack(GameTime gameTime)
         {
             this.AttackManager.Attack(this, gameTime);
+        }
+        #endregion
+
+        #region IKillable Implementation
+        public bool IsDead { get; set; }
+        public TimeSpan DeathTimer { get; set; }
+        public TimeSpan DeathDuration { get; set; }
+
+        public void Die(GameTime gameTime)
+        {
+            DeathManager.Die(this, gameTime);
         }
         #endregion
 
@@ -75,6 +89,7 @@ namespace GameDevProject.Entities
             this.InputReader = inputReader;
             this.MovementManager = new MovementManager();
             this.AttackManager = new AttackManager();
+            this.DeathManager = new DeathManager();
 
             this.CanJump = true;
 
@@ -88,6 +103,10 @@ namespace GameDevProject.Entities
             this.AttackCooldown = TimeSpan.FromSeconds(5);
             this.AttackDuration = TimeSpan.FromSeconds(2);
             this.AttackTimer = TimeSpan.Zero;
+
+            this.IsDead = false;
+            this.DeathDuration = TimeSpan.FromSeconds(1.5);
+            this.DeathTimer = TimeSpan.Zero;
 
             this.CanAttack = true;
             this.IsAttacking = false;
@@ -108,8 +127,12 @@ namespace GameDevProject.Entities
 
         override public void Update(GameTime gameTime, World world)
         {
+            if (!HasNoHealth())
+            {
+                this.Attack(gameTime);
+            }
             this.Move(gameTime, world);
-            this.Attack(gameTime);
+            this.Die(gameTime);
             this.ChangeState();
             //Update the animation
             this.playerState.Update(gameTime, animations);
@@ -155,7 +178,7 @@ namespace GameDevProject.Entities
             {
                 this.playerState = new PlayerIdleState();
             }
-            if (isDead())
+            if (HasNoHealth())
             {
                 this.playerState = new PlayerDeadState();
             }
@@ -188,14 +211,14 @@ namespace GameDevProject.Entities
             return false;
         }
 
-        private bool isDead()
+        private bool HasNoHealth()
         {
             if (this.Health <= 0)
             {
                 return true;
             }
             return false;
-        }
+        }        
         #endregion
     }
 }
