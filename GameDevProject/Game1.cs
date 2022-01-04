@@ -11,12 +11,15 @@ using GameDevProject.Interfaces;
 using System.Diagnostics;
 using GameDevProject.Levels;
 using GameDevProject.States.GameStates;
+using GameDevProject.Hitboxes;
 
 namespace GameDevProject
 {
     public enum State { MainMenu, Level1, Level2, GameOver}
     public class Game1 : Game
     {
+        private bool devMode = true;
+
         private RenderTarget2D gameRenderTarget;
         public static int scale = 3;
 
@@ -32,8 +35,7 @@ namespace GameDevProject
         private SpriteFont font;
 
         //hitbox stuff
-        private List<IHitbox> items;
-        private List<Hitbox> hitboxes;
+        private HitboxManager hitboxManager;
 
         private IGameState gameState;
         public static State State;
@@ -57,8 +59,9 @@ namespace GameDevProject
 
             this.SetRenderer();
             //PhysicsManager.tiles = this.world1. GETTILES
+            this.hitboxManager = new HitboxManager();
 
-            this.hitboxes = new List<Hitbox>(); //temp
+            this.hitboxManager.hitboxes = new List<Hitbox>(); //temp
         }
 
         protected override void LoadContent()
@@ -76,42 +79,13 @@ namespace GameDevProject
                 this.Exit();
             }
 
-            //in method / static class steken
-            switch (Game1.State)
+            //hitbox stuff
+            if (this.ActiveLevel != null)
             {
-                case State.MainMenu:
-                    if(this.gameState.GetType() != typeof(MainMenuState))
-                    {
-                        this.gameState = new MainMenuState(font);
-                        this.SetRenderer();
-                    }
-                    break;
-                case State.Level1:
-                    if (this.gameState.GetType() != typeof(Level1State))
-                    {
-                        this.CreateLevel1();
-                        this.gameState = new Level1State();
-                        this.SetRenderer();
-                    }
-                    break;
-                case State.Level2:
-                    if (this.gameState.GetType() != typeof(Level2State))
-                    {
-                        this.CreateLevel2();
-                        this.gameState = new Level2State();
-                        this.SetRenderer();
-                    }
-                    break;
-                case State.GameOver:
-                    if (this.gameState.GetType() != typeof(GameOverState))
-                    {
-                        this.gameState = new GameOverState(font);
-                        this.SetRenderer();
-                    }
-                    break;
-                default:
-                    break;
+                this.hitboxManager.AddWantedHitboxes(this.ActiveLevel.entities, this.ActiveLevel.world, graphics);
             }
+
+            this.ChangeGameState();
 
             //Update depending on gamestate
             this.gameState.Update(this.ActiveLevel, gameTime);
@@ -123,13 +97,15 @@ namespace GameDevProject
         {
             //Draw all objects to a frame
             this.DrawToFrame();
+
             //Draw frame to window => rescale
             this.DrawToScreen();
+
             base.Draw(gameTime);
         }
 
         #region Initialize
-        private void CreateLevel1()
+        private void LoadLevel1()
         {
             List<Entity> entities = new List<Entity>();
 
@@ -156,7 +132,7 @@ namespace GameDevProject
             this.ActiveLevel = new Level(this.worldTileset, entities, map, healthManager, collisionManager);
         }
 
-        private void CreateLevel2()
+        private void LoadLevel2()
         {
             List<Entity> entities = new List<Entity>();
 
@@ -183,6 +159,10 @@ namespace GameDevProject
             this.ActiveLevel = new Level(this.worldTileset, entities, map, healthManager, collisionManager);
         }
 
+        private void ClearLevel()
+        {
+            this.ActiveLevel = null;
+        }
         private void SetRenderer() //aanpassen per wereld
         {
             this.gameRenderTarget = new RenderTarget2D(this.GraphicsDevice, this.gameState.GetWindowWidth(this.ActiveLevel), this.gameState.GetWindowHeight(this.ActiveLevel));
@@ -236,7 +216,46 @@ namespace GameDevProject
         #endregion
 
         #region Update
-
+        private void ChangeGameState()
+        {
+            switch (Game1.State)
+            {
+                case State.MainMenu:
+                    if (this.gameState.GetType() != typeof(MainMenuState))
+                    {
+                        this.ClearLevel();
+                        this.gameState = new MainMenuState(font);
+                        this.SetRenderer();
+                    }
+                    break;
+                case State.Level1:
+                    if (this.gameState.GetType() != typeof(Level1State))
+                    {
+                        this.LoadLevel1();
+                        this.gameState = new Level1State();
+                        this.SetRenderer();
+                    }
+                    break;
+                case State.Level2:
+                    if (this.gameState.GetType() != typeof(Level2State))
+                    {
+                        this.LoadLevel2();
+                        this.gameState = new Level2State();
+                        this.SetRenderer();
+                    }
+                    break;
+                case State.GameOver:
+                    if (this.gameState.GetType() != typeof(GameOverState))
+                    {
+                        this.ClearLevel();
+                        this.gameState = new GameOverState(font);
+                        this.SetRenderer();
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
         #endregion
 
         #region Draw
@@ -249,7 +268,10 @@ namespace GameDevProject
             //Draw world and entities depending on gamestate
             this.gameState.Draw(this.ActiveLevel, this.spriteBatch);
 
-            this.DrawHitboxes();
+            if(devMode == true && ActiveLevel != null)
+            {
+                this.hitboxManager.DrawHitboxes(spriteBatch);
+            }
 
             this.spriteBatch.End();
         }
@@ -261,75 +283,6 @@ namespace GameDevProject
             this.spriteBatch.Draw(this.gameRenderTarget, new Rectangle(0, 0, Game1.scale * this.gameState.GetWindowWidth(this.ActiveLevel), Game1.scale * this.gameState.GetWindowHeight(this.ActiveLevel)), Color.White);
             
             this.spriteBatch.End();
-        }
-
-
-        //in hitbox thingie
-        private void DrawHitboxes()
-        {
-            this.GetHitboxes();
-
-            foreach (Hitbox hitbox in hitboxes)
-            {
-                spriteBatch.Draw(hitbox.Texture, hitbox.Position, Color.White);
-            }
-        }
-        #endregion
-
-        //in hitbox manager??
-        #region Hitbox stuff
-        private void GetHitboxes()
-        {
-            this.hitboxes = new List<Hitbox>();
-            this.items = new List<IHitbox>();
-
-            this.AddWantedHitboxes();
-
-            foreach (IHitbox item in items)
-            {
-                int itemWidth = item.HitboxRectangle.Width;
-                int itemHeight = item.HitboxRectangle.Height;
-                Vector2 position = new Vector2(item.HitboxRectangle.X, item.HitboxRectangle.Y);
-
-                Texture2D texture = new Texture2D(graphics.GraphicsDevice, itemWidth, itemHeight);
-                int pixels = itemWidth * itemHeight;
-                Color[] outline = new Color[pixels];
-
-                for (int i = 0; i < pixels; i++)
-                {
-                    if (i < itemWidth || i % itemWidth == 0 || i % itemWidth == itemWidth - 1 || i > pixels - itemWidth)
-                    {
-                        outline[i] = Color.White;
-                    }
-                    else
-                    {
-                        outline[i] = Color.Transparent;
-                    }
-                }
-
-                texture.SetData(outline);
-
-                hitboxes.Add(new Hitbox(texture, position));
-            }
-        }
-
-        public void AddWantedHitboxes()
-        {
-            if(this.ActiveLevel != null)
-            {
-                foreach (IHitbox entity in this.ActiveLevel.entities)
-                {
-                    items.Add(entity);
-                }
-                foreach (IHitbox tile in this.ActiveLevel.world.GetTiles())
-                {
-                    Tile test = (Tile)tile;
-                    if (test.IsTopCollide || test.IsRightCollide || test.IsLeftCollide || test.IsBottomCollide)
-                    {
-                        items.Add(tile);
-                    }
-                }
-            }
         }
         #endregion
     }
