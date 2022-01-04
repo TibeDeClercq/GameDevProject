@@ -57,7 +57,17 @@ namespace GameDevProject.States.GameStates
                     {
                         if (entity is Player)
                         {
-                            Game1.State = State.GameOver;
+                            switch (Game1.State)
+                            {
+                                case State.Level1:
+                                    Game1.State = State.GameOverLevel1;
+                                    break;
+                                case State.Level2:
+                                    Game1.State = State.GameOverLevel2;
+                                    break;
+                                default:
+                                    break;
+                            }
                         }
                         level.entities.Remove(entity);
                         level.collisionManager.entities.Remove(entity);
