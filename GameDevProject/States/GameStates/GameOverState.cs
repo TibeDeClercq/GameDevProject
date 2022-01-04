@@ -27,7 +27,7 @@ namespace GameDevProject.States.GameStates
             this.buttons.Add(new SelectLevelButton(new Vector2(20, 50), new Vector2(35, 10), "Retry"));
             this.buttons.Add(new SelectLevelButton(new Vector2(110, 50), new Vector2(75, 10), "Main Menu"));
         }
-        public void Update(List<Level> levels, GameTime gameTime)
+        public void Update(Level level, GameTime gameTime)
         {
             MouseState mouse = Mouse.GetState();
             
@@ -53,7 +53,7 @@ namespace GameDevProject.States.GameStates
             }
         }
 
-        public void Draw(List<Level> levels, SpriteBatch spriteBatch)
+        public void Draw(Level level, SpriteBatch spriteBatch)
         {
             spriteBatch.DrawString(this.font, "Game Over", new Vector2(70, 10), Color.Black);
 
@@ -63,12 +63,12 @@ namespace GameDevProject.States.GameStates
             }
         }
 
-        public int GetWindowHeight(List<Level> levels)
+        public int GetWindowHeight(Level level)
         {
             return 100;
         }
 
-        public int GetWindowWidth(List<Level> levels)
+        public int GetWindowWidth(Level level)
         {
             return 200;
         }

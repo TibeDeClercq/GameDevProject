@@ -13,40 +13,40 @@ namespace GameDevProject.States.GameStates
 {
     class Level1State : IGameState
     {
-        public void Update(List<Level> levels, GameTime gameTime)
+        public void Update(Level level, GameTime gameTime)
         {
-            foreach (Entity entity in levels[0].entities)
+            foreach (Entity entity in level.entities)
             {
-                entity.Update(gameTime, levels[0].world);
+                entity.Update(gameTime, level.world);
             }
 
-            levels[0].healthManager.UpdateHealth(levels[0].collisionManager);
-            ClearDeadEntities(levels);
+            level.healthManager.UpdateHealth(level.collisionManager);
+            ClearDeadEntities(level);
         }
 
-        public void Draw(List<Level> levels, SpriteBatch spriteBatch)
+        public void Draw(Level level, SpriteBatch spriteBatch)
         {
-            levels[0].world.Draw(spriteBatch);
+            level.world.Draw(spriteBatch);
 
-            foreach (Entity entity in levels[0].entities)
+            foreach (Entity entity in level.entities)
             {
                 entity.Draw(spriteBatch);
             }
         }
 
-        public int GetWindowHeight(List<Level> levels)
+        public int GetWindowHeight(Level level)
         {
-            return levels[0].world.GetWorldHeight(); //getWorldHeight
+            return level.world.GetWorldHeight(); //getWorldHeight
         }
 
-        public int GetWindowWidth(List<Level> levels)
+        public int GetWindowWidth(Level level)
         {
-            return levels[0].world.GetWorldWidth(); //getWorldWidth
+            return level.world.GetWorldWidth(); //getWorldWidth
         }
 
-        private void ClearDeadEntities(List<Level> levels)
+        private void ClearDeadEntities(Level level)
         {
-            var entities = new List<Entity>(levels[0].entities);
+            var entities = new List<Entity>(level.entities);
 
             foreach (Entity entity in entities)
             {
@@ -56,8 +56,8 @@ namespace GameDevProject.States.GameStates
                     {
                         Game1.State = State.GameOver;
                     }
-                    levels[0].entities.Remove(entity);
-                    levels[0].collisionManager.entities.Remove(entity);
+                    level.entities.Remove(entity);
+                    level.collisionManager.entities.Remove(entity);
                 }
             }
         }
