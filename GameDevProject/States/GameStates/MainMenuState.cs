@@ -28,7 +28,7 @@ namespace GameDevProject.States.GameStates
             this.buttons.Add(new SelectLevelButton(new Vector2(20, 50), new Vector2(45, 10), "Level 1"));
             this.buttons.Add(new SelectLevelButton(new Vector2(120, 50), new Vector2(45, 10), "Level 2"));
         }
-        public void Update(List<Level> levels, GameTime gameTime)
+        public void Update(Level level, GameTime gameTime)
         {
             MouseState mouse = Mouse.GetState();
             if (mouse.LeftButton == ButtonState.Released)
@@ -57,7 +57,7 @@ namespace GameDevProject.States.GameStates
             }
         }
 
-        public void Draw(List<Level> levels, SpriteBatch spriteBatch)
+        public void Draw(Level level, SpriteBatch spriteBatch)
         {
             spriteBatch.DrawString(this.font, "Main menu", new Vector2(70, 10), Color.Black);
 
@@ -67,12 +67,12 @@ namespace GameDevProject.States.GameStates
             }
         }
 
-        public int GetWindowHeight(List<Level> levels)
+        public int GetWindowHeight(Level level)
         {
             return 100;
         }
 
-        public int GetWindowWidth(List<Level> levels)
+        public int GetWindowWidth(Level level)
         {
             return 200;
         }

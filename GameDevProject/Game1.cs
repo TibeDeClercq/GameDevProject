@@ -26,7 +26,7 @@ namespace GameDevProject
         private List<Texture2D> playerTextures;
         private List<Texture2D> type1EnemyTextures;
 
-        private List<Level> levels;
+        private Level ActiveLevel;
         private Texture2D worldTileset;
 
         private SpriteFont font;
@@ -55,8 +55,6 @@ namespace GameDevProject
             Game1.State = State.MainMenu;
             this.gameState = new MainMenuState(font);
 
-            this.CreateLevels();
-
             this.SetRenderer();
             //PhysicsManager.tiles = this.world1. GETTILES
 
@@ -78,6 +76,7 @@ namespace GameDevProject
                 this.Exit();
             }
 
+            //in method / static class steken
             switch (Game1.State)
             {
                 case State.MainMenu:
@@ -90,6 +89,7 @@ namespace GameDevProject
                 case State.Level1:
                     if (this.gameState.GetType() != typeof(Level1State))
                     {
+                        this.CreateLevel1();
                         this.gameState = new Level1State();
                         this.SetRenderer();
                     }
@@ -97,6 +97,7 @@ namespace GameDevProject
                 case State.Level2:
                     if (this.gameState.GetType() != typeof(Level2State))
                     {
+                        this.CreateLevel2();
                         this.gameState = new Level2State();
                         this.SetRenderer();
                     }
@@ -113,7 +114,7 @@ namespace GameDevProject
             }
 
             //Update depending on gamestate
-            this.gameState.Update(this.levels, gameTime);
+            this.gameState.Update(this.ActiveLevel, gameTime);
 
             base.Update(gameTime);
         }
@@ -128,14 +129,6 @@ namespace GameDevProject
         }
 
         #region Initialize
-        private void CreateLevels()
-        {
-            this.levels = new List<Level>();
-
-            this.CreateLevel1();
-            this.CreateLevel2();
-        }
-
         private void CreateLevel1()
         {
             List<Entity> entities = new List<Entity>();
@@ -159,7 +152,8 @@ namespace GameDevProject
 
             HealthManager healthManager = new HealthManager();
             EntityCollisionManager collisionManager = new EntityCollisionManager(entities, player);
-            this.levels.Add(new Level(this.worldTileset, entities, map, healthManager, collisionManager));
+
+            this.ActiveLevel = new Level(this.worldTileset, entities, map, healthManager, collisionManager);
         }
 
         private void CreateLevel2()
@@ -185,15 +179,16 @@ namespace GameDevProject
 
             HealthManager healthManager = new HealthManager();
             EntityCollisionManager collisionManager = new EntityCollisionManager(entities, player);
-            this.levels.Add(new Level(this.worldTileset, entities, map, healthManager, collisionManager));
+
+            this.ActiveLevel = new Level(this.worldTileset, entities, map, healthManager, collisionManager);
         }
 
         private void SetRenderer() //aanpassen per wereld
         {
-            this.gameRenderTarget = new RenderTarget2D(this.GraphicsDevice, this.gameState.GetWindowWidth(levels), this.gameState.GetWindowHeight(levels));
+            this.gameRenderTarget = new RenderTarget2D(this.GraphicsDevice, this.gameState.GetWindowWidth(this.ActiveLevel), this.gameState.GetWindowHeight(this.ActiveLevel));
 
-            this.graphics.PreferredBackBufferHeight = Game1.scale * this.gameState.GetWindowHeight(this.levels);
-            this.graphics.PreferredBackBufferWidth = Game1.scale * this.gameState.GetWindowWidth(this.levels);
+            this.graphics.PreferredBackBufferHeight = Game1.scale * this.gameState.GetWindowHeight(this.ActiveLevel);
+            this.graphics.PreferredBackBufferWidth = Game1.scale * this.gameState.GetWindowWidth(this.ActiveLevel);
             this.graphics.ApplyChanges();
         }
         #endregion
@@ -254,7 +249,7 @@ namespace GameDevProject
             this.spriteBatch.Begin();
 
             //Draw world and entities depending on gamestate
-            this.gameState.Draw(this.levels, this.spriteBatch);
+            this.gameState.Draw(this.ActiveLevel, this.spriteBatch);
 
             this.DrawHitboxes();
 
@@ -265,7 +260,7 @@ namespace GameDevProject
         {
             this.GraphicsDevice.SetRenderTarget(null);
             this.spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-            this.spriteBatch.Draw(this.gameRenderTarget, new Rectangle(0, 0, Game1.scale * this.gameState.GetWindowWidth(this.levels), Game1.scale * this.gameState.GetWindowHeight(this.levels)), Color.White);
+            this.spriteBatch.Draw(this.gameRenderTarget, new Rectangle(0, 0, Game1.scale * this.gameState.GetWindowWidth(this.ActiveLevel), Game1.scale * this.gameState.GetWindowHeight(this.ActiveLevel)), Color.White);
             
             this.spriteBatch.End();
         }
@@ -322,16 +317,19 @@ namespace GameDevProject
 
         public void AddWantedHitboxes()
         {
-            foreach (IHitbox entity in levels[0].entities)
+            if(this.ActiveLevel != null)
             {
-                items.Add(entity);
-            }
-            foreach (IHitbox tile in levels[0].world.GetTiles())
-            {
-                Tile test = (Tile)tile;
-                if (test.IsTopCollide || test.IsRightCollide || test.IsLeftCollide || test.IsBottomCollide)
+                foreach (IHitbox entity in this.ActiveLevel.entities)
                 {
-                    items.Add(tile);
+                    items.Add(entity);
+                }
+                foreach (IHitbox tile in this.ActiveLevel.world.GetTiles())
+                {
+                    Tile test = (Tile)tile;
+                    if (test.IsTopCollide || test.IsRightCollide || test.IsLeftCollide || test.IsBottomCollide)
+                    {
+                        items.Add(tile);
+                    }
                 }
             }
         }

@@ -10,9 +10,9 @@ namespace GameDevProject.Interfaces
 {
     interface IGameState
     {
-        public void Update(List<Level> levels, GameTime gameTime);
-        public void Draw(List<Level> levels, SpriteBatch spriteBatch);
-        public int GetWindowHeight(List<Level> levels);
-        public int GetWindowWidth(List<Level> levels);
+        public void Update(Level level, GameTime gameTime);
+        public void Draw(Level level, SpriteBatch spriteBatch);
+        public int GetWindowHeight(Level level);
+        public int GetWindowWidth(Level level);
     }
 }

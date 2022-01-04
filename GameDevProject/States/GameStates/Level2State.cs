@@ -12,32 +12,32 @@ namespace GameDevProject.States.GameStates
 {
     class Level2State : IGameState
     {
-        public void Update(List<Level> levels, GameTime gameTime)
+        public void Update(Level level, GameTime gameTime)
         {
-            foreach (Entity entity in levels[1].entities)
+            foreach (Entity entity in level.entities)
             {
-                entity.Update(gameTime, levels[1].world);
+                entity.Update(gameTime, level.world);
             }
         }
 
-        public void Draw(List<Level> levels, SpriteBatch spriteBatch)
+        public void Draw(Level level, SpriteBatch spriteBatch)
         {
-            levels[1].world.Draw(spriteBatch);
+            level.world.Draw(spriteBatch);
 
-            foreach (Entity entity in levels[1].entities)
+            foreach (Entity entity in level.entities)
             {
                 entity.Draw(spriteBatch);
             }
         }
 
-        public int GetWindowHeight(List<Level> levels)
+        public int GetWindowHeight(Level level)
         {
-            return levels[1].world.GetWorldHeight(); //getWorldHeight
+            return level.world.GetWorldHeight(); //getWorldHeight
         }
 
-        public int GetWindowWidth(List<Level> levels)
+        public int GetWindowWidth(Level level)
         {
-            return levels[1].world.GetWorldWidth(); //getWorldWidth
+            return level.world.GetWorldWidth(); //getWorldWidth
         }
     }
 }
