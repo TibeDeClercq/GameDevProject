@@ -15,7 +15,7 @@ using GameDevProject.Hitboxes;
 
 namespace GameDevProject
 {
-    public enum State { MainMenu, Level1, Level2, GameOver}
+    public enum State { MainMenu, Level1, Level1Complete, GameOverLevel1, Level2, Level2Complete, GameOverLevel2}
     public class Game1 : Game
     {
         private bool devMode = true;
@@ -137,9 +137,7 @@ namespace GameDevProject
             List<Entity> entities = new List<Entity>();
 
             Player player = new Player(this.playerTextures, new KeyboardReader());
-            Type1Enemy type1Enemy = new Type1Enemy(this.type1EnemyTextures, player);
 
-            entities.Add(type1Enemy);
             entities.Add(player);
 
             string[,] map = {
@@ -147,8 +145,8 @@ namespace GameDevProject
                                 { "C2", "C2", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
                                 { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
                                 { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
-                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
-                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "A5", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "C5", "G1"},
                                 { "A2", "A2", "A2", "A2", "A2", "A2","A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2","A2", "A2", "A2", "A2", "A2", "A2"},
                                 { "E3", "E3", "E3", "E3", "E3", "E3","E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3","E3", "E3", "E3", "E3", "E3", "E3"}
                              };
@@ -231,26 +229,52 @@ namespace GameDevProject
                     }
                     break;
                 case State.Level1:
-                    if (this.gameState.GetType() != typeof(Level1State))
+                    if (this.gameState.GetType() != typeof(LevelState))
                     {
+                        this.ClearLevel();
                         this.LoadLevel1();
-                        this.gameState = new Level1State();
+                        this.gameState = new LevelState();
+                        this.SetRenderer();
+                    }
+                    break;
+                case State.Level1Complete:
+                    if (this.gameState.GetType() != typeof(Level1CompletedState))
+                    {
+                        this.ClearLevel();
+                        this.gameState = new Level1CompletedState(font);
+                        this.SetRenderer();
+                    }
+                    break;
+                case State.GameOverLevel1:
+                    if (this.gameState.GetType() != typeof(GameOverLevel1State))
+                    {
+                        this.ClearLevel();
+                        this.gameState = new GameOverLevel1State(font);
                         this.SetRenderer();
                     }
                     break;
                 case State.Level2:
-                    if (this.gameState.GetType() != typeof(Level2State))
+                    if (this.gameState.GetType() != typeof(LevelState))
                     {
+                        this.ClearLevel();
                         this.LoadLevel2();
-                        this.gameState = new Level2State();
+                        this.gameState = new LevelState();
                         this.SetRenderer();
                     }
                     break;
-                case State.GameOver:
-                    if (this.gameState.GetType() != typeof(GameOverState))
+                case State.Level2Complete:
+                    if (this.gameState.GetType() != typeof(Level2CompletedState))
                     {
                         this.ClearLevel();
-                        this.gameState = new GameOverState(font);
+                        this.gameState = new Level2CompletedState(font);
+                        this.SetRenderer();
+                    }
+                    break;
+                case State.GameOverLevel2:
+                    if (this.gameState.GetType() != typeof(GameOverLevel2State))
+                    {
+                        this.ClearLevel();
+                        this.gameState = new GameOverLevel2State(font);
                         this.SetRenderer();
                     }
                     break;

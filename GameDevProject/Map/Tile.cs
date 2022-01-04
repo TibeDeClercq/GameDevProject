@@ -19,11 +19,13 @@ namespace GameDevProject.Map
         public bool IsRightCollide { get; set; }
         public bool IsTopCollide { get; set; }
         public bool IsBottomCollide { get; set; }
+        public bool IsFinishCollide { get; set; }
 
         private int[] leftCollidable = { 0, 3, 8, 11, 16, 19 };
         private int[] rightCollidable = {2, 10, 11, 18, 19 };
         private int[] topCollidable = { 0, 1, 2, 3 };
         private int[] bottomCollidable = { 16, 17, 18, 19 };
+        private int[] finishCollidable = { 4, 5, 6, 12, 13, 14, 20, 21, 22 };
 
         public Tile(Rectangle sourceRectangle, Vector2 position, int identifier)
         {
@@ -47,6 +49,10 @@ namespace GameDevProject.Map
             if (Array.IndexOf(bottomCollidable, identifier) != -1)
             {
                 this.IsBottomCollide = true;
+            }
+            if(Array.IndexOf(finishCollidable, identifier) != -1)
+            {
+                this.IsFinishCollide = true;
             }
             else
             {

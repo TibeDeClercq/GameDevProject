@@ -13,43 +13,39 @@ using Microsoft.Xna.Framework.Input;
 
 namespace GameDevProject.States.GameStates
 {
-    class MainMenuState : IGameState
+    class GameOverLevel2State : IGameState
     {
         private SpriteFont font;
 
         private List<Button> buttons;
 
-        public bool CanClick;
-        public MainMenuState(SpriteFont font)
+        public GameOverLevel2State(SpriteFont font)
         {
             this.font = font;
 
             this.buttons = new List<Button>();
-            this.buttons.Add(new Button(new Vector2(20, 50), new Vector2(45, 10), "Level 1"));
-            this.buttons.Add(new Button(new Vector2(120, 50), new Vector2(45, 10), "Level 2"));
+            this.buttons.Add(new Button(new Vector2(20, 50), new Vector2(35, 10), "Retry"));
+            this.buttons.Add(new Button(new Vector2(110, 50), new Vector2(75, 10), "Main Menu"));
         }
         public void Update(Level level, GameTime gameTime)
         {
             MouseState mouse = Mouse.GetState();
-            if (mouse.LeftButton == ButtonState.Released)
-            {
-                CanClick = true;
-            }
+            
             foreach (Button button in buttons)
             {
                 if (mouse.X / Game1.scale >= button.Position.X && mouse.X / Game1.scale <= button.Position.X + button.Size.X)
                 {
                     if (mouse.Y / Game1.scale >= button.Position.Y && mouse.Y / Game1.scale <= button.Position.Y + button.Size.Y)
                     {
-                        if(mouse.LeftButton == ButtonState.Pressed && CanClick)
+                        if (mouse.LeftButton == ButtonState.Pressed)
                         {
-                            if(button == buttons[0])
+                            if (button == buttons[0])
                             {
-                                Game1.State = State.Level1;
+                                Game1.State = State.Level2;
                             }
                             else if (button == buttons[1])
                             {
-                                Game1.State = State.Level2;
+                                Game1.State = State.MainMenu;
                             }
                         }
                     }
@@ -59,7 +55,7 @@ namespace GameDevProject.States.GameStates
 
         public void Draw(Level level, SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(this.font, "Main menu", new Vector2(70, 10), Color.Black);
+            spriteBatch.DrawString(this.font, "Game Over", new Vector2(70, 10), Color.Black);
 
             foreach (Button button in buttons)
             {

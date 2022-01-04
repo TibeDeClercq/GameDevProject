@@ -64,8 +64,8 @@ namespace GameDevProject.Hitboxes
             }
             foreach (IHitbox tile in world.GetTiles())
             {
-                Tile test = (Tile)tile;
-                if (test.IsTopCollide || test.IsRightCollide || test.IsLeftCollide || test.IsBottomCollide)
+                Tile Tile = (Tile)tile;
+                if (Tile.IsTopCollide || Tile.IsRightCollide || Tile.IsLeftCollide || Tile.IsBottomCollide || Tile.IsFinishCollide)
                 {
                     items.Add(tile);
                 }
