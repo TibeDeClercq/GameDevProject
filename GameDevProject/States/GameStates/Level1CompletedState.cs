@@ -1,37 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Text;
 
-using GameDevProject.Entities;
 using GameDevProject.Interfaces;
 using GameDevProject.Levels;
-using GameDevProject.MainMenu;
+using GameDevProject.MenuItems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace GameDevProject.States.GameStates
 {
-    class GameOverState : IGameState
+    class Level1CompletedState : IGameState
     {
         private SpriteFont font;
 
-        private List<SelectLevelButton> buttons;
-
-        public GameOverState(SpriteFont font)
+        private List<Button> buttons;
+        public Level1CompletedState(SpriteFont font)
         {
             this.font = font;
 
-            this.buttons = new List<SelectLevelButton>();
-            this.buttons.Add(new SelectLevelButton(new Vector2(20, 50), new Vector2(35, 10), "Retry"));
-            this.buttons.Add(new SelectLevelButton(new Vector2(110, 50), new Vector2(75, 10), "Main Menu"));
+            this.buttons = new List<Button>();
+            this.buttons.Add(new Button(new Vector2(20, 50), new Vector2(75, 10), "Next level"));
+            this.buttons.Add(new Button(new Vector2(110, 50), new Vector2(75, 10), "Main Menu"));
         }
+
         public void Update(Level level, GameTime gameTime)
         {
             MouseState mouse = Mouse.GetState();
-            
-            foreach (SelectLevelButton button in buttons)
+            foreach (Button button in buttons)
             {
                 if (mouse.X / Game1.scale >= button.Position.X && mouse.X / Game1.scale <= button.Position.X + button.Size.X)
                 {
@@ -41,7 +38,7 @@ namespace GameDevProject.States.GameStates
                         {
                             if (button == buttons[0])
                             {
-                                Game1.State = State.Level1;
+                                Game1.State = State.Level2;
                             }
                             else if (button == buttons[1])
                             {
@@ -55,9 +52,9 @@ namespace GameDevProject.States.GameStates
 
         public void Draw(Level level, SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(this.font, "Game Over", new Vector2(70, 10), Color.Black);
+            spriteBatch.DrawString(this.font, "Completed Level 1", new Vector2(70, 10), Color.Black);
 
-            foreach (SelectLevelButton button in buttons)
+            foreach (Button button in buttons)
             {
                 spriteBatch.DrawString(this.font, button.Text, button.Position, Color.Black);
             }

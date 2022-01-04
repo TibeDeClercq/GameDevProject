@@ -15,7 +15,9 @@ namespace GameDevProject.Managers
         #region Public methods
         public void Move(IMovable movable, GameTime gameTime, World world)
         {
-            var input = movable.InputReader.ReadInput();            
+            this.CheckLevelComplete(movable, world);
+
+            var input = movable.InputReader.ReadInput();
 
             movable.Velocity = new Vector2(0, 0);
             PhysicsManager.AddGravity(movable, world);
@@ -58,6 +60,30 @@ namespace GameDevProject.Managers
         {
             //Debug.WriteLine($"a: {movable.Acceleration.Y} | v: {movable.Velocity} | jumping? {movable.IsJumping} | Can jump? {movable.CanJump}");
             //Debug.WriteLine($"jumping? {movable.IsJumping}");
+        }
+
+        private void CheckLevelComplete(IMovable movable, World world)
+        {
+            foreach (Tile tile in world.GetTiles())
+            {
+                if (tile.IsFinishCollide)
+                {
+                    if (movable.HitboxRectangle.Intersects(tile.HitboxRectangle))
+                    {
+                        switch (Game1.State)
+                        {
+                            case State.Level1:
+                                Game1.State = State.Level1Complete;
+                                break;
+                            case State.Level2:
+                                Game1.State = State.Level2Complete;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
         }
         #endregion
     }   
