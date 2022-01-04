@@ -200,8 +200,8 @@ namespace GameDevProject
         {
             this.type1EnemyTextures = new List<Texture2D>();
 
-            this.type1EnemyTextures.Add(this.Content.Load<Texture2D>("SpritesheetsPlayer/PlayerIdle"));
-            this.type1EnemyTextures.Add(this.Content.Load<Texture2D>("SpritesheetsPlayer/PlayerDead"));
+            this.type1EnemyTextures.Add(this.Content.Load<Texture2D>("SpritesheetsEnemies/Enemy1Walk"));
+            this.type1EnemyTextures.Add(this.Content.Load<Texture2D>("SpritesheetsEnemies/Enemy1Dead"));
         }
 
         private void AddWorldTextures()
