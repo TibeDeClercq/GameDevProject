@@ -20,6 +20,18 @@
 /processorParam:TextureFormat=Compressed
 /build:SpriteFonts/font.spritefont
 
+#begin SpriteSheetsPlayer/PlayerDead.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:SpriteSheetsPlayer/PlayerDead.png
+
 #begin SpriteSheetsPlayer/PlayerIdle.png
 /importer:TextureImporter
 /processor:TextureProcessor

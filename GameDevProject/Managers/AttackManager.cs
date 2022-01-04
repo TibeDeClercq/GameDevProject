@@ -13,14 +13,14 @@ namespace GameDevProject.Managers
         {
             if (attacker.IsAttacking)
             {
-                attacker.Timer += gameTime.ElapsedGameTime;
+                attacker.AttackTimer += gameTime.ElapsedGameTime;
 
-                Debug.WriteLine($"attack done in {attacker.AttackDuration - attacker.Timer} secondes");
+                Debug.WriteLine($"attack done in {attacker.AttackDuration - attacker.AttackTimer} seconds");
 
-                if (attacker.Timer >= attacker.AttackDuration)
+                if (attacker.AttackTimer >= attacker.AttackDuration)
                 {
                     attacker.IsAttacking = false;
-                    attacker.Timer = TimeSpan.Zero;
+                    attacker.AttackTimer = TimeSpan.Zero;
                 }
             }
             else
@@ -35,15 +35,15 @@ namespace GameDevProject.Managers
                 }
                 else
                 {
-                    attacker.Timer += gameTime.ElapsedGameTime;
+                    attacker.AttackTimer += gameTime.ElapsedGameTime;
 
-                    if (attacker.Timer >= attacker.AttackCooldown)
+                    if (attacker.AttackTimer >= attacker.AttackCooldown)
                     {
                         attacker.CanAttack = true;
-                        attacker.Timer = TimeSpan.Zero;
+                        attacker.AttackTimer = TimeSpan.Zero;
                     }
 
-                    Debug.WriteLine($"attack ready in {attacker.AttackCooldown - attacker.Timer} secondes");
+                    Debug.WriteLine($"attack ready in {attacker.AttackCooldown - attacker.AttackTimer} seconds");
 
                 }
             }

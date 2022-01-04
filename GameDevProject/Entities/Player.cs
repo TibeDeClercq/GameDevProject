@@ -27,12 +27,14 @@ namespace GameDevProject.Entities
         private const int JUMP_FRAMES = 9;
         private const int SPIN_FRAMES = 12;
         private const int SLEEP_FRAMES = 6;
+        private const int DEAD_FRAMES = 15;
 
         private const int IDLE_FPS = 5;
         private const int WALK_FPS = 10;
         private const int JUMP_FPS = 10;
         private const int SPIN_FPS = SPIN_FRAMES / 2; //fixen
         private const int SLEEP_FPS = 10;
+        private const int DEAD_FPS = 10;
         #endregion
 
         #region IMovable implementation
@@ -56,7 +58,7 @@ namespace GameDevProject.Entities
         #region IAttacker implementation
         public TimeSpan AttackCooldown { get; set; }
         public TimeSpan AttackDuration { get; set; }
-        public TimeSpan Timer { get; set; }
+        public TimeSpan AttackTimer { get; set; }
         public bool CanAttack { get; set; }
         public bool IsAttacking { get; set; }
 
@@ -85,7 +87,7 @@ namespace GameDevProject.Entities
 
             this.AttackCooldown = TimeSpan.FromSeconds(5);
             this.AttackDuration = TimeSpan.FromSeconds(2);
-            this.Timer = TimeSpan.Zero;
+            this.AttackTimer = TimeSpan.Zero;
 
             this.CanAttack = true;
             this.IsAttacking = false;
@@ -111,8 +113,6 @@ namespace GameDevProject.Entities
             this.ChangeState();
             //Update the animation
             this.playerState.Update(gameTime, animations);
-
-            Debug.WriteLine($"Player Health: {this.Health}");
         }
         #endregion
 
@@ -123,6 +123,7 @@ namespace GameDevProject.Entities
             this.animations.Add(new Animation(JUMP_FPS));
             this.animations.Add(new Animation(SPIN_FPS));
             this.animations.Add(new Animation(SLEEP_FPS));
+            this.animations.Add(new Animation(DEAD_FPS));
         }
 
         private void SetAnimations()
@@ -132,6 +133,7 @@ namespace GameDevProject.Entities
             this.animations[2].GetFramesFromTextureProperties(textures[2].Width, textures[2].Height, JUMP_FRAMES, 1);
             this.animations[3].GetFramesFromTextureProperties(textures[3].Width, textures[3].Height, SPIN_FRAMES, 1);
             this.animations[4].GetFramesFromTextureProperties(textures[4].Width, textures[4].Height, SLEEP_FRAMES, 1);
+            this.animations[5].GetFramesFromTextureProperties(textures[5].Width, textures[5].Height, DEAD_FRAMES, 1);
         }
 
         #region StateChanges
@@ -152,6 +154,10 @@ namespace GameDevProject.Entities
             else
             {
                 this.playerState = new PlayerIdleState();
+            }
+            if (isDead())
+            {
+                this.playerState = new PlayerDeadState();
             }
         }
 
@@ -176,6 +182,15 @@ namespace GameDevProject.Entities
         private bool IsSpinning()
         {
             if (this.IsAttacking == true)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool isDead()
+        {
+            if (this.Health <= 0)
             {
                 return true;
             }

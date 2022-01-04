@@ -195,6 +195,7 @@ namespace GameDevProject
             this.playerTextures.Add(this.Content.Load<Texture2D>("SpritesheetsPlayer/PlayerJump"));
             this.playerTextures.Add(this.Content.Load<Texture2D>("SpritesheetsPlayer/PlayerSpin"));
             this.playerTextures.Add(this.Content.Load<Texture2D>("SpritesheetsPlayer/PlayerSleep"));
+            this.playerTextures.Add(this.Content.Load<Texture2D>("SpritesheetsPlayer/PlayerDead"));
         }
 
         private void AddEnemyTextures()
@@ -202,6 +203,7 @@ namespace GameDevProject
             this.type1EnemyTextures = new List<Texture2D>();
 
             this.type1EnemyTextures.Add(this.Content.Load<Texture2D>("SpritesheetsPlayer/PlayerIdle"));
+            this.type1EnemyTextures.Add(this.Content.Load<Texture2D>("SpritesheetsPlayer/PlayerDead"));
         }
 
         private void AddWorldTextures()
