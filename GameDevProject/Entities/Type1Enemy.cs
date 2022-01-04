@@ -21,8 +21,10 @@ namespace GameDevProject.Entities
         private IType1EnemyState enemyState;
 
         private const int IDLE_FRAMES = 2;
+        private const int DEAD_FRAMES = 15;
 
         private const int IDLE_FPS = 5;
+        private const int DEAD_FPS = 15;
         #endregion
 
         #region Constructor
@@ -36,14 +38,16 @@ namespace GameDevProject.Entities
             this.InputReader = new Type1EnemyAI(player, this);
             this.Health = 1;
 
-            this.MovementManager = new MovementManager();
-            this.enemyState = new Type1EnemyIdleState();
             AddAnimations();
             SetAnimations();
+
+            this.MovementManager = new MovementManager();
+            this.enemyState = new Type1EnemyIdleState();
+            
         }
         #endregion
 
-        #region IMobale Implementation
+        #region IMovable Implementation
         public bool CanJump { get; set; }
         public bool IsJumping { get; set; }
 
@@ -67,21 +71,47 @@ namespace GameDevProject.Entities
         }
         public override void Update(GameTime gameTime, World world)
         {
+            this.Move(gameTime, world);
+            this.ChangeState();
             this.enemyState.Update(gameTime, this.animations);
-            Move(gameTime, world);
-
-            Debug.WriteLine($"Enemy Health: {this.Health}");
         }
         #endregion
 
+        #region Animations
         private void AddAnimations()
         {
             this.animations.Add(new Animation(IDLE_FPS));
+            this.animations.Add(new Animation(DEAD_FPS));
         }
 
         private void SetAnimations()
         {
             this.animations[0].GetFramesFromTextureProperties(textures[0].Width, textures[0].Height, IDLE_FRAMES, 1);
-        }        
+            this.animations[1].GetFramesFromTextureProperties(textures[1].Width, textures[1].Height, DEAD_FRAMES, 1);
+        }
+        #endregion
+
+        #region StateChanges
+        private void ChangeState()
+        {
+            if (IsDead())
+            {
+                this.enemyState = new Type1EnemyDeadState();
+            }
+            else
+            {
+                this.enemyState = new Type1EnemyIdleState();
+            }
+        }
+
+        private bool IsDead()
+        {
+            if (this.Health <= 0)
+            {
+                return true;
+            }
+            return false;
+        }
+        #endregion
     }
 }

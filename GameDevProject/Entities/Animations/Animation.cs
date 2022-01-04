@@ -9,7 +9,7 @@ namespace GameDevProject.Entities.Animations
     {
         public AnimationFrame CurrentFrame { get; set; }
         private List<AnimationFrame> frames;
-        private int counter;
+        private int counter = 0;
         private double secondCounter = 0;
         private int fps = 0;
 

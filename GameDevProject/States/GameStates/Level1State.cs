@@ -52,12 +52,12 @@ namespace GameDevProject.States.GameStates
             {
                 if(entity.Health <= 0)
                 {
-                    if(entity is Player)
-                    {
-                        Game1.State = State.GameOver;
-                    }
-                    levels[0].entities.Remove(entity);
-                    levels[0].collisionManager.entities.Remove(entity);
+                    //if(entity is Player)
+                    //{
+                    //    Game1.State = State.GameOver;
+                    //}
+                    //levels[0].entities.Remove(entity);
+                    //levels[0].collisionManager.entities.Remove(entity);
                 }
             }
         }
