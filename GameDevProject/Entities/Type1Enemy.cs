@@ -13,10 +13,12 @@ using System.Text;
 
 namespace GameDevProject.Entities
 {
-    class Type1Enemy : Entity , IMovable , IHitbox
+    class Type1Enemy : Entity , IMovable , IHitbox, IKillable
     {
         #region Enemy Properties
         public MovementManager MovementManager;
+
+        public DeathManager DeathManager;
 
         private IType1EnemyState enemyState;
 
@@ -24,12 +26,15 @@ namespace GameDevProject.Entities
         private const int DEAD_FRAMES = 15;
 
         private const int IDLE_FPS = 5;
-        private const int DEAD_FPS = 15;
+        private const int DEAD_FPS = 10;
         #endregion
 
         #region Constructor
         public Type1Enemy(List<Texture2D> textures, Player player)
         {
+            this.MovementManager = new MovementManager();
+            this.DeathManager = new DeathManager();
+
             this.textures = textures;
             this.Position = new Vector2(150, 10);
             this.MaxVelocity = new Vector2(1, 2);
@@ -38,12 +43,14 @@ namespace GameDevProject.Entities
             this.InputReader = new Type1EnemyAI(player, this);
             this.Health = 1;
 
+            this.IsDead = false;
+            this.DeathDuration = TimeSpan.FromSeconds(1.5);
+            this.DeathTimer = TimeSpan.Zero;
+
             AddAnimations();
             SetAnimations();
 
-            this.MovementManager = new MovementManager();
-            this.enemyState = new Type1EnemyIdleState();
-            
+            this.enemyState = new Type1EnemyIdleState();            
         }
         #endregion
 
@@ -56,11 +63,22 @@ namespace GameDevProject.Entities
         public Vector2 Velocity { get; set; }
         public Vector2 Acceleration { get; set; }
         public Rectangle HitboxRectangle { get; set; }
-        public IInputReader InputReader { get; set; }
+        public IInputReader InputReader { get; set; }       
 
         public void Move(GameTime gameTime, World world)
         {
             this.MovementManager.Move(this, gameTime, world);
+        }
+        #endregion
+
+        #region IKillable Implementation
+        public bool IsDead { get; set; }
+        public TimeSpan DeathTimer { get; set; }
+        public TimeSpan DeathDuration { get; set; }
+
+        public void Die(GameTime gameTime)
+        {
+            this.DeathManager.Die(this, gameTime);
         }
         #endregion
 
@@ -71,7 +89,11 @@ namespace GameDevProject.Entities
         }
         public override void Update(GameTime gameTime, World world)
         {
-            this.Move(gameTime, world);
+            if (!HasNoHealth())
+            {
+                this.Move(gameTime, world);
+            }
+            this.Die(gameTime);
             this.ChangeState();
             this.enemyState.Update(gameTime, this.animations);
         }
@@ -94,7 +116,7 @@ namespace GameDevProject.Entities
         #region StateChanges
         private void ChangeState()
         {
-            if (IsDead())
+            if (HasNoHealth())
             {
                 this.enemyState = new Type1EnemyDeadState();
             }
@@ -104,14 +126,14 @@ namespace GameDevProject.Entities
             }
         }
 
-        private bool IsDead()
+        private bool HasNoHealth()
         {
             if (this.Health <= 0)
             {
                 return true;
             }
             return false;
-        }
+        }        
         #endregion
     }
 }

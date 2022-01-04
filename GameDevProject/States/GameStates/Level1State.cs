@@ -50,15 +50,19 @@ namespace GameDevProject.States.GameStates
 
             foreach (Entity entity in entities)
             {
-                if(entity.Health <= 0)
+                var killable = entity as IKillable;
+                if (killable != null)
                 {
-                    if(entity is Player)
+                    if (killable.IsDead)
                     {
-                        Game1.State = State.GameOver;
+                        if (entity is Player)
+                        {
+                            Game1.State = State.GameOver;
+                        }
+                        level.entities.Remove(entity);
+                        level.collisionManager.entities.Remove(entity);
                     }
-                    level.entities.Remove(entity);
-                    level.collisionManager.entities.Remove(entity);
-                }
+                }                
             }
         }
     }
