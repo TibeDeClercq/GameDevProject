@@ -70,7 +70,7 @@ namespace GameDevProject.States.GameStates
                             }
                         }
                         level.entities.Remove(entity);
-                        level.collisionManager.entities.Remove(entity);
+                        level.collisionManager.Entities.Remove(entity);
                     }
                 }                
             }

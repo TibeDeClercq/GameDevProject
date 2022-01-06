@@ -8,30 +8,30 @@ namespace GameDevProject.Managers
 {
     class EntityCollisionManager
     {
-        public  List<Entity> entities;
-        private  Entity player;
+        public  List<Entity> Entities;
+        public  Entity Player;
 
         public EntityCollisionManager(List<Entity> entities)
         {
-            this.entities = entities;
+            this.Entities = entities;
 
             foreach(Entity entity in entities)
             {
                 if (entity.isPlayer)
                 {
-                    this.player = entity;
+                    this.Player = entity;
                 }
             }            
         }
 
         public  Entity CheckCollision()
         {
-            foreach (Entity entity in entities)
+            foreach (Entity entity in Entities)
             {
                 var movableEntity = entity as IMovable;
-                var movablePlayer = player as IMovable;
+                var movablePlayer = Player as IMovable;
 
-                if (movableEntity.HitboxRectangle.Intersects(movablePlayer.HitboxRectangle) && entity != player && entity.Health > 0)
+                if (movableEntity.HitboxRectangle.Intersects(movablePlayer.HitboxRectangle) && entity != Player && entity.Health > 0)
                 {
                     return entity;
                 }                

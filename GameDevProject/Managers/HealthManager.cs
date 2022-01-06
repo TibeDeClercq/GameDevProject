@@ -12,7 +12,7 @@ namespace GameDevProject.Managers
         public void UpdateHealth(EntityCollisionManager collisionManager)
         {
             Entity entity = collisionManager.CheckCollision();
-            Player player = collisionManager.player as Player;
+            Player player = collisionManager.Player as Player;
 
             if (entity != null)
             {
