@@ -18,7 +18,7 @@ namespace GameDevProject
     public enum State { MainMenu, Level1, Level1Complete, GameOverLevel1, Level2, Level2Complete, GameOverLevel2}
     public class Game1 : Game
     {
-        private bool devMode = true;
+        private bool devMode = false;
 
         private RenderTarget2D gameRenderTarget;
         public static int scale = 3;
@@ -34,7 +34,6 @@ namespace GameDevProject
 
         private SpriteFont font;
 
-        //hitbox stuff
         private HitboxManager hitboxManager;
 
         private IGameState gameState;
@@ -54,14 +53,11 @@ namespace GameDevProject
         {
             base.Initialize();
 
-            Game1.State = State.MainMenu;
-            this.gameState = new MainMenuState(font);
+            this.SetFirstScreen();
 
             this.SetRenderer();
-            //PhysicsManager.tiles = this.world1. GETTILES
-            this.hitboxManager = new HitboxManager();
 
-            this.hitboxManager.hitboxes = new List<Hitbox>(); //temp
+            this.DevView();
         }
 
         protected override void LoadContent()
@@ -79,15 +75,10 @@ namespace GameDevProject
                 this.Exit();
             }
 
-            //hitbox stuff
-            if (this.ActiveLevel != null)
-            {
-                this.hitboxManager.AddWantedHitboxes(this.ActiveLevel.entities, this.ActiveLevel.world, graphics);
-            }
+            this.DevViewUpdate();
 
             this.ChangeGameState();
 
-            //Update depending on gamestate
             this.gameState.Update(this.ActiveLevel, gameTime);
 
             base.Update(gameTime);
@@ -105,6 +96,38 @@ namespace GameDevProject
         }
 
         #region Initialize
+        private void SetFirstScreen()
+        {
+            Game1.State = State.MainMenu;
+            this.gameState = new MainMenuState(font);
+            this.LoadMainMenu();
+        }
+        
+        private void DevView()
+        {
+            if (devMode)
+            {
+                this.hitboxManager = new HitboxManager();
+                this.hitboxManager.hitboxes = new List<Hitbox>();
+            }
+        }
+
+        private void LoadMainMenu()
+        {
+            string[,] map = {
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "A2", "A2", "A2", "A2", "A2", "A2","A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2","A2", "A2", "A2", "A2", "A2", "A2"},
+                                { "E3", "E3", "E3", "E3", "E3", "E3","E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3","E3", "E3", "E3", "E3", "E3", "E3"}
+                             };
+
+            this.ActiveLevel = new Level(this.worldTileset, map);
+        }
+
         private void LoadLevel1()
         {
             List<Entity> entities = new List<Entity>();
@@ -156,12 +179,41 @@ namespace GameDevProject
 
             this.ActiveLevel = new Level(this.worldTileset, entities, map, healthManager, collisionManager);
         }
+        private void LoadGameOver()
+        {
+            string[,] map = {
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "A2", "A2", "A2", "A2", "A2", "A2","A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2","A2", "A2", "A2", "A2", "A2", "A2"},
+                                { "E3", "E3", "E3", "E3", "E3", "E3","E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3","E3", "E3", "E3", "E3", "E3", "E3"}
+                             };
 
+            this.ActiveLevel = new Level(this.worldTileset, map);
+        }
+        private void LoadLevelCompleted()
+        {
+            string[,] map = {
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "A2", "A2", "A2", "A2", "A2", "A2","A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2","A2", "A2", "A2", "A2", "A2", "A2"},
+                                { "E3", "E3", "E3", "E3", "E3", "E3","E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3","E3", "E3", "E3", "E3", "E3", "E3"}
+                             };
+
+            this.ActiveLevel = new Level(this.worldTileset, map);
+        }
         private void ClearLevel()
         {
             this.ActiveLevel = null;
         }
-        private void SetRenderer() //aanpassen per wereld
+        private void SetRenderer()
         {
             this.gameRenderTarget = new RenderTarget2D(this.GraphicsDevice, this.gameState.GetWindowWidth(this.ActiveLevel), this.gameState.GetWindowHeight(this.ActiveLevel));
 
@@ -216,6 +268,13 @@ namespace GameDevProject
         #endregion
 
         #region Update
+        private void DevViewUpdate()
+        {
+            if (this.ActiveLevel != null && devMode)
+            {
+                this.hitboxManager.AddWantedHitboxes(this.ActiveLevel.entities, this.ActiveLevel.world, graphics);
+            }
+        }
         private void ChangeGameState()
         {
             switch (Game1.State)
@@ -224,6 +283,7 @@ namespace GameDevProject
                     if (this.gameState.GetType() != typeof(MainMenuState))
                     {
                         this.ClearLevel();
+                        this.LoadMainMenu();
                         this.gameState = new MainMenuState(font);
                         this.SetRenderer();
                     }
@@ -241,6 +301,7 @@ namespace GameDevProject
                     if (this.gameState.GetType() != typeof(Level1CompletedState))
                     {
                         this.ClearLevel();
+                        this.LoadLevelCompleted();
                         this.gameState = new Level1CompletedState(font);
                         this.SetRenderer();
                     }
@@ -249,6 +310,7 @@ namespace GameDevProject
                     if (this.gameState.GetType() != typeof(GameOverLevel1State))
                     {
                         this.ClearLevel();
+                        this.LoadGameOver();
                         this.gameState = new GameOverLevel1State(font);
                         this.SetRenderer();
                     }
@@ -266,6 +328,7 @@ namespace GameDevProject
                     if (this.gameState.GetType() != typeof(Level2CompletedState))
                     {
                         this.ClearLevel();
+                        this.LoadLevelCompleted();
                         this.gameState = new Level2CompletedState(font);
                         this.SetRenderer();
                     }
@@ -274,6 +337,7 @@ namespace GameDevProject
                     if (this.gameState.GetType() != typeof(GameOverLevel2State))
                     {
                         this.ClearLevel();
+                        this.LoadGameOver();
                         this.gameState = new GameOverLevel2State(font);
                         this.SetRenderer();
                     }
@@ -291,13 +355,9 @@ namespace GameDevProject
             this.GraphicsDevice.Clear(Color.CornflowerBlue);
             this.spriteBatch.Begin();
 
-            //Draw world and entities depending on gamestate
             this.gameState.Draw(this.ActiveLevel, this.spriteBatch);
 
-            if(devMode == true && ActiveLevel != null)
-            {
-                this.hitboxManager.DrawHitboxes(spriteBatch);
-            }
+            this.DrawDevView();
 
             this.spriteBatch.End();
         }
@@ -309,6 +369,14 @@ namespace GameDevProject
             this.spriteBatch.Draw(this.gameRenderTarget, new Rectangle(0, 0, Game1.scale * this.gameState.GetWindowWidth(this.ActiveLevel), Game1.scale * this.gameState.GetWindowHeight(this.ActiveLevel)), Color.White);
             
             this.spriteBatch.End();
+        }
+
+        private void DrawDevView()
+        {
+            if (devMode == true && ActiveLevel != null)
+            {
+                this.hitboxManager.DrawHitboxes(spriteBatch);
+            }
         }
         #endregion
     }

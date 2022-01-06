@@ -59,6 +59,8 @@ namespace GameDevProject.States.GameStates
 
         public void Draw(Level level, SpriteBatch spriteBatch)
         {
+            level.world.Draw(spriteBatch);
+
             spriteBatch.DrawString(this.font, "Main menu", new Vector2(70, 10), Color.Black);
 
             foreach (Button button in buttons)
@@ -69,12 +71,12 @@ namespace GameDevProject.States.GameStates
 
         public int GetWindowHeight(Level level)
         {
-            return 100;
+            return level.world.GetWorldHeight(); //getWorldHeight
         }
 
         public int GetWindowWidth(Level level)
         {
-            return 200;
+            return level.world.GetWorldWidth(); //getWorldHeight
         }
     }
 }

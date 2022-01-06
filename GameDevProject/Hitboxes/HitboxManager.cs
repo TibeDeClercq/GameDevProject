@@ -58,16 +58,19 @@ namespace GameDevProject.Hitboxes
             this.hitboxes = new List<Hitbox>();
             this.items = new List<IHitbox>();
 
-            foreach (IHitbox entity in entities)
+            if(entities != null)
             {
-                items.Add(entity);
-            }
-            foreach (IHitbox tile in world.GetTiles())
-            {
-                Tile Tile = (Tile)tile;
-                if (Tile.IsTopCollide || Tile.IsRightCollide || Tile.IsLeftCollide || Tile.IsBottomCollide || Tile.IsFinishCollide)
+                foreach (IHitbox entity in entities)
                 {
-                    items.Add(tile);
+                    items.Add(entity);
+                }
+                foreach (IHitbox tile in world.GetTiles())
+                {
+                    Tile Tile = (Tile)tile;
+                    if (Tile.IsTopCollide || Tile.IsRightCollide || Tile.IsLeftCollide || Tile.IsBottomCollide || Tile.IsFinishCollide)
+                    {
+                        items.Add(tile);
+                    }
                 }
             }
 
