@@ -72,12 +72,6 @@ namespace GameDevProject.Entities
         public bool IsDead { get; set; }
         public TimeSpan DeathTimer { get; set; }
         public TimeSpan DeathDuration { get; set; }
-        public DeathManager DeathManager { get; set; }
-
-        public void Die(GameTime gameTime)
-        {
-            //this.DeathManager.Die(this, gameTime);
-        }
         #endregion
 
         #region Player constructors
@@ -87,7 +81,6 @@ namespace GameDevProject.Entities
             this.InputReader = inputReader;
             this.MovementManager = new MovementManager();
             this.AttackManager = new AttackManager();
-            this.DeathManager = new DeathManager();
 
             this.CanJump = true;
 
@@ -137,6 +130,7 @@ namespace GameDevProject.Entities
         }
         #endregion
 
+        #region Animation Methods
         private void AddAnimations()
         {
             this.animations.Add(new Animation(IDLE_FPS));
@@ -156,6 +150,7 @@ namespace GameDevProject.Entities
             this.animations[4].GetFramesFromTextureProperties(textures[4].Width, textures[4].Height, SLEEP_FRAMES, 1);
             this.animations[5].GetFramesFromTextureProperties(textures[5].Width, textures[5].Height, DEAD_FRAMES, 1);
         }
+        #endregion
 
         #region StateChanges
         private void ChangeState()

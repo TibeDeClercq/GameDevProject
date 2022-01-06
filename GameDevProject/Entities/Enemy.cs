@@ -10,27 +10,24 @@ namespace GameDevProject.Entities
 {
     class Enemy : Entity, IMovable, IHitbox, IKillable
     {
+        #region Properties
         public MovementManager MovementManager;
         protected IEnemyState enemyState;
+        #endregion
 
+        #region Constructor
         public Enemy()
         {
             this.enemyState = new EnemyIdleState();
             this.MovementManager = new MovementManager();
-            this.DeathManager = new DeathManager();
             this.IsDead = false;
         }
+        #endregion 
 
         #region IKillable Implementation
         public bool IsDead { get; set; }
         public TimeSpan DeathTimer { get; set; }
         public TimeSpan DeathDuration { get; set; }
-        public DeathManager DeathManager { get; set; }
-
-        public void Die(GameTime gameTime)
-        {
-            //this.DeathManager.Die(this, gameTime);
-        }
         #endregion
 
         #region IMovable implementation

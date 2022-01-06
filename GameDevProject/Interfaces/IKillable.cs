@@ -10,6 +10,5 @@ namespace GameDevProject.Interfaces
         public bool IsDead { get; set; }
         public TimeSpan DeathTimer { get; set; }
         public TimeSpan DeathDuration { get; set; }
-        public void Die(GameTime gameTime);
     }
 }
