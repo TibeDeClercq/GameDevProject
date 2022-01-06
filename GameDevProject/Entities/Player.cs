@@ -36,7 +36,7 @@ namespace GameDevProject.Entities
         private const int JUMP_FPS = 10;
         private const int SPIN_FPS = SPIN_FRAMES / 2; //fixen
         private const int SLEEP_FPS = 10;
-        private const int DEAD_FPS = 10;
+        private const int DEAD_FPS = 11;
         #endregion
 
         #region IMovable implementation
@@ -85,6 +85,7 @@ namespace GameDevProject.Entities
         #region Player constructors
         public Player(List<Texture2D> textures, IInputReader inputReader)
         {
+            this.isPlayer = true;
             this.textures = textures;
             this.InputReader = inputReader;
             this.MovementManager = new MovementManager();

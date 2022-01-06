@@ -121,13 +121,13 @@ namespace GameDevProject
                                 { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
                                 { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
                                 { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
-                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
+                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "F4", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
                                 { "A2", "A2", "A2", "A2", "A2", "A2","A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2","A2", "A2", "A2", "A2", "A2", "A2"},
                                 { "E3", "E3", "E3", "E3", "E3", "E3","E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3","E3", "E3", "E3", "E3", "E3", "E3"}
                              };
 
             HealthManager healthManager = new HealthManager();
-            EntityCollisionManager collisionManager = new EntityCollisionManager(entities, player);
+            EntityCollisionManager collisionManager = new EntityCollisionManager(entities);
 
             this.ActiveLevel = new Level(this.worldTileset, entities, map, healthManager, collisionManager);
         }
@@ -152,7 +152,7 @@ namespace GameDevProject
                              };
 
             HealthManager healthManager = new HealthManager();
-            EntityCollisionManager collisionManager = new EntityCollisionManager(entities, player);
+            EntityCollisionManager collisionManager = new EntityCollisionManager(entities);
 
             this.ActiveLevel = new Level(this.worldTileset, entities, map, healthManager, collisionManager);
         }

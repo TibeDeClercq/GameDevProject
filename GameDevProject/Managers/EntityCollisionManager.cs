@@ -9,12 +9,19 @@ namespace GameDevProject.Managers
     class EntityCollisionManager
     {
         public  List<Entity> entities;
-        public  Entity player;
+        private  Entity player;
 
-        public EntityCollisionManager(List<Entity> entities, Entity player)
+        public EntityCollisionManager(List<Entity> entities)
         {
             this.entities = entities;
-            this.player = player;
+
+            foreach(Entity entity in entities)
+            {
+                if (entity.isPlayer)
+                {
+                    this.player = entity;
+                }
+            }            
         }
 
         public  Entity CheckCollision()
