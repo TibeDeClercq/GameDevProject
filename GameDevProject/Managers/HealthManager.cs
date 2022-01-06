@@ -16,8 +16,6 @@ namespace GameDevProject.Managers
 
             if (entity != null)
             {
-                bool collidesFromTop = collisionManager.CheckCollisionFromTop(entity);
-
                 if (entity.Health > 0 && player.IsAttacking)
                 {
                     entity.Health--;
@@ -28,6 +26,11 @@ namespace GameDevProject.Managers
                     {
                         player.Health--;
                     }
+                }
+
+                if (entity is Player && entity.Health > 0)
+                {
+                    entity.Health--;
                 }
             }
         }

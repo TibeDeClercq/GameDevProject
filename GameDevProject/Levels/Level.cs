@@ -23,7 +23,7 @@ namespace GameDevProject.Levels
         {
             this.world = new World(worldTileSet, map);
             this.healthManager = new HealthManager();
-            this.collisionManager = new EntityCollisionManager(entities);
+            this.collisionManager = new EntityCollisionManager(entities, this.world);
 
             this.entities = new List<Entity>();
             foreach (Entity entity in entities)

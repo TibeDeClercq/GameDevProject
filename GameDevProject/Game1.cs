@@ -134,11 +134,8 @@ namespace GameDevProject
         {
             List<Entity> entities = new List<Entity>();
 
-            Player player = new Player(this.playerTextures, new KeyboardReader());
-            Type1Enemy type1Enemy = new Type1Enemy(this.type1EnemyTextures, player);            
-
-            entities.Add(type1Enemy);
-            entities.Add(player);
+            Player player = new Player(this.playerTextures, new KeyboardReader(), new Vector2(1, 6));
+            Type1Enemy type1Enemy = new Type1Enemy(this.type1EnemyTextures, player, new Vector2(10, 6));
 
             string[,] map = {
                                 { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
@@ -149,7 +146,10 @@ namespace GameDevProject
                                 { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "F4", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
                                 { "A2", "A2", "A2", "A2", "A2", "A2","A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2","A2", "A2", "A2", "A2", "A2", "A2"},
                                 { "E3", "E3", "E3", "E3", "E3", "E3","E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3","E3", "E3", "E3", "E3", "E3", "E3"}
-                             };
+                             };            
+
+            entities.Add(type1Enemy);
+            entities.Add(player);
 
             this.ActiveLevel = new Level(this.worldTileset, entities, map);
         }
@@ -158,8 +158,8 @@ namespace GameDevProject
         {
             List<Entity> entities = new List<Entity>();
 
-            Player player = new Player(this.playerTextures, new KeyboardReader());
-            Type2Enemy type2enemy = new Type2Enemy(this.type2EnemyTextures, player);
+            Player player = new Player(this.playerTextures, new KeyboardReader(), new Vector2(2, 6));
+            Type2Enemy type2enemy = new Type2Enemy(this.type2EnemyTextures, player, new Vector2(10, 6));
 
             entities.Add(type2enemy);
             entities.Add(player);

@@ -1,5 +1,6 @@
 ﻿using GameDevProject.Entities;
 using GameDevProject.Interfaces;
+using GameDevProject.Map;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,12 +9,14 @@ namespace GameDevProject.Managers
 {
     class EntityCollisionManager
     {
-        public  List<Entity> Entities;
-        public  Entity Player;
+        private World World;
+        public List<Entity> Entities;
+        public Entity Player;
 
-        public EntityCollisionManager(List<Entity> entities)
+        public EntityCollisionManager(List<Entity> entities, World world)
         {
             this.Entities = entities;
+            this.World = world;
 
             foreach(Entity entity in entities)
             {
@@ -36,12 +39,20 @@ namespace GameDevProject.Managers
                     return entity;
                 }                
             }
-            return null;
-        }
 
-        public  bool CheckCollisionFromTop(Entity entity)
-        {
-            return true;
+            foreach (Tile tile in this.World.GetTiles())
+            {
+                if (tile.IsTrapCollide)
+                {
+                    IMovable movable = Player as IMovable;
+                    if (movable.HitboxRectangle.Intersects(tile.HitboxRectangle))
+                    {
+                        return Player;
+                    }
+                }
+            }
+
+            return null;
         }
     }
 }

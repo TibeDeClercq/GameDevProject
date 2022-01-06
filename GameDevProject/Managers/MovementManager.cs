@@ -16,7 +16,6 @@ namespace GameDevProject.Managers
         public void Move(IMovable movable, GameTime gameTime, World world)
         {
             this.CheckLevelComplete(movable, world);
-            this.CheckTrapCollision(movable, world);
 
             var input = movable.InputReader.ReadInput();
 
@@ -82,22 +81,6 @@ namespace GameDevProject.Managers
                             default:
                                 break;
                         }
-                    }
-                }
-            }
-        }
-
-        private void CheckTrapCollision(IMovable movable, World world)
-        {
-            Entity entity = movable as Entity;
-
-            foreach (Tile tile in world.GetTiles())
-            {
-                if (tile.IsTrapCollide && entity is Player)
-                {
-                    if (movable.HitboxRectangle.Intersects(tile.HitboxRectangle))
-                    {
-                        entity.Health = 0;
                     }
                 }
             }

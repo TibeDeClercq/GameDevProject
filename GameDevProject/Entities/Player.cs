@@ -83,7 +83,7 @@ namespace GameDevProject.Entities
         #endregion
 
         #region Player constructors
-        public Player(List<Texture2D> textures, IInputReader inputReader)
+        public Player(List<Texture2D> textures, IInputReader inputReader, Vector2 position)
         {
             this.textures = textures;
             this.InputReader = inputReader;
@@ -93,10 +93,10 @@ namespace GameDevProject.Entities
 
             this.CanJump = true;
 
-            this.Position = new Vector2(40, 10);
             this.MaxVelocity = new Vector2(1, 1); //horizontal , vertical
             this.Acceleration = new Vector2(0, 0);
             this.HitboxRectangle = new Rectangle(0, 0, 45, 45);
+            this.Position = new Vector2((position.X * 16) - 16, (position.Y * 16) - this.HitboxRectangle.Height);
             this.Velocity = new Vector2(0,0);
             this.Health = 1;
 
