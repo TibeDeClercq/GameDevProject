@@ -1,16 +1,23 @@
 ﻿using GameDevProject.Entities.Animations;
 using GameDevProject.Input;
 using GameDevProject.Input.EnemyAI;
+using GameDevProject.Interfaces;
+using GameDevProject.Managers;
+using GameDevProject.Map;
+using GameDevProject.States.EnemyStates;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace GameDevProject.Entities
 {
-    class Type1Enemy : Enemy
+    class Type2Enemy : Enemy
     {
         #region Enemy Properties
+        private Type2EnemyAI enemyAI;
+
         private const int WALK_FRAMES = 7;
         private const int DEAD_FRAMES = 15;
 
@@ -19,23 +26,30 @@ namespace GameDevProject.Entities
         #endregion
 
         #region Constructor
-        public Type1Enemy(List<Texture2D> textures, Player player)
-        {           
+        public Type2Enemy(List<Texture2D> textures, Player player)
+        {
             this.textures = textures;
             this.Position = new Vector2(150, 10);
             this.MaxVelocity = new Vector2(1, 2);
             this.Velocity = new Vector2(0, 0);
             this.HitboxRectangle = new Rectangle((int)this.Position.X, (int)this.Position.Y, 32, 32);
-            this.InputReader = new Type1EnemyAI(player, this);
+            this.enemyAI = new Type2EnemyAI(player, this);
+            this.InputReader = enemyAI;
             this.Health = 1;
-            
+
             this.DeathDuration = TimeSpan.FromSeconds(1);
             this.DeathTimer = TimeSpan.Zero;
 
             AddAnimations();
-            SetAnimations();                        
+            SetAnimations();
         }
-        #endregion        
+        #endregion
+
+        public override void Update(GameTime gameTime, World world)
+        {
+            base.Update(gameTime, world);
+            this.enemyAI.TryJump(gameTime);
+        }
 
         #region Animations
         private void AddAnimations()

@@ -1,20 +1,22 @@
 ﻿using GameDevProject.Entities;
 using GameDevProject.Interfaces;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace GameDevProject.Input
+namespace GameDevProject.Input.EnemyAI
 {
-    class Type1EnemyAI : IInputReader
+    class Type2EnemyAI : EnemyAI, IInputReader
     {
-        private Player player;
-        private Type1Enemy enemy;
+        #region Properties
+        private TimeSpan JumpRate = TimeSpan.FromSeconds(1.5);
+        private TimeSpan Timer = TimeSpan.Zero;
 
-        private const int MOVEMENT_LIMITER = 2;
-        private int timer = 0;
+        private bool canJump = false;
+        #endregion
 
-        public Type1EnemyAI(Player player, Type1Enemy enemy)
+        public Type2EnemyAI(Player player, Type2Enemy enemy)
         {
             this.player = player;
             this.enemy = enemy;
@@ -44,23 +46,28 @@ namespace GameDevProject.Input
             }
             timer++;
 
+            if (canJump)
+            {
+                inputParameters.DirectionInput.Y = 1;
+            }
+
             return inputParameters;
         }
 
-        private int LocatePlayer(Player player, Type1Enemy enemy)
+        #region Private Methods
+        public void TryJump(GameTime gameTime)
         {
-            if (player.Position.X - enemy.Position.X > 0.01f)
+            if (JumpRate > Timer)
             {
-                return 1;
-            }
-            else if (enemy.Position.X - player.Position.X > 0.01f)
-            {
-                return -1;
+                Timer += gameTime.ElapsedGameTime;
+                canJump = false;
             }
             else
             {
-                return 0;
+                Timer = TimeSpan.Zero;
+                canJump = true;                
             }
         }
+        #endregion
     }
 }

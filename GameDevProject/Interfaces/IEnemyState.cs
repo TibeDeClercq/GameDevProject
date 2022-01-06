@@ -7,7 +7,7 @@ using System.Text;
 
 namespace GameDevProject.Interfaces
 {
-    interface IType1EnemyState
+    interface IEnemyState
     {
         public void Draw(SpriteBatch spriteBatch, List<Texture2D> textures, Vector2 position, List<Animation> animations, SpriteEffects spriteEffects);
         public void Update(GameTime gameTime, List<Animation> animations);

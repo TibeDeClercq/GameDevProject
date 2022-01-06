@@ -17,7 +17,7 @@ namespace GameDevProject.Managers
 
             foreach(Entity entity in entities)
             {
-                if (entity.isPlayer)
+                if (entity is Player)
                 {
                     this.Player = entity;
                 }

@@ -85,7 +85,6 @@ namespace GameDevProject.Entities
         #region Player constructors
         public Player(List<Texture2D> textures, IInputReader inputReader)
         {
-            this.isPlayer = true;
             this.textures = textures;
             this.InputReader = inputReader;
             this.MovementManager = new MovementManager();

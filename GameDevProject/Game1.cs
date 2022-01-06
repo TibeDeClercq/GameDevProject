@@ -12,6 +12,7 @@ using System.Diagnostics;
 using GameDevProject.Levels;
 using GameDevProject.States.GameStates;
 using GameDevProject.Hitboxes;
+using GameDevProject.Input.EnemyAI;
 
 namespace GameDevProject
 {
@@ -28,6 +29,7 @@ namespace GameDevProject
 
         private List<Texture2D> playerTextures;
         private List<Texture2D> type1EnemyTextures;
+        private List<Texture2D> type2EnemyTextures;
 
         private Level ActiveLevel;
         private Texture2D worldTileset;
@@ -157,7 +159,9 @@ namespace GameDevProject
             List<Entity> entities = new List<Entity>();
 
             Player player = new Player(this.playerTextures, new KeyboardReader());
+            Type2Enemy type2enemy = new Type2Enemy(this.type2EnemyTextures, player);
 
+            entities.Add(type2enemy);
             entities.Add(player);
 
             string[,] map = {
@@ -245,9 +249,12 @@ namespace GameDevProject
         private void AddEnemyTextures()
         {
             this.type1EnemyTextures = new List<Texture2D>();
-
             this.type1EnemyTextures.Add(this.Content.Load<Texture2D>("SpritesheetsEnemies/Enemy1Walk"));
             this.type1EnemyTextures.Add(this.Content.Load<Texture2D>("SpritesheetsEnemies/Enemy1Dead"));
+
+            this.type2EnemyTextures = new List<Texture2D>();
+            this.type2EnemyTextures.Add(this.Content.Load<Texture2D>("SpritesheetsEnemies/Enemy1Walk"));
+            this.type2EnemyTextures.Add(this.Content.Load<Texture2D>("SpritesheetsEnemies/Enemy1Dead"));
         }
 
         private void AddWorldTextures()

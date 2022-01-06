@@ -93,7 +93,7 @@ namespace GameDevProject.Managers
 
             foreach (Tile tile in world.GetTiles())
             {
-                if (tile.IsTrapCollide && entity.isPlayer)
+                if (tile.IsTrapCollide && entity is Player)
                 {
                     if (movable.HitboxRectangle.Intersects(tile.HitboxRectangle))
                     {

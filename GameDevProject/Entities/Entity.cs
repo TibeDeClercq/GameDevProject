@@ -1,9 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
-using System.Text;
-
 using GameDevProject.Interfaces;
 using GameDevProject.Entities.Animations;
 using GameDevProject.Map;
@@ -15,7 +12,7 @@ namespace GameDevProject.Entities
         protected List<Texture2D> textures;
         protected List<Animation> animations = new List<Animation>();
         protected IInputReader inputReader;
-        public bool isPlayer = false;
+
         public Vector2 Position { get; set; }
         public int Health { get; set; }
 
