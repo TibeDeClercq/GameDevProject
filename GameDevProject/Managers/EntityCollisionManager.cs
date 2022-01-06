@@ -3,16 +3,20 @@ using GameDevProject.Interfaces;
 using GameDevProject.Map;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace GameDevProject.Managers
 {
     class EntityCollisionManager
     {
+        #region Properties
         private World World;
         public List<Entity> Entities;
         public Entity Player;
+        #endregion
 
+        #region Constructor
         public EntityCollisionManager(List<Entity> entities, World world)
         {
             this.Entities = entities;
@@ -26,26 +30,27 @@ namespace GameDevProject.Managers
                 }
             }            
         }
+        #endregion
 
-        public  Entity CheckCollision()
+        #region Collision Methods
+        public Entity CheckCollision()
         {
             foreach (Entity entity in Entities)
             {
-                var movableEntity = entity as IMovable;
                 var movablePlayer = Player as IMovable;
-
+                var movableEntity = entity as IMovable;
                 if (movableEntity.HitboxRectangle.Intersects(movablePlayer.HitboxRectangle) && entity != Player && entity.Health > 0)
                 {
                     return entity;
                 }                
             }
 
-            foreach (Tile tile in this.World.GetTiles())
+            foreach (Tile tile in World.GetTiles())
             {
                 if (tile.IsTrapCollide)
                 {
-                    IMovable movable = Player as IMovable;
-                    if (movable.HitboxRectangle.Intersects(tile.HitboxRectangle))
+                    var movablePlayer = Player as IMovable;
+                    if (movablePlayer.HitboxRectangle.Intersects(tile.HitboxRectangle))
                     {
                         return Player;
                     }
@@ -54,5 +59,6 @@ namespace GameDevProject.Managers
 
             return null;
         }
+        #endregion
     }
 }

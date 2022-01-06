@@ -10,9 +10,8 @@ namespace GameDevProject.Entities
 {
     class Enemy : Entity, IMovable, IHitbox, IKillable
     {
-        protected IEnemyState enemyState;
         public MovementManager MovementManager;
-        public DeathManager DeathManager;
+        protected IEnemyState enemyState;
 
         public Enemy()
         {
@@ -21,6 +20,36 @@ namespace GameDevProject.Entities
             this.DeathManager = new DeathManager();
             this.IsDead = false;
         }
+
+        #region IKillable Implementation
+        public bool IsDead { get; set; }
+        public TimeSpan DeathTimer { get; set; }
+        public TimeSpan DeathDuration { get; set; }
+        public DeathManager DeathManager { get; set; }
+
+        public void Die(GameTime gameTime)
+        {
+            //this.DeathManager.Die(this, gameTime);
+        }
+        #endregion
+
+        #region IMovable implementation
+        public bool CanJump { get; set; }
+        public bool IsJumping { get; set; }
+
+        public Vector2 MaxVelocity { get; set; }
+        public IInputReader InputReader { get; set; }
+        public SpriteEffects SpriteEffects { get; set; }
+        public Vector2 Velocity { get; set; }
+        public Vector2 Acceleration { get; set; }
+        public Rectangle HitboxRectangle { get; set; }
+
+        public void Move(GameTime gameTime, World world)
+        {
+            this.MovementManager.Move(this, gameTime, world);
+        }
+
+        #endregion
 
         #region Enemy Methods
         public override void Draw(SpriteBatch spriteBatch)
@@ -33,37 +62,9 @@ namespace GameDevProject.Entities
             {
                 this.Move(gameTime, world);
             }
-            this.Die(gameTime);
+            //this.Die(gameTime);
             this.ChangeState();
             this.enemyState.Update(gameTime, this.animations);
-        }
-        #endregion
-
-        #region IMovable Implementation
-        public bool CanJump { get; set; }
-        public bool IsJumping { get; set; }
-
-        public Vector2 MaxVelocity { get; set; }
-        public SpriteEffects SpriteEffects { get; set; }
-        public Vector2 Velocity { get; set; }
-        public Vector2 Acceleration { get; set; }
-        public Rectangle HitboxRectangle { get; set; }
-        public IInputReader InputReader { get; set; }
-
-        public void Move(GameTime gameTime, World world)
-        {
-            this.MovementManager.Move(this, gameTime, world);
-        }
-        #endregion
-
-        #region IKillable Implementation
-        public bool IsDead { get; set; }
-        public TimeSpan DeathTimer { get; set; }
-        public TimeSpan DeathDuration { get; set; }
-
-        public void Die(GameTime gameTime)
-        {
-            this.DeathManager.Die(this, gameTime);
         }
         #endregion
 

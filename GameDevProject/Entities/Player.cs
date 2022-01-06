@@ -16,11 +16,8 @@ namespace GameDevProject.Entities
     class Player : Entity, IMovable, IAttacker, IHitbox, IKillable
     {
         #region Player properties
-        public MovementManager MovementManager;
-
         public AttackManager AttackManager;
-
-        public DeathManager DeathManager;
+        public MovementManager MovementManager;
 
         private IPlayerState playerState;
 
@@ -69,16 +66,17 @@ namespace GameDevProject.Entities
         {
             this.AttackManager.Attack(this, gameTime);
         }
-        #endregion
+        #endregion        
 
         #region IKillable Implementation
         public bool IsDead { get; set; }
         public TimeSpan DeathTimer { get; set; }
         public TimeSpan DeathDuration { get; set; }
+        public DeathManager DeathManager { get; set; }
 
         public void Die(GameTime gameTime)
         {
-            DeathManager.Die(this, gameTime);
+            //this.DeathManager.Die(this, gameTime);
         }
         #endregion
 
@@ -132,7 +130,7 @@ namespace GameDevProject.Entities
                 this.Attack(gameTime);
             }
             this.Move(gameTime, world);
-            this.Die(gameTime);
+            //this.Die(gameTime);
             this.ChangeState();
             //Update the animation
             this.playerState.Update(gameTime, animations);

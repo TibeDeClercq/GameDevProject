@@ -15,7 +15,7 @@ namespace GameDevProject.Managers
             {
                 attacker.AttackTimer += gameTime.ElapsedGameTime;
 
-                Debug.WriteLine($"attack done in {attacker.AttackDuration - attacker.AttackTimer} seconds");
+                //Debug.WriteLine($"attack done in {attacker.AttackDuration - attacker.AttackTimer} seconds");
 
                 if (attacker.AttackTimer >= attacker.AttackDuration)
                 {
@@ -43,7 +43,7 @@ namespace GameDevProject.Managers
                         attacker.AttackTimer = TimeSpan.Zero;
                     }
 
-                    Debug.WriteLine($"attack ready in {attacker.AttackCooldown - attacker.AttackTimer} seconds");
+                    //Debug.WriteLine($"attack ready in {attacker.AttackCooldown - attacker.AttackTimer} seconds");
 
                 }
             }

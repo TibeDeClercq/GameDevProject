@@ -20,8 +20,7 @@ namespace GameDevProject.States.GameStates
                 entity.Update(gameTime, level.world);
             }
 
-            level.healthManager.UpdateHealth(level.collisionManager);
-            ClearDeadEntities(level);
+            level.healthManager.UpdateHealth(level ,gameTime);
         }
 
         public void Draw(Level level, SpriteBatch spriteBatch)
@@ -42,38 +41,6 @@ namespace GameDevProject.States.GameStates
         public int GetWindowWidth(Level level)
         {
             return level.world.GetWorldWidth(); //getWorldWidth
-        }
-
-        private void ClearDeadEntities(Level level)
-        {
-            var entities = new List<Entity>(level.entities);
-
-            foreach (Entity entity in entities)
-            {
-                var killable = entity as IKillable;
-                if (killable != null)
-                {
-                    if (killable.IsDead)
-                    {
-                        if (entity is Player)
-                        {
-                            switch (Game1.State)
-                            {
-                                case State.Level1:
-                                    Game1.State = State.GameOverLevel1;
-                                    break;
-                                case State.Level2:
-                                    Game1.State = State.GameOverLevel2;
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
-                        level.entities.Remove(entity);
-                        level.collisionManager.Entities.Remove(entity);
-                    }
-                }                
-            }
         }
     }
 }

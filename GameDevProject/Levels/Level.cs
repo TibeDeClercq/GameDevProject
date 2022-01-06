@@ -22,8 +22,8 @@ namespace GameDevProject.Levels
         public Level(Texture2D worldTileSet, List<Entity> entities, string[,] map)
         {
             this.world = new World(worldTileSet, map);
-            this.healthManager = new HealthManager();
             this.collisionManager = new EntityCollisionManager(entities, this.world);
+            this.healthManager = new HealthManager(this.collisionManager);            
 
             this.entities = new List<Entity>();
             foreach (Entity entity in entities)

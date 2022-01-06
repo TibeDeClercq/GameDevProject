@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using GameDevProject.Interfaces;
 using GameDevProject.Entities.Animations;
 using GameDevProject.Map;
+using System;
+using GameDevProject.Managers;
 
 namespace GameDevProject.Entities
 {

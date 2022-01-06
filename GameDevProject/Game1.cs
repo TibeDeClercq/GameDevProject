@@ -19,7 +19,7 @@ namespace GameDevProject
     public enum State { MainMenu, Level1, Level1Complete, GameOverLevel1, Level2, Level2Complete, GameOverLevel2}
     public class Game1 : Game
     {
-        private bool devMode = false;
+        private bool devMode = true;
 
         private RenderTarget2D gameRenderTarget;
         public static int scale = 3;
