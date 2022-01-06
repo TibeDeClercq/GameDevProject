@@ -19,13 +19,13 @@ namespace GameDevProject.Entities
         #endregion
 
         #region Constructor
-        public Type1Enemy(List<Texture2D> textures, Player player, Vector2 position)
+        public Type1Enemy(List<Texture2D> textures, Player player, Vector2 coordinates)
         {           
             this.textures = textures;            
             this.MaxVelocity = new Vector2(1, 2);
             this.Velocity = new Vector2(0, 0);
             this.HitboxRectangle = new Rectangle((int)this.Position.X, (int)this.Position.Y, 32, 32);
-            this.Position = new Vector2((position.X * 16) - 16, (position.Y * 16) - this.HitboxRectangle.Height);
+            this.Position = new Vector2((coordinates.X * 16) - 16, (coordinates.Y * 16) - this.HitboxRectangle.Height);
             this.InputReader = new Type1EnemyAI(player, this);
             this.Health = 1;
             
