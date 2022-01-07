@@ -44,8 +44,10 @@ namespace GameDevProject.States.GameStates
                 }
                 entity.Draw(spriteBatch);
             }
-
-            spriteBatch.DrawString(this.font, $"Score: {player.Score}", new Vector2(3, 3), Color.White);            
+            if (player != null)
+            {
+                spriteBatch.DrawString(this.font, $"Score: {player.Score}", new Vector2(3, 3), Color.White);
+            }
         }
 
         public int GetWindowHeight(Level level)
