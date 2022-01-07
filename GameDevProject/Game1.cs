@@ -164,8 +164,10 @@ namespace GameDevProject
 
             Player player = new Player(this.playerTextures, new KeyboardReader(), new Vector2(2, 6));
             Type2Enemy type2enemy = new Type2Enemy(this.type2EnemyTextures, player, new Vector2(10, 6));
+            Coin coin1 = new Coin(this.coinTextures, new Vector2(7, 5));
 
             entities.Add(type2enemy);
+            entities.Add(coin1);
             entities.Add(player);
 
             string[,] map = {

@@ -61,11 +61,11 @@ namespace GameDevProject.States.GameStates
         {
             level.world.Draw(spriteBatch);
 
-            spriteBatch.DrawString(this.font, "Main menu", new Vector2(70, 10), Color.Black);
+            spriteBatch.DrawString(this.font, "Main menu", new Vector2(70, 10), Color.White);
 
             foreach (Button button in buttons)
             {
-                spriteBatch.DrawString(this.font, button.Text, button.Position, Color.Black);
+                spriteBatch.DrawString(this.font, button.Text, button.Position, Color.White);
             }
         }
 
