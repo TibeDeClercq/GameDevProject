@@ -16,10 +16,12 @@ namespace GameDevProject.Entities
     class Player : Entity, IMovable, IAttacker, IHitbox, IKillable
     {
         #region Player properties
+        public int Score { get; set; } = 0;
+
         public AttackManager AttackManager;
         public MovementManager MovementManager;
 
-        private IPlayerState playerState;
+        private IEntityState playerState;
 
         private const int IDLE_FRAMES = 2;
         private const int WALK_FRAMES = 4;
@@ -84,7 +86,7 @@ namespace GameDevProject.Entities
 
             this.CanJump = true;
 
-            this.MaxVelocity = new Vector2(1, 1); //horizontal , vertical
+            this.MaxVelocity = new Vector2(1, 1);
             this.Acceleration = new Vector2(0, 0);
             this.HitboxRectangle = new Rectangle(0, 0, 45, 30);
             this.Position = new Vector2((coordinates.X * 16) - 16, (coordinates.Y * 16) - this.HitboxRectangle.Height);
@@ -113,7 +115,6 @@ namespace GameDevProject.Entities
         #region Player methods
         public override void Draw(SpriteBatch spriteBatch)
         {
-            //Draw the animation
             this.playerState.Draw(spriteBatch, this.textures, this.Position, this.animations, this.SpriteEffects);
         }
 
@@ -123,11 +124,12 @@ namespace GameDevProject.Entities
             {
                 this.Attack(gameTime);
             }
-            this.Move(gameTime, world);
-            //this.Die(gameTime);
+            this.Move(gameTime, world);            
             this.ChangeState();
-            //Update the animation
-            this.playerState.Update(gameTime, animations, this);
+            this.playerState.Update(gameTime, animations);
+            ScoreManager.Score = Score;
+
+            Debug.WriteLine($"Player Score: {Score}");
         }
         #endregion
 
@@ -176,10 +178,12 @@ namespace GameDevProject.Entities
             //}
             else if (IsWalking())
             {
+                SoundManager.PlaySound(Sound.PlayerWalk);
                 this.playerState = new PlayerWalkState();
             }
             else
             {
+                SoundManager.StopSound(Sound.PlayerWalk);
                 this.playerState = new PlayerIdleState();
             }
             if (HasNoHealth())
@@ -190,39 +194,23 @@ namespace GameDevProject.Entities
 
         private bool IsIdle()
         {
-            if (this.Velocity == Vector2.Zero)
-            {
-                return true;
-            }
-            return false;
+            return this.Velocity == Vector2.Zero;
         }
 
         private bool IsWalking()
         {
-            if (this.Velocity.X != 0)
-            {
-                return true;
-            }
-            return false;
+            return this.Velocity.X != 0;
         }
 
         private bool IsSpinning()
         {
-            if (this.IsAttacking == true)
-            {
-                return true;
-            }
-            return false;
+            return this.IsAttacking;
         }
 
         private bool HasNoHealth()
         {
-            if (this.Health <= 0)
-            {
-                return true;
-            }
-            return false;
-        }        
+            return this.Health <= 0;
+        }
         #endregion
     }
 }

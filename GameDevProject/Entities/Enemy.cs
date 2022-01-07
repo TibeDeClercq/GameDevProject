@@ -5,6 +5,7 @@ using GameDevProject.States.EnemyStates;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Diagnostics;
 
 namespace GameDevProject.Entities
 {
@@ -12,7 +13,7 @@ namespace GameDevProject.Entities
     {
         #region Properties
         public MovementManager MovementManager;
-        protected IEnemyState enemyState;
+        protected IEntityState enemyState;
         #endregion
 
         #region Constructor
@@ -55,11 +56,7 @@ namespace GameDevProject.Entities
         }
         public override void Update(GameTime gameTime, World world)
         {
-            if (!HasNoHealth())
-            {
-                this.Move(gameTime, world);
-            }
-            //this.Die(gameTime);
+            this.Move(gameTime, world);            
             this.ChangeState();
             this.enemyState.Update(gameTime, this.animations);
         }
@@ -76,15 +73,21 @@ namespace GameDevProject.Entities
             {
                 this.enemyState = new EnemyIdleState();
             }
+
+            if (IsWalking())
+            {
+                SoundManager.PlaySound(Sound.EnemyWalk);
+            }
         }
 
         private bool HasNoHealth()
         {
-            if (this.Health <= 0)
-            {
-                return true;
-            }
-            return false;
+            return this.Health <= 0;            
+        }
+
+        private bool IsWalking()
+        {
+            return this.Velocity.X != 0;
         }
         #endregion
     }

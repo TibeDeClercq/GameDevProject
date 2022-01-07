@@ -13,6 +13,7 @@ using GameDevProject.Levels;
 using GameDevProject.States.GameStates;
 using GameDevProject.Hitboxes;
 using GameDevProject.Input.EnemyAI;
+using Microsoft.Xna.Framework.Audio;
 
 namespace GameDevProject
 {
@@ -30,11 +31,13 @@ namespace GameDevProject
         private List<Texture2D> playerTextures;
         private List<Texture2D> type1EnemyTextures;
         private List<Texture2D> type2EnemyTextures;
+        private List<Texture2D> coinTextures;
 
         private Level ActiveLevel;
         private Texture2D worldTileset;
 
         private SpriteFont font;
+        private SpriteFont scoreFont;
 
         private HitboxManager hitboxManager;
 
@@ -66,6 +69,7 @@ namespace GameDevProject
         {
             this.AddSpriteBatch();
             this.AddTextures();
+            this.AddSounds();
             this.AddFont();
             // TODO: use this.Content to load your game content here
         }
@@ -135,7 +139,8 @@ namespace GameDevProject
             List<Entity> entities = new List<Entity>();
 
             Player player = new Player(this.playerTextures, new KeyboardReader(), new Vector2(1, 6));
-            //Type1Enemy type1Enemy = new Type1Enemy(this.type1EnemyTextures, player, new Vector2(10, 6));
+            Type1Enemy type1Enemy = new Type1Enemy(this.type1EnemyTextures, player, new Vector2(10, 6));
+            Coin coin1 = new Coin(this.coinTextures, new Vector2(7, 5));
 
             string[,] map = {
                                 { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
@@ -148,7 +153,8 @@ namespace GameDevProject
                                 { "E3", "E3", "E3", "E3", "E3", "E3","E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3","E3", "E3", "E3", "E3", "E3", "E3"}
                              };            
 
-            //entities.Add(type1Enemy);
+            entities.Add(type1Enemy);
+            entities.Add(coin1);
             entities.Add(player);
 
             this.ActiveLevel = new Level(this.worldTileset, entities, map);
@@ -160,8 +166,10 @@ namespace GameDevProject
 
             Player player = new Player(this.playerTextures, new KeyboardReader(), new Vector2(2, 6));
             Type2Enemy type2enemy = new Type2Enemy(this.type2EnemyTextures, player, new Vector2(10, 6));
+            Coin coin1 = new Coin(this.coinTextures, new Vector2(7, 5));
 
             entities.Add(type2enemy);
+            entities.Add(coin1);
             entities.Add(player);
 
             string[,] map = {
@@ -231,7 +239,8 @@ namespace GameDevProject
         {
             this.AddPlayerTextures();
             this.AddEnemyTextures();
-            this.AddWorldTextures();
+            this.AddItemTextures();
+            this.AddWorldTextures();            
         }
 
         private void AddPlayerTextures()
@@ -257,6 +266,12 @@ namespace GameDevProject
             this.type2EnemyTextures.Add(this.Content.Load<Texture2D>("SpritesheetsEnemies/Enemy1Dead"));
         }
 
+        private void AddItemTextures()
+        {
+            this.coinTextures = new List<Texture2D>();
+            this.coinTextures.Add(this.Content.Load<Texture2D>("SpritesheetsCoin/Coin"));
+        }
+
         private void AddWorldTextures()
         {
             this.worldTileset = this.Content.Load<Texture2D>("TileSetsWorld/TilesetWorld");
@@ -265,6 +280,23 @@ namespace GameDevProject
         private void AddFont()
         {
             this.font = Content.Load<SpriteFont>("SpriteFonts/font");
+            this.scoreFont = Content.Load<SpriteFont>("SpriteFonts/ScoreFont");
+        }
+
+        private void AddSounds()
+        {
+            SoundManager.SoundEffects = new List<SoundEffect>();
+            SoundManager.SoundEffects.Add(this.Content.Load<SoundEffect>("SoundEffects/CoinSound"));
+            SoundManager.SoundEffects.Add(this.Content.Load<SoundEffect>("SoundEffects/Spike"));
+            SoundManager.SoundEffects.Add(this.Content.Load<SoundEffect>("SoundEffects/JumpSound"));
+            SoundManager.SoundEffects.Add(this.Content.Load<SoundEffect>("SoundEffects/EnemyJumpSound"));
+            SoundManager.SoundEffects.Add(this.Content.Load<SoundEffect>("SoundEffects/SpinSound"));
+            SoundManager.SoundEffects.Add(this.Content.Load<SoundEffect>("SoundEffects/DeathSound"));
+            SoundManager.SoundEffects.Add(this.Content.Load<SoundEffect>("SoundEffects/WinSound"));
+            SoundManager.SoundEffects.Add(this.Content.Load<SoundEffect>("SoundEffects/LoseSound"));
+            SoundManager.SoundEffects.Add(this.Content.Load<SoundEffect>("SoundEffects/WalkSound"));
+            SoundManager.SoundEffects.Add(this.Content.Load<SoundEffect>("SoundEffects/WalkSound"));
+            SoundManager.SoundEffects.Add(this.Content.Load<SoundEffect>("SoundEffects/DungeonSound"));
         }
         #endregion
 
@@ -285,6 +317,7 @@ namespace GameDevProject
                     {
                         this.ClearLevel();
                         this.LoadMainMenu();
+                        SoundManager.StopSound(Sound.Dungeon);
                         this.gameState = new MainMenuState(font);
                         this.SetRenderer();
                     }
@@ -294,7 +327,8 @@ namespace GameDevProject
                     {
                         this.ClearLevel();
                         this.LoadLevel1();
-                        this.gameState = new LevelState();
+                        SoundManager.PlaySound(Sound.Dungeon);
+                        this.gameState = new LevelState(scoreFont);
                         this.SetRenderer();
                     }
                     break;
@@ -303,6 +337,10 @@ namespace GameDevProject
                     {
                         this.ClearLevel();
                         this.LoadLevelCompleted();
+                        SoundManager.PlaySound(Sound.Victory);
+                        SoundManager.StopSound(Sound.PlayerWalk);
+                        SoundManager.StopSound(Sound.EnemyWalk);
+                        SoundManager.StopSound(Sound.Dungeon);
                         this.gameState = new Level1CompletedState(font);
                         this.SetRenderer();
                     }
@@ -312,6 +350,10 @@ namespace GameDevProject
                     {
                         this.ClearLevel();
                         this.LoadGameOver();
+                        SoundManager.PlaySound(Sound.Defeat);
+                        SoundManager.StopSound(Sound.PlayerWalk);
+                        SoundManager.StopSound(Sound.EnemyWalk);
+                        SoundManager.StopSound(Sound.Dungeon);
                         this.gameState = new GameOverLevel1State(font);
                         this.SetRenderer();
                     }
@@ -321,7 +363,8 @@ namespace GameDevProject
                     {
                         this.ClearLevel();
                         this.LoadLevel2();
-                        this.gameState = new LevelState();
+                        SoundManager.PlaySound(Sound.Dungeon);
+                        this.gameState = new LevelState(scoreFont);
                         this.SetRenderer();
                     }
                     break;
@@ -330,6 +373,10 @@ namespace GameDevProject
                     {
                         this.ClearLevel();
                         this.LoadLevelCompleted();
+                        SoundManager.PlaySound(Sound.Victory);
+                        SoundManager.StopSound(Sound.PlayerWalk);
+                        SoundManager.StopSound(Sound.EnemyWalk);
+                        SoundManager.StopSound(Sound.Dungeon);
                         this.gameState = new Level2CompletedState(font);
                         this.SetRenderer();
                     }
@@ -339,6 +386,10 @@ namespace GameDevProject
                     {
                         this.ClearLevel();
                         this.LoadGameOver();
+                        SoundManager.PlaySound(Sound.Defeat);
+                        SoundManager.StopSound(Sound.EnemyWalk);
+                        SoundManager.StopSound(Sound.PlayerWalk);
+                        SoundManager.StopSound(Sound.Dungeon);
                         this.gameState = new GameOverLevel2State(font);
                         this.SetRenderer();
                     }

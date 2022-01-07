@@ -1,5 +1,6 @@
 ﻿using GameDevProject.Entities;
-using GameDevProject.Entities.Animations;
+﻿using GameDevProject.Entities.Animations;
+using GameDevProject.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -8,7 +9,7 @@ using System.Text;
 
 namespace GameDevProject.States.PlayerStates
 {
-    class PlayerDeadState : IPlayerState
+    class PlayerDeadState : IEntityState
     {
         #region Public methods
         public void Draw(SpriteBatch spriteBatch, List<Texture2D> textures, Vector2 position, List<Animation> animations, SpriteEffects spriteEffects)

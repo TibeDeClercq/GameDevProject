@@ -13,6 +13,13 @@ namespace GameDevProject.States.GameStates
 {
     class LevelState : IGameState
     {
+        private SpriteFont font;
+
+        public LevelState(SpriteFont font)
+        {
+            this.font = font;
+        }
+
         public void Update(Level level, GameTime gameTime)
         {
             foreach (Entity entity in level.entities)
@@ -20,7 +27,7 @@ namespace GameDevProject.States.GameStates
                 entity.Update(gameTime, level.world);
             }
 
-            level.healthManager.UpdateHealth(level ,gameTime);
+            level.healthManager.UpdateHealth(level ,gameTime);            
         }
 
         public void Draw(Level level, SpriteBatch spriteBatch)
@@ -31,6 +38,8 @@ namespace GameDevProject.States.GameStates
             {
                 entity.Draw(spriteBatch);
             }
+
+            spriteBatch.DrawString(this.font, $"Score: {ScoreManager.Score}", new Vector2(3, 3), Color.White);
         }
 
         public int GetWindowHeight(Level level)

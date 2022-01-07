@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
+using GameDevProject.Entities;
 using GameDevProject.Interfaces;
 using GameDevProject.Levels;
+using GameDevProject.Managers;
 using GameDevProject.MenuItems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -16,6 +17,7 @@ namespace GameDevProject.States.GameStates
         private SpriteFont font;
 
         private List<Button> buttons;
+
         public Level2CompletedState(SpriteFont font)
         {
             this.font = font;
@@ -48,19 +50,21 @@ namespace GameDevProject.States.GameStates
                         }
                     }
                 }
-            }
+            }    
         }
 
         public void Draw(Level level, SpriteBatch spriteBatch)
         {
             level.world.Draw(spriteBatch);
 
-            spriteBatch.DrawString(this.font, "Completed Level 2", new Vector2(70, 10), Color.Black);
+            spriteBatch.DrawString(this.font, "Completed Level 2", new Vector2(70, 10), Color.White);
 
             foreach (Button button in buttons)
             {
-                spriteBatch.DrawString(this.font, button.Text, button.Position, Color.Black);
+                spriteBatch.DrawString(this.font, button.Text, button.Position, Color.White);
             }
+
+            spriteBatch.DrawString(this.font, $"Score: {ScoreManager.Score}", new Vector2(70, 30), Color.White);
         }
 
         public int GetWindowHeight(Level level)
