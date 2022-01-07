@@ -8,7 +8,7 @@ using System.Text;
 
 namespace GameDevProject.States.EnemyStates
 {
-    class EnemyDeadState : IEnemyState
+    class EnemyDeadState : IEntityState
     {
         public void Draw(SpriteBatch spriteBatch, List<Texture2D> textures, Vector2 position, List<Animation> animations, SpriteEffects spriteEffects)
         {

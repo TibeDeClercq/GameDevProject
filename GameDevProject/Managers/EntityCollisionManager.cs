@@ -1,10 +1,7 @@
 ﻿using GameDevProject.Entities;
 using GameDevProject.Interfaces;
 using GameDevProject.Map;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 
 namespace GameDevProject.Managers
 {
@@ -37,19 +34,19 @@ namespace GameDevProject.Managers
         {
             foreach (Entity entity in Entities)
             {
-                var movablePlayer = Player as IMovable;
-                var movableEntity = entity as IMovable;
+                var movablePlayer = Player as IHitbox;
+                var movableEntity = entity as IHitbox;
                 if (movableEntity.HitboxRectangle.Intersects(movablePlayer.HitboxRectangle) && entity != Player && entity.Health > 0)
                 {
                     return entity;
-                }                
+                }         
             }
 
             foreach (Tile tile in World.GetTiles())
             {
                 if (tile.IsTrapCollide)
                 {
-                    var movablePlayer = Player as IMovable;
+                    var movablePlayer = Player as IHitbox;
                     if (movablePlayer.HitboxRectangle.Intersects(tile.HitboxRectangle))
                     {
                         return Player;

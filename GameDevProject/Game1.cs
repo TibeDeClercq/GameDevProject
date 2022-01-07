@@ -30,6 +30,7 @@ namespace GameDevProject
         private List<Texture2D> playerTextures;
         private List<Texture2D> type1EnemyTextures;
         private List<Texture2D> type2EnemyTextures;
+        private List<Texture2D> coinTextures;
 
         private Level ActiveLevel;
         private Texture2D worldTileset;
@@ -136,6 +137,7 @@ namespace GameDevProject
 
             Player player = new Player(this.playerTextures, new KeyboardReader(), new Vector2(1, 6));
             Type1Enemy type1Enemy = new Type1Enemy(this.type1EnemyTextures, player, new Vector2(10, 6));
+            Coin coin1 = new Coin(this.coinTextures, new Vector2(7, 5));
 
             string[,] map = {
                                 { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
@@ -149,6 +151,7 @@ namespace GameDevProject
                              };            
 
             entities.Add(type1Enemy);
+            entities.Add(coin1);
             entities.Add(player);
 
             this.ActiveLevel = new Level(this.worldTileset, entities, map);
@@ -231,6 +234,7 @@ namespace GameDevProject
         {
             this.AddPlayerTextures();
             this.AddEnemyTextures();
+            this.AddItemTextures();
             this.AddWorldTextures();
         }
 
@@ -255,6 +259,12 @@ namespace GameDevProject
             this.type2EnemyTextures = new List<Texture2D>();
             this.type2EnemyTextures.Add(this.Content.Load<Texture2D>("SpritesheetsEnemies/Enemy1Walk"));
             this.type2EnemyTextures.Add(this.Content.Load<Texture2D>("SpritesheetsEnemies/Enemy1Dead"));
+        }
+
+        private void AddItemTextures()
+        {
+            this.coinTextures = new List<Texture2D>();
+            this.coinTextures.Add(this.Content.Load<Texture2D>("SpritesheetsCoin/Coin"));
         }
 
         private void AddWorldTextures()

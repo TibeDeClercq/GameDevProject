@@ -3,6 +3,7 @@ using GameDevProject.Interfaces;
 using GameDevProject.Levels;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace GameDevProject.Managers
 {
@@ -22,13 +23,13 @@ namespace GameDevProject.Managers
 
             if (entity != null)
             {
-                if (entity.Health > 0 && player.IsAttacking)
+                if (entity.Health > 0 && player.IsAttacking && !(entity is Coin))
                 {
                     entity.Health--;
                 }
                 else
                 {
-                    if (player.Health > 0 && !player.IsAttacking)
+                    if (player.Health > 0 && !player.IsAttacking && !(entity is Coin))
                     {
                         player.Health--;
                     }
@@ -37,7 +38,13 @@ namespace GameDevProject.Managers
                 if (entity is Player && entity.Health > 0)
                 {
                     entity.Health--;
-                }               
+                }   
+                
+                if (entity is Coin)
+                {
+                    player.Score++;
+                    entity.Health--;
+                }
             }
 
             Kill(CollisionManager, gameTime);
@@ -57,6 +64,12 @@ namespace GameDevProject.Managers
                     if (killable.DeathTimer > killable.DeathDuration)
                     {
                         killable.IsDead = true;
+                    }
+
+                    if (entity is Coin)
+                    {
+                        var coin = entity as Coin;
+                        coin.Position -= new Vector2(0,1.2f);     
                     }
                 }
             }            

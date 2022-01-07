@@ -12,7 +12,7 @@ namespace GameDevProject.Entities
     {
         #region Properties
         public MovementManager MovementManager;
-        protected IEnemyState enemyState;
+        protected IEntityState enemyState;
         #endregion
 
         #region Constructor
@@ -55,11 +55,7 @@ namespace GameDevProject.Entities
         }
         public override void Update(GameTime gameTime, World world)
         {
-            if (!HasNoHealth())
-            {
-                this.Move(gameTime, world);
-            }
-            //this.Die(gameTime);
+            this.Move(gameTime, world);            
             this.ChangeState();
             this.enemyState.Update(gameTime, this.animations);
         }
