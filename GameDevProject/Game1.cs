@@ -13,6 +13,7 @@ using GameDevProject.Levels;
 using GameDevProject.States.GameStates;
 using GameDevProject.Hitboxes;
 using GameDevProject.Input.EnemyAI;
+using Microsoft.Xna.Framework.Audio;
 
 namespace GameDevProject
 {
@@ -68,6 +69,7 @@ namespace GameDevProject
         {
             this.AddSpriteBatch();
             this.AddTextures();
+            this.AddSounds();
             this.AddFont();
             // TODO: use this.Content to load your game content here
         }
@@ -238,7 +240,7 @@ namespace GameDevProject
             this.AddPlayerTextures();
             this.AddEnemyTextures();
             this.AddItemTextures();
-            this.AddWorldTextures();
+            this.AddWorldTextures();            
         }
 
         private void AddPlayerTextures()
@@ -280,6 +282,22 @@ namespace GameDevProject
             this.font = Content.Load<SpriteFont>("SpriteFonts/font");
             this.scoreFont = Content.Load<SpriteFont>("SpriteFonts/ScoreFont");
         }
+
+        private void AddSounds()
+        {
+            SoundManager.SoundEffects = new List<SoundEffect>();
+            SoundManager.SoundEffects.Add(this.Content.Load<SoundEffect>("SoundEffects/CoinSound"));
+            SoundManager.SoundEffects.Add(this.Content.Load<SoundEffect>("SoundEffects/Spike"));
+            SoundManager.SoundEffects.Add(this.Content.Load<SoundEffect>("SoundEffects/JumpSound"));
+            SoundManager.SoundEffects.Add(this.Content.Load<SoundEffect>("SoundEffects/EnemyJumpSound"));
+            SoundManager.SoundEffects.Add(this.Content.Load<SoundEffect>("SoundEffects/SpinSound"));
+            SoundManager.SoundEffects.Add(this.Content.Load<SoundEffect>("SoundEffects/DeathSound"));
+            SoundManager.SoundEffects.Add(this.Content.Load<SoundEffect>("SoundEffects/WinSound"));
+            SoundManager.SoundEffects.Add(this.Content.Load<SoundEffect>("SoundEffects/LoseSound"));
+            SoundManager.SoundEffects.Add(this.Content.Load<SoundEffect>("SoundEffects/WalkSound"));
+            SoundManager.SoundEffects.Add(this.Content.Load<SoundEffect>("SoundEffects/WalkSound"));
+            SoundManager.SoundEffects.Add(this.Content.Load<SoundEffect>("SoundEffects/DungeonSound"));
+        }
         #endregion
 
         #region Update
@@ -299,6 +317,7 @@ namespace GameDevProject
                     {
                         this.ClearLevel();
                         this.LoadMainMenu();
+                        SoundManager.StopSound(Sound.Dungeon);
                         this.gameState = new MainMenuState(font);
                         this.SetRenderer();
                     }
@@ -308,6 +327,7 @@ namespace GameDevProject
                     {
                         this.ClearLevel();
                         this.LoadLevel1();
+                        SoundManager.PlaySound(Sound.Dungeon);
                         this.gameState = new LevelState(scoreFont);
                         this.SetRenderer();
                     }
@@ -317,6 +337,10 @@ namespace GameDevProject
                     {
                         this.ClearLevel();
                         this.LoadLevelCompleted();
+                        SoundManager.PlaySound(Sound.Victory);
+                        SoundManager.StopSound(Sound.PlayerWalk);
+                        SoundManager.StopSound(Sound.EnemyWalk);
+                        SoundManager.StopSound(Sound.Dungeon);
                         this.gameState = new Level1CompletedState(font);
                         this.SetRenderer();
                     }
@@ -326,6 +350,10 @@ namespace GameDevProject
                     {
                         this.ClearLevel();
                         this.LoadGameOver();
+                        SoundManager.PlaySound(Sound.Defeat);
+                        SoundManager.StopSound(Sound.PlayerWalk);
+                        SoundManager.StopSound(Sound.EnemyWalk);
+                        SoundManager.StopSound(Sound.Dungeon);
                         this.gameState = new GameOverLevel1State(font);
                         this.SetRenderer();
                     }
@@ -335,6 +363,7 @@ namespace GameDevProject
                     {
                         this.ClearLevel();
                         this.LoadLevel2();
+                        SoundManager.PlaySound(Sound.Dungeon);
                         this.gameState = new LevelState(scoreFont);
                         this.SetRenderer();
                     }
@@ -344,6 +373,10 @@ namespace GameDevProject
                     {
                         this.ClearLevel();
                         this.LoadLevelCompleted();
+                        SoundManager.PlaySound(Sound.Victory);
+                        SoundManager.StopSound(Sound.PlayerWalk);
+                        SoundManager.StopSound(Sound.EnemyWalk);
+                        SoundManager.StopSound(Sound.Dungeon);
                         this.gameState = new Level2CompletedState(font);
                         this.SetRenderer();
                     }
@@ -353,6 +386,10 @@ namespace GameDevProject
                     {
                         this.ClearLevel();
                         this.LoadGameOver();
+                        SoundManager.PlaySound(Sound.Defeat);
+                        SoundManager.StopSound(Sound.EnemyWalk);
+                        SoundManager.StopSound(Sound.PlayerWalk);
+                        SoundManager.StopSound(Sound.Dungeon);
                         this.gameState = new GameOverLevel2State(font);
                         this.SetRenderer();
                     }

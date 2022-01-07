@@ -41,6 +41,14 @@ namespace GameDevProject.Managers
                 {
                     if (movable.CanJump)
                     {
+                        if (movable is Player)
+                        {
+                            SoundManager.PlaySound(Sound.Jump);
+                        }
+                        if (movable is Enemy)
+                        {
+                            SoundManager.PlaySound(Sound.EnemyJump);
+                        }
                         movable.Acceleration = new Vector2(0, -2.7f); // power of the jump
                         movable.IsJumping = true;
                     }

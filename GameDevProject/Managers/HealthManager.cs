@@ -23,28 +23,33 @@ namespace GameDevProject.Managers
 
             if (entity != null)
             {
+                if (entity is Player && entity.Health > 0)
+                {
+                    SoundManager.PlaySound(Sound.Spike);
+                    SoundManager.PlaySound(Sound.Death);
+                    entity.Health--;
+                }
+                if (entity is Coin)
+                {
+                    SoundManager.PlaySound(Sound.Coin);
+                    player.Score++;
+                    entity.Health--;
+                }
+
                 if (entity.Health > 0 && player.IsAttacking && !(entity is Coin))
                 {
+                    SoundManager.PlaySound(Sound.Death);
+                    SoundManager.StopSound(Sound.EnemyWalk);
                     entity.Health--;
                 }
                 else
                 {
                     if (player.Health > 0 && !player.IsAttacking && !(entity is Coin))
                     {
+                        SoundManager.PlaySound(Sound.Death);
                         player.Health--;
                     }
-                }
-
-                if (entity is Player && entity.Health > 0)
-                {
-                    entity.Health--;
-                }   
-                
-                if (entity is Coin)
-                {
-                    player.Score++;
-                    entity.Health--;
-                }
+                }               
             }
 
             Kill(CollisionManager, gameTime);

@@ -167,10 +167,12 @@ namespace GameDevProject.Entities
             //}
             else if (IsWalking())
             {
+                SoundManager.PlaySound(Sound.PlayerWalk);
                 this.playerState = new PlayerWalkState();
             }
             else
             {
+                SoundManager.StopSound(Sound.PlayerWalk);
                 this.playerState = new PlayerIdleState();
             }
             if (HasNoHealth())
@@ -181,39 +183,23 @@ namespace GameDevProject.Entities
 
         private bool IsIdle()
         {
-            if (this.Velocity == Vector2.Zero)
-            {
-                return true;
-            }
-            return false;
+            return this.Velocity == Vector2.Zero;
         }
 
         private bool IsWalking()
         {
-            if (this.Velocity.X != 0)
-            {
-                return true;
-            }
-            return false;
+            return this.Velocity.X != 0;
         }
 
         private bool IsSpinning()
         {
-            if (this.IsAttacking == true)
-            {
-                return true;
-            }
-            return false;
+            return this.IsAttacking;
         }
 
         private bool HasNoHealth()
         {
-            if (this.Health <= 0)
-            {
-                return true;
-            }
-            return false;
-        }        
+            return this.Health <= 0;
+        }
         #endregion
     }
 }

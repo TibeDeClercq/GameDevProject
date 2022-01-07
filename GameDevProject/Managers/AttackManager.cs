@@ -29,6 +29,7 @@ namespace GameDevProject.Managers
                 {
                     if (attacker.InputReader.ReadInput().Attack == true)
                     {
+                        SoundManager.PlaySound(Sound.Spin);
                         attacker.IsAttacking = true;
                         attacker.CanAttack = false;
                     }
