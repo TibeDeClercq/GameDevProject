@@ -1,10 +1,6 @@
-<<<<<<< HEAD
 ﻿using GameDevProject.Entities;
 using GameDevProject.Entities.Animations;
-=======
-﻿using GameDevProject.Entities.Animations;
 using GameDevProject.Interfaces;
->>>>>>> master
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;

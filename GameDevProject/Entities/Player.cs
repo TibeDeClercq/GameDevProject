@@ -126,7 +126,7 @@ namespace GameDevProject.Entities
             }
             this.Move(gameTime, world);            
             this.ChangeState();
-            this.playerState.Update(gameTime, animations);
+            this.playerState.Update(gameTime, animations, this);
             ScoreManager.Score = Score;
 
             Debug.WriteLine($"Player Score: {Score}");
