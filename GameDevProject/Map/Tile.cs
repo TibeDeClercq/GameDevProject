@@ -24,7 +24,7 @@ namespace GameDevProject.Map
 
         private int[] leftCollidable = { 0, 3, 8, 11, 16, 19 };
         private int[] rightCollidable = {2, 10, 11, 18, 19 };
-        private int[] topCollidable = { 0, 1, 2, 3 };
+        private int[] topCollidable = { 0, 1, 2, 3, 28, 29, 30 };
         private int[] bottomCollidable = { 16, 17, 18, 19 };
         private int[] finishCollidable = { 4, 5, 6, 12, 13, 14, 20, 21, 22 };
         private int[] trapCollidable = { 43 };

@@ -86,7 +86,7 @@ namespace GameDevProject.Entities
 
             this.MaxVelocity = new Vector2(1, 1); //horizontal , vertical
             this.Acceleration = new Vector2(0, 0);
-            this.HitboxRectangle = new Rectangle(0, 0, 45, 45);
+            this.HitboxRectangle = new Rectangle(0, 0, 45, 30);
             this.Position = new Vector2((coordinates.X * 16) - 16, (coordinates.Y * 16) - this.HitboxRectangle.Height);
             this.Velocity = new Vector2(0,0);
             this.Health = 1;
@@ -104,6 +104,7 @@ namespace GameDevProject.Entities
 
             AddAnimations();
             SetAnimations();
+            SetHitboxes();
 
             this.playerState = new PlayerSleepState();
         }
@@ -126,7 +127,7 @@ namespace GameDevProject.Entities
             //this.Die(gameTime);
             this.ChangeState();
             //Update the animation
-            this.playerState.Update(gameTime, animations);
+            this.playerState.Update(gameTime, animations, this);
         }
         #endregion
 
@@ -149,6 +150,16 @@ namespace GameDevProject.Entities
             this.animations[3].GetFramesFromTextureProperties(textures[3].Width, textures[3].Height, SPIN_FRAMES, 1);
             this.animations[4].GetFramesFromTextureProperties(textures[4].Width, textures[4].Height, SLEEP_FRAMES, 1);
             this.animations[5].GetFramesFromTextureProperties(textures[5].Width, textures[5].Height, DEAD_FRAMES, 1);
+        }
+
+        private void SetHitboxes()
+        {
+            this.animations[0].Hitbox = new Rectangle(5, 15, 35, 30);
+            this.animations[1].Hitbox = new Rectangle(5, 15, 35, 30);
+            this.animations[2].Hitbox = new Rectangle(5, 15, 35, 30);
+            this.animations[3].Hitbox = new Rectangle(5, 15, 35, 30);
+            this.animations[4].Hitbox = new Rectangle(5, 15, 35, 30);
+            this.animations[5].Hitbox = new Rectangle(5, 15, 35, 30);
         }
         #endregion
 

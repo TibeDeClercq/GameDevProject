@@ -13,6 +13,7 @@ namespace GameDevProject.Entities.Animations
         private double secondCounter = 0;
         private int fps = 0;
 
+        public Rectangle Hitbox { get; set; }
 
         public Animation(int fps)
         {
