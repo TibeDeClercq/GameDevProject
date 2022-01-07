@@ -36,6 +36,7 @@ namespace GameDevProject
         private Texture2D worldTileset;
 
         private SpriteFont font;
+        private SpriteFont scoreFont;
 
         private HitboxManager hitboxManager;
 
@@ -275,6 +276,7 @@ namespace GameDevProject
         private void AddFont()
         {
             this.font = Content.Load<SpriteFont>("SpriteFonts/font");
+            this.scoreFont = Content.Load<SpriteFont>("SpriteFonts/ScoreFont");
         }
         #endregion
 
@@ -304,7 +306,7 @@ namespace GameDevProject
                     {
                         this.ClearLevel();
                         this.LoadLevel1();
-                        this.gameState = new LevelState();
+                        this.gameState = new LevelState(scoreFont);
                         this.SetRenderer();
                     }
                     break;
@@ -331,7 +333,7 @@ namespace GameDevProject
                     {
                         this.ClearLevel();
                         this.LoadLevel2();
-                        this.gameState = new LevelState();
+                        this.gameState = new LevelState(scoreFont);
                         this.SetRenderer();
                     }
                     break;
