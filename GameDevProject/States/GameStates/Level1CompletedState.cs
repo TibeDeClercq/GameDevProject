@@ -24,8 +24,8 @@ namespace GameDevProject.States.GameStates
             this.font = font;
 
             this.buttons = new List<Button>();
-            this.buttons.Add(new Button(new Vector2(20, 50), new Vector2(75, 10), "Next level"));
-            this.buttons.Add(new Button(new Vector2(110, 50), new Vector2(75, 10), "Main Menu"));
+            this.buttons.Add(new Button(new Vector2(4, 6), new Vector2(6, 2), "Next level"));
+            this.buttons.Add(new Button(new Vector2(13, 6), new Vector2(6, 2), "Main Menu"));
         }
 
         public void Update(Level level, GameTime gameTime)
@@ -58,13 +58,12 @@ namespace GameDevProject.States.GameStates
             level.world.Draw(spriteBatch);
 
             spriteBatch.DrawString(this.font, "Completed Level 1", new Vector2(70, 10), Color.White);
+            spriteBatch.DrawString(this.font, $"Score: {ScoreManager.Score}", new Vector2((level.world.GetWorldWidth() / 2) - 30, 23), Color.White);
 
             foreach (Button button in buttons)
             {
-                spriteBatch.DrawString(this.font, button.Text, button.Position, Color.White);
+                spriteBatch.DrawString(this.font, button.Text, button.TextPosition, Color.White);
             }
-
-            spriteBatch.DrawString(this.font, $"Score: {ScoreManager.Score}", new Vector2(70, 30), Color.White);
         }
 
         public int GetWindowHeight(Level level)

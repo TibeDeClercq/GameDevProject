@@ -129,7 +129,7 @@ namespace GameDevProject.Entities
             this.playerState.Update(gameTime, animations, this);
             ScoreManager.Score = Score;
 
-            Debug.WriteLine($"Player Score: {Score}");
+            //Debug.WriteLine($"Player Score: {Score}");
         }
         #endregion
 

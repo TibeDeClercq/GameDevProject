@@ -25,8 +25,8 @@ namespace GameDevProject.States.GameStates
             this.font = font;
 
             this.buttons = new List<Button>();
-            this.buttons.Add(new Button(new Vector2(20, 50), new Vector2(45, 10), "Level 1"));
-            this.buttons.Add(new Button(new Vector2(120, 50), new Vector2(45, 10), "Level 2"));
+            this.buttons.Add(new Button(new Vector2(4, 6), new Vector2(4, 2), "Level 1"));
+            this.buttons.Add(new Button(new Vector2(15, 6), new Vector2(4, 2), "Level 2"));
         }
         public void Update(Level level, GameTime gameTime)
         {
@@ -61,11 +61,11 @@ namespace GameDevProject.States.GameStates
         {
             level.world.Draw(spriteBatch);
 
-            spriteBatch.DrawString(this.font, "Main menu", new Vector2(70, 10), Color.White);
+            spriteBatch.DrawString(this.font, "BLOB", new Vector2((level.world.GetWorldWidth() / 2) - 20, 7), Color.White); //Each letter is 5 pixels
 
             foreach (Button button in buttons)
             {
-                spriteBatch.DrawString(this.font, button.Text, button.Position, Color.White);
+                spriteBatch.DrawString(this.font, button.Text, button.TextPosition, Color.White);
             }
         }
 

@@ -36,7 +36,7 @@ namespace GameDevProject.Map
             this.CreateRectangles(136, 136, 8, 8);
             this.AddTiles();
 
-            this.WriteDiagnostics();
+            //this.WriteDiagnostics();
         }
         #endregion
 
