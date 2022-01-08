@@ -23,7 +23,7 @@ namespace GameDevProject
         private bool devMode = true;
 
         private RenderTarget2D gameRenderTarget;
-        public static float scale = 2.5f;
+        public static float scale = 5f;
 
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
