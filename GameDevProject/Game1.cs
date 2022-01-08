@@ -4,15 +4,12 @@ using Microsoft.Xna.Framework.Input;
 
 using GameDevProject.Entities;
 using GameDevProject.Input;
-using GameDevProject.Map;
 using System.Collections.Generic;
 using GameDevProject.Managers;
 using GameDevProject.Interfaces;
-using System.Diagnostics;
 using GameDevProject.Levels;
 using GameDevProject.States.GameStates;
 using GameDevProject.Hitboxes;
-using GameDevProject.Input.EnemyAI;
 using Microsoft.Xna.Framework.Audio;
 
 namespace GameDevProject
@@ -50,18 +47,14 @@ namespace GameDevProject
 
             this.Content.RootDirectory = "Content";
             this.IsMouseVisible = true;
-
             this.graphics.IsFullScreen = false;
         }
 
         protected override void Initialize()
         {
             base.Initialize();
-
             this.SetFirstScreen();
-
             this.SetRenderer();
-
             this.DevView();
         }
 
@@ -71,7 +64,6 @@ namespace GameDevProject
             this.AddTextures();
             this.AddSounds();
             this.AddFont();
-            // TODO: use this.Content to load your game content here
         }
 
         protected override void Update(GameTime gameTime)
@@ -80,24 +72,16 @@ namespace GameDevProject
             {
                 this.Exit();
             }
-
             this.DevViewUpdate();
-
             this.ChangeGameState();
-
             this.gameState.Update(this.ActiveLevel, gameTime);
-
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            //Draw all objects to a frame
             this.DrawToFrame();
-
-            //Draw frame to window => rescale
             this.DrawToScreen();
-
             base.Draw(gameTime);
         }
 
@@ -145,10 +129,80 @@ namespace GameDevProject
 
             string[,] map = {
                                 { "A1", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A3"},
+                                { "B1", "E1", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "E2", "E1", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "E2", "B3"},
+                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
+                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
+                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3", "G1", "A6", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
+                                { "B1", "B3", "G1", "G1", "G1", "G1", "E8", "D7", "A1", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A3", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3", "G1", "B6", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
+                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "C1", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "E2", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3", "G1", "C6", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
+                                { "B1", "B3", "D5", "F8", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
+                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3", "D2", "D2", "D2", "D2", "D3", "G1", "G1", "G1", "G1", "B1", "B3"},
+                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "E8", "D7", "B1", "B3"},
+                                { "B1", "F1", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A3", "D5", "F8", "G1", "G1", "G1", "G1", "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
+                                { "B1", "E1", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C3", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3", "D5", "D6", "D7", "A1", "A2", "A2", "F2", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
+                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "E8", "D7", "B1", "B3", "G1", "G1", "G1", "C1", "C2", "C2", "C2", "C3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "D1", "D2", "B1", "B3"},
+                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
+                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
+                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "A1", "A2", "A2", "A2", "A3", "D5", "D6", "D6", "D7", "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "D1", "D2", "D3", "G1", "G1", "G1", "B1", "B3"},
+                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "E3", "E3", "E3", "B3", "G1", "G1", "G1", "G1", "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
+                                { "B1", "B3", "G1", "G1", "G1", "G1", "A1", "A3", "G1", "G1", "B1", "E3", "E3", "E3", "B3", "G1", "G1", "G1", "G1", "B1", "B3", "G1", "G1", "G1", "A1", "A2", "A2", "A2", "A3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
+                                { "B1", "B3", "G1", "G1", "G1", "G1", "B1", "B3", "F4", "F4", "B1", "E3", "E3", "E3", "F1", "A2", "A2", "A2", "A2", "F2", "B3", "F4", "F4", "F4", "B1", "E3", "E3", "E3", "B3", "F4", "F4", "F4", "F4", "F4", "F4", "F4", "F4", "F4", "B1", "B3"},
+                                { "B1", "F1", "A2", "A2", "A2", "A2", "F2", "F1", "A2", "A2", "F2", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "F1", "A2", "A2", "A2", "F2", "E3", "E3", "E3", "F1", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "F2", "B3"},
+                                { "C1", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C3"}
+                             };            
+
+            entities.AddRange(GetLevel1Enemies(player));
+            entities.AddRange(GetLevel1Coins());
+            entities.Add(player);
+
+            this.ActiveLevel = new Level(this.worldTileset, entities, map);
+        }
+        private List<Coin> GetLevel1Coins()
+        {
+            List<Coin> coins = new List<Coin>();
+            coins.Add(new Coin(this.coinTextures, new Vector2(11, 15)));
+            coins.Add(new Coin(this.coinTextures, new Vector2(11, 4)));
+            coins.Add(new Coin(this.coinTextures, new Vector2(14, 4)));
+            coins.Add(new Coin(this.coinTextures, new Vector2(17, 4)));
+            coins.Add(new Coin(this.coinTextures, new Vector2(16, 18)));
+            coins.Add(new Coin(this.coinTextures, new Vector2(17, 18)));
+            coins.Add(new Coin(this.coinTextures, new Vector2(18, 18)));
+            coins.Add(new Coin(this.coinTextures, new Vector2(19, 18)));
+            coins.Add(new Coin(this.coinTextures, new Vector2(26, 16)));
+            coins.Add(new Coin(this.coinTextures, new Vector2(28, 16)));
+            coins.Add(new Coin(this.coinTextures, new Vector2(35, 14)));
+            coins.Add(new Coin(this.coinTextures, new Vector2(38, 11)));
+            coins.Add(new Coin(this.coinTextures, new Vector2(33, 7)));
+
+            return coins;
+        }
+        private List<Enemy> GetLevel1Enemies(Player player)
+        {
+            List<Enemy> enemies = new List<Enemy>();
+            enemies.Add(new Type1Enemy(this.type1EnemyTextures, player, new Vector2(17, 18)));
+            enemies.Add(new Type1Enemy(this.type1EnemyTextures, player, new Vector2(4, 10)));
+            enemies.Add(new Type2Enemy(this.type2EnemyTextures, player, new Vector2(26, 11)));
+
+            return enemies;
+        }
+
+
+        private void LoadLevel2()
+        {
+            List<Entity> entities = new List<Entity>();
+
+            Player player = new Player(this.playerTextures, new KeyboardReader(), new Vector2(3, 19));
+
+            entities.AddRange(GetLevel2Enemies(player));
+            entities.AddRange(GetLevel2Coins());
+            entities.Add(player);
+
+            string[,] map = {
+                                { "A1", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A3"},
                                 { "B1", "E1", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "E2", "B3"},
                                 { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B4", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "A5", "B1", "B3"},
                                 { "B1", "B3", "F4", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B4", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "C5", "B1", "B3"},
-                                { "B1", "B3", "D5", "F8", "G1", "G1", "G1", "G1", "G1", "G1", "B4", "G1", "G1", "G1", "G1", "G1", "G1", "D1", "D2", "D2", "D2", "D2", "D3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "D4", "G1", "G1", "G1", "G1", "B1", "B3"},
+                                { "B1", "B3", "D5", "F8", "G1", "G1", "G1", "G1", "G1", "G1", "B4", "G1", "G1", "G1", "G1", "G1", "G1", "D1", "D2", "D2", "D2", "D2", "D3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "D1", "D3", "G1", "G1", "G1", "G1", "B1", "B3"},
                                 { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B4", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "A1", "A3", "G1", "G1", "G1", "G1", "G1", "G1", "E8", "D7", "B1", "B3"},
                                 { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B4", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3", "F4", "F4", "F4", "F4", "F4", "F4", "F4", "F4", "B1", "B3"},
                                 { "B1", "B3", "G1", "G1", "G1", "E8", "D7", "D1", "D2", "D2", "C3", "D5", "D6", "D7", "D1", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D3", "B1", "B3"},
@@ -164,17 +218,12 @@ namespace GameDevProject
                                 { "B1", "B3", "G1", "G1", "G1", "G1", "A1", "A2", "A3", "D5", "G1", "G1", "G1", "A1", "A2", "A3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3", "G1", "G1", "G1", "B1", "B3"},
                                 { "B1", "B3", "G1", "G1", "G1", "G1", "B1", "E3", "B3", "F4", "F4", "F4", "F4", "B1", "E3", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "F4", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3", "F4", "F4", "F4", "B1", "B3"},
                                 { "B1", "F1", "A2", "A2", "A2", "A2", "F2", "E3", "F1", "A2", "A2", "A2", "A2", "F2", "E3", "F1", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "F2", "F1", "A2", "A2", "A2", "F2", "B3"},
-                                { "C1", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C3"}
-                             };            
-
-            entities.AddRange(GetLevel1Enemies(player));
-            entities.AddRange(GetLevel1Coins());
-            entities.Add(player);
+                                { "C1", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C3"}                                
+                             };
 
             this.ActiveLevel = new Level(this.worldTileset, entities, map);
         }
-
-        private List<Coin> GetLevel1Coins()
+        private List<Coin> GetLevel2Coins()
         {
             List<Coin> coins = new List<Coin>();
             coins.Add(new Coin(this.coinTextures, new Vector2(10, 16)));
@@ -196,11 +245,9 @@ namespace GameDevProject
             coins.Add(new Coin(this.coinTextures, new Vector2(10, 13)));
             coins.Add(new Coin(this.coinTextures, new Vector2(9, 12)));
             coins.Add(new Coin(this.coinTextures, new Vector2(9, 13)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(7, 12)));
             coins.Add(new Coin(this.coinTextures, new Vector2(6, 12)));
             coins.Add(new Coin(this.coinTextures, new Vector2(5, 12)));
             coins.Add(new Coin(this.coinTextures, new Vector2(4, 12)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(3, 12)));
             coins.Add(new Coin(this.coinTextures, new Vector2(6, 13)));
             coins.Add(new Coin(this.coinTextures, new Vector2(5, 13)));
             coins.Add(new Coin(this.coinTextures, new Vector2(4, 13)));
@@ -225,7 +272,7 @@ namespace GameDevProject
 
             return coins;
         }
-        private List<Enemy> GetLevel1Enemies(Player player)
+        private List<Enemy> GetLevel2Enemies(Player player)
         {
             List<Enemy> enemies = new List<Enemy>();
             enemies.Add(new Type1Enemy(this.type1EnemyTextures, player, new Vector2(29, 19)));
@@ -241,42 +288,6 @@ namespace GameDevProject
             return enemies;
         }
 
-        private void LoadLevel2()
-        {
-            List<Entity> entities = new List<Entity>();
-
-            Player player = new Player(this.playerTextures, new KeyboardReader(), new Vector2(3, 19));
-
-            entities.AddRange(GetLevel1Enemies(player));
-            entities.AddRange(GetLevel1Coins());
-            entities.Add(player);
-
-            string[,] map = {
-                                { "A1", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A3"},
-                                { "B1", "E1", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "E2", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "F1", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "F2", "B3"},
-                                { "C1", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C3"}
-                             };
-
-            this.ActiveLevel = new Level(this.worldTileset, entities, map);
-        }
         private void LoadGameOver()
         {
             string[,] map = {
