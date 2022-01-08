@@ -33,7 +33,7 @@ namespace GameDevProject.Managers
             if (!IntersectsFromTop(movable, world))
             {
                 movable.CanJump = false;
-                movable.Acceleration += new Vector2(0, 0.1f);
+                movable.Acceleration += movable.Gravity;
             }
             else
             {

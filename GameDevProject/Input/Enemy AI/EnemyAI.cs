@@ -9,17 +9,15 @@ namespace GameDevProject.Input.EnemyAI
     {
         protected Player player;
         protected Enemy enemy;
+        protected float detectionDistance;
 
-        protected const int MOVEMENT_LIMITER = 2;
-        protected int timer = 0;
-
-        protected int LocatePlayer(Player player, Enemy enemy)
+        protected int LocatePlayer(Player player, Enemy enemy, float detectionDistance)
         {
-            if (player.Position.X - enemy.Position.X > 0.01f)
+            if (player.Position.X - enemy.Position.X > 0.01f && player.Position.X - enemy.Position.X >= detectionDistance)
             {
                 return 1;
             }
-            else if (enemy.Position.X - player.Position.X > 0.01f)
+            else if (enemy.Position.X - player.Position.X > 0.01f && enemy.Position.X - player.Position.X <= detectionDistance)
             {
                 return -1;
             }

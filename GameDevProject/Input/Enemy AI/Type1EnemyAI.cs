@@ -8,10 +8,11 @@ namespace GameDevProject.Input.EnemyAI
 {
     class Type1EnemyAI : EnemyAI, IInputReader
     {      
-        public Type1EnemyAI(Player player, Type1Enemy enemy)
+        public Type1EnemyAI(Player player, Type1Enemy enemy, float detectionDistance)
         {
             this.player = player;
             this.enemy = enemy;
+            this.detectionDistance = detectionDistance;
         }
 
         public bool IsDestinationInput => false;
@@ -20,23 +21,18 @@ namespace GameDevProject.Input.EnemyAI
         {
             InputParameters inputParameters = new InputParameters();
 
-            if (timer >= MOVEMENT_LIMITER)
+            switch (LocatePlayer(this.player, this.enemy, this.detectionDistance))
             {
-                switch (LocatePlayer(this.player, this.enemy))
-                {
-                    case -1:
-                        inputParameters.DirectionInput.X -= 1;
-                        break;
-                    case 1:
-                        inputParameters.DirectionInput.X += 1;
-                        break;
-                    case 0:
-                        inputParameters.DirectionInput.X = 0;
-                        break;
-                }
-                timer = 0;
+                case -1:
+                    inputParameters.DirectionInput.X -= 1;
+                    break;
+                case 1:
+                    inputParameters.DirectionInput.X += 1;
+                    break;
+                case 0:
+                    inputParameters.DirectionInput.X = 0;
+                    break;
             }
-            timer++;
 
             return inputParameters;
         }        

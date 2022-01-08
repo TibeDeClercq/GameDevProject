@@ -14,16 +14,11 @@ namespace GameDevProject.Entities
         #region Properties
         public MovementManager MovementManager;
         protected IEntityState enemyState;
+
+        private const int MOVEMENT_LIMITER = 2;
+        private int timer = 0;
         #endregion
 
-        #region Constructor
-        public Enemy()
-        {
-            this.enemyState = new EnemyIdleState();
-            this.MovementManager = new MovementManager();
-            this.IsDead = false;
-        }
-        #endregion 
 
         #region IKillable Implementation
         public bool IsDead { get; set; }
@@ -40,14 +35,29 @@ namespace GameDevProject.Entities
         public SpriteEffects SpriteEffects { get; set; }
         public Vector2 Velocity { get; set; }
         public Vector2 Acceleration { get; set; }
+        public Vector2 Gravity { get; set; }
         public Rectangle HitboxRectangle { get; set; }
 
         public void Move(GameTime gameTime, World world)
         {
-            this.MovementManager.Move(this, gameTime, world);
+            if (timer >= MOVEMENT_LIMITER)
+            {
+                this.MovementManager.Move(this, gameTime, world);
+                timer = 0;
+            }
+            timer++;
         }
 
         #endregion
+
+        #region Constructor
+        public Enemy()
+        {
+            this.enemyState = new EnemyIdleState();
+            this.MovementManager = new MovementManager();
+            this.IsDead = false;
+        }
+        #endregion 
 
         #region Enemy Methods
         public override void Draw(SpriteBatch spriteBatch)
@@ -71,18 +81,22 @@ namespace GameDevProject.Entities
             }
             else
             {
-                this.enemyState = new EnemyIdleState();
-            }
-
-            if (IsWalking())
-            {
-                SoundManager.PlaySound(Sound.EnemyWalk);
+                if (IsWalking())
+                {
+                    this.enemyState = new EnemyWalkState();
+                    SoundManager.PlaySound(Sound.EnemyWalk);
+                }
+                else
+                {
+                    this.enemyState = new EnemyIdleState();
+                    SoundManager.StopSound(Sound.EnemyWalk);
+                }
             }
         }
 
         private bool HasNoHealth()
         {
-            return this.Health <= 0;            
+            return this.Health <= 0;         
         }
 
         private bool IsWalking()
