@@ -75,7 +75,7 @@ namespace GameDevProject.Managers
                 {
                     if (tile.IsLeftCollide && !MovableLowerThanTile(movable, tile))
                     {
-                        if(movable.HitboxRectangle.X + movable.HitboxRectangle.Width >= tile.HitboxRectangle.X)
+                        if(movable.HitboxRectangle.X + movable.HitboxRectangle.Width >= tile.HitboxRectangle.X) //Herwerken, nog een aantal bugs
                         {
                             movable.Position = new Vector2(tile.Position.X - movable.HitboxRectangle.Width, movable.Position.Y);
                         }
