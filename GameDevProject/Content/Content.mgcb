@@ -109,7 +109,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:SpriteSheetsEnemies/Enemy1Dead.png
+/build:SpriteSheetsEnemies/Enemy1Dead.png;SpriteSheetsEnemies/Enemy2Dead.png
 
 #begin SpriteSheetsEnemies/Enemy1Idle.png
 /importer:TextureImporter
@@ -121,7 +121,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:SpriteSheetsEnemies/Enemy1Idle.png
+/build:SpriteSheetsEnemies/Enemy1Idle.png;SpriteSheetsEnemies/Enemy2Idle.png
 
 #begin SpriteSheetsEnemies/Enemy1Walk.png
 /importer:TextureImporter
@@ -133,7 +133,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:SpriteSheetsEnemies/Enemy1Walk.png
+/build:SpriteSheetsEnemies/Enemy1Walk.png;SpriteSheetsEnemies/Enemy2Walk.png
 
 #begin SpriteSheetsEnemies/Enemy2Dead.png
 /importer:TextureImporter
@@ -145,7 +145,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:SpriteSheetsEnemies/Enemy2Dead.png
+/build:SpriteSheetsEnemies/Enemy2Dead.png;SpriteSheetsEnemies/Enemy1Dead.png
 
 #begin SpriteSheetsEnemies/Enemy2Idle.png
 /importer:TextureImporter
@@ -157,7 +157,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:SpriteSheetsEnemies/Enemy2Idle.png
+/build:SpriteSheetsEnemies/Enemy2Idle.png;SpriteSheetsEnemies/Enemy1Idle.png
 
 #begin SpriteSheetsEnemies/Enemy2Walk.png
 /importer:TextureImporter
@@ -169,7 +169,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:SpriteSheetsEnemies/Enemy2Walk.png
+/build:SpriteSheetsEnemies/Enemy2Walk.png;SpriteSheetsEnemies/Enemy1Walk.png
 
 #begin SpriteSheetsPlayer/PlayerDead.png
 /importer:TextureImporter
