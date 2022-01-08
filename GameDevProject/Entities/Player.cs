@@ -162,6 +162,7 @@ namespace GameDevProject.Entities
             }
             this.animations[0].Hitbox = new Rectangle(8, 15, 29, 30);
             this.animations[1].Hitbox = new Rectangle(2, 15, 40, 30);
+            this.animations[3].Hitbox = new Rectangle(6, 15, 38, 30);
 
         }
         #endregion

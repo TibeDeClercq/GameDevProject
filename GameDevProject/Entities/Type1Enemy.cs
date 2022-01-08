@@ -57,9 +57,9 @@ namespace GameDevProject.Entities
         }
         private void SetHitboxes()
         {
-            this.animations[0].Hitbox = new Rectangle(5, 15, 35, 30);
-            this.animations[1].Hitbox = new Rectangle(5, 15, 35, 30);
-            this.animations[2].Hitbox = new Rectangle(5, 15, 35, 30);
+            this.animations[0].Hitbox = new Rectangle(5, 0, 35, 32);
+            this.animations[1].Hitbox = new Rectangle(5, 0, 35, 32);
+            this.animations[2].Hitbox = new Rectangle(0, 10, 32, 22);
         }
         #endregion
     }
