@@ -40,7 +40,7 @@ namespace GameDevProject.Input.EnemyAI
                     break;
             }
 
-            if (canJump)
+            if (canJump && inputParameters.DirectionInput.X != 0)
             {
                 inputParameters.DirectionInput.Y = 1;
             }

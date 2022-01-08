@@ -17,14 +17,14 @@ namespace GameDevProject.Entities
 
         private const int WALK_FPS = 10;
         private const int DEAD_FPS = 10;
-        private const int IDLE_FPS = 10;
+        private const int IDLE_FPS = 5;
         #endregion
 
         #region Constructor
         public Type1Enemy(List<Texture2D> textures, Player player, Vector2 coordinates)
         {           
             this.textures = textures;
-            this.MaxVelocity = new Vector2(0, 2);
+            this.MaxVelocity = new Vector2(1, 2);
             this.Velocity = new Vector2(0, 0);
             this.Gravity = new Vector2(0, 0.1f);
             this.HitboxRectangle = new Rectangle((int)this.Position.X, (int)this.Position.Y, 32, 32);

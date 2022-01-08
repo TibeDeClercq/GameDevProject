@@ -23,10 +23,10 @@ namespace GameDevProject.Map
         public bool IsTrapCollide { get; set; }
         public bool CanDropDown { get; set; }
 
-        private int[] leftCollidable = { 0, 3, 8, 11, 16, 19 };
-        private int[] rightCollidable = {2, 10, 11, 18, 19 };
-        private int[] topCollidable = { 0, 1, 2, 3, 28, 29, 30 };
-        private int[] bottomCollidable = { 16, 17, 18, 19 };
+        private int[] leftCollidable = { 0, 3, 8, 11, 16, 19, 27, 24 };
+        private int[] rightCollidable = {2, 10, 11, 18, 19, 27, 26 };
+        private int[] topCollidable = { 0, 1, 2, 3, 28, 29, 30, 24, 25, 26, 27 };
+        private int[] bottomCollidable = { 16, 17, 18, 19, 24, 25, 26, 27 };
         private int[] finishCollidable = { 4, 5, 6, 12, 13, 14, 20, 21, 22 };
         private int[] trapCollidable = { 43 };
         private int[] dropDownable = { 28, 29, 30 };
