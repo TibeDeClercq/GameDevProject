@@ -229,7 +229,7 @@ namespace GameDevProject
         private List<Enemy> GetLevel1Enemies(Player player)
         {
             List<Enemy> enemies = new List<Enemy>();
-            enemies.Add(new Type1Enemy(this.type1EnemyTextures, player, new Vector2(26, 19)));
+            enemies.Add(new Type1Enemy(this.type1EnemyTextures, player, new Vector2(29, 19)));
             enemies.Add(new Type2Enemy(this.type2EnemyTextures, player, new Vector2(28, 13)));
             enemies.Add(new Type2Enemy(this.type2EnemyTextures, player, new Vector2(14, 13)));
             enemies.Add(new Type1Enemy(this.type1EnemyTextures, player, new Vector2(11, 13)));
