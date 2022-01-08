@@ -2,15 +2,13 @@
 using GameDevProject.Interfaces;
 using Microsoft.Xna.Framework;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace GameDevProject.Input.EnemyAI
 {
     class Type2EnemyAI : EnemyAI, IInputReader
     {
         #region Properties
-        private TimeSpan JumpRate = TimeSpan.FromSeconds(1.5);
+        private TimeSpan JumpRate = TimeSpan.FromSeconds(1);
         private TimeSpan Timer = TimeSpan.Zero;
 
         private bool canJump = false;
