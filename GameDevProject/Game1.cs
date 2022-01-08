@@ -20,10 +20,10 @@ namespace GameDevProject
     public enum State { MainMenu, Level1, Level1Complete, GameOverLevel1, Level2, Level2Complete, GameOverLevel2}
     public class Game1 : Game
     {
-        private bool devMode = false;
+        private bool devMode = true;
 
         private RenderTarget2D gameRenderTarget;
-        public static float scale = 2.5f;
+        public static float scale = 5f;
 
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
@@ -258,8 +258,8 @@ namespace GameDevProject
                                 { "C2", "C2", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
                                 { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
                                 { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1"},
-                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "A1", "A2", "A2", "A3", "D5", "D6", "D7", "A1", "A2","A3", "G1", "G1", "G1", "A5", "G1"},
-                                { "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "C5", "G1"},
+                                { "B3", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "A1", "A2", "A2", "A3", "D5", "D6", "D7", "A1", "A2","A3", "G1", "G1", "G1", "A5", "G1"},
+                                { "B3", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1","G1", "G1", "G1", "G1", "C5", "G1"},
                                 { "A2", "A2", "A2", "A2", "A2", "A2","A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2","A2", "A2", "A2", "A2", "A2", "A2"},
                                 { "E3", "E3", "E3", "E3", "E3", "E3","E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3","E3", "E3", "E3", "E3", "E3", "E3"}
                              };

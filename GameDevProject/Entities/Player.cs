@@ -160,7 +160,9 @@ namespace GameDevProject.Entities
             {
                 animation.Hitbox = new Rectangle(0, 15, 45, 30);
             }
-            this.animations[0].Hitbox = new Rectangle(5, 15, 40, 30);
+            this.animations[0].Hitbox = new Rectangle(8, 15, 29, 30);
+            this.animations[1].Hitbox = new Rectangle(2, 15, 40, 30);
+
         }
         #endregion
 

@@ -75,7 +75,7 @@ namespace GameDevProject.Managers
                 {
                     if (tile.IsLeftCollide && !MovableLowerThanTile(movable, tile))
                     {
-                        if(movable.HitboxRectangle.X + movable.HitboxRectangle.Width + 5 >= tile.HitboxRectangle.X)
+                        if(movable.HitboxRectangle.X + movable.HitboxRectangle.Width >= tile.HitboxRectangle.X)
                         {
                             movable.Position = new Vector2(tile.Position.X - movable.HitboxRectangle.Width, movable.Position.Y);
                         }
@@ -98,7 +98,6 @@ namespace GameDevProject.Managers
                 {
                     if (tile.IsRightCollide && !MovableLowerThanTile(movable, tile))
                     {
-                        //Debug.WriteLine("Collided with a tile from the right");
                         return true;
                     }
                 }
