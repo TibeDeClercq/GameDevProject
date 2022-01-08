@@ -18,6 +18,7 @@ namespace GameDevProject.States.GameStates
 
         public LevelState(SpriteFont font)
         {
+            ScoreManager.GameTimer = TimeSpan.Zero;
             this.font = font;
         }
 
@@ -32,7 +33,8 @@ namespace GameDevProject.States.GameStates
                 }
             }
 
-            level.healthManager.UpdateHealth(level ,gameTime);            
+            level.healthManager.UpdateHealth(level ,gameTime);
+            ScoreManager.GameTimer += gameTime.ElapsedGameTime;
         }
 
         public void Draw(Level level, SpriteBatch spriteBatch)
@@ -45,6 +47,7 @@ namespace GameDevProject.States.GameStates
             }
 
             spriteBatch.DrawString(this.font, $"Score: {ScoreManager.Score}", new Vector2(32, 11), Color.White);
+            spriteBatch.DrawString(this.font, $"Time: {Math.Round(ScoreManager.GameTimer.TotalSeconds, 2)}", new Vector2((level.world.GetWorldWidth() - 80), 11), Color.White);
 
             if (player != null && !player.IsAttacking && player.AttackTimer != TimeSpan.Zero)
             {

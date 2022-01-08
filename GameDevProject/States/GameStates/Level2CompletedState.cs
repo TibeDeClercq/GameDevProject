@@ -59,6 +59,7 @@ namespace GameDevProject.States.GameStates
 
             spriteBatch.DrawString(this.font, "Completed Level 2", new Vector2((level.world.GetWorldWidth() / 2) - 65, 8), Color.White);
             spriteBatch.DrawString(this.font, $"Score: {ScoreManager.Score}", new Vector2((level.world.GetWorldWidth() / 2) - 30, 23), Color.White);
+            spriteBatch.DrawString(this.font, $"Time: {Math.Round(ScoreManager.GameTimer.TotalSeconds, 2)}", new Vector2((level.world.GetWorldWidth() / 2) - 40, level.world.GetWorldHeight() - 25), Color.White);
 
             foreach (Button button in buttons)
             {
