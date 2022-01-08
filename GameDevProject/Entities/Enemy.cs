@@ -19,7 +19,6 @@ namespace GameDevProject.Entities
         private int timer = 0;
         #endregion
 
-
         #region IKillable Implementation
         public bool IsDead { get; set; }
         public TimeSpan DeathTimer { get; set; }

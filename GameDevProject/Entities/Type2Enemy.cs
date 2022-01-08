@@ -61,16 +61,17 @@ namespace GameDevProject.Entities
         #region Animations
         private void AddAnimations()
         {
-            this.animations.Add(new Animation(WALK_FPS));
-            this.animations.Add(new Animation(DEAD_FPS));
-            this.animations.Add(new Animation(IDLE_FPS));
+            this.animations.Add(new Animation(WALK_FPS, WALK_FRAMES));
+            this.animations.Add(new Animation(DEAD_FPS, DEAD_FRAMES));
+            this.animations.Add(new Animation(IDLE_FPS, IDLE_FRAMES));
         }
 
         private void SetAnimations()
         {
-            this.animations[0].GetFramesFromTextureProperties(textures[0].Width, textures[0].Height, WALK_FRAMES, 1);
-            this.animations[1].GetFramesFromTextureProperties(textures[1].Width, textures[1].Height, DEAD_FRAMES, 1);
-            this.animations[2].GetFramesFromTextureProperties(textures[2].Width, textures[2].Height, IDLE_FRAMES, 1);
+            for (int i = 0; i < this.animations.Count; i++)
+            {
+                this.animations[i].GetFramesFromTextureProperties(textures[i].Width, textures[i].Height, 1);
+            }
         }
 
         private void SetHitboxes()

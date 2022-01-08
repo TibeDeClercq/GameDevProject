@@ -12,12 +12,14 @@ namespace GameDevProject.Entities.Animations
         private int counter = 0;
         private double secondCounter = 0;
         private int fps = 0;
+        private int frameCount = 0;
 
         public Rectangle Hitbox { get; set; }
 
-        public Animation(int fps)
+        public Animation(int fps, int frameCount)
         {
             this.fps = fps;
+            this.frameCount = frameCount;
             this.frames = new List<AnimationFrame>();
         }
 
@@ -44,9 +46,9 @@ namespace GameDevProject.Entities.Animations
             }
         }
 
-        public void GetFramesFromTextureProperties(int width, int height, int numberOfWidthSprites, int numberOfHeightSprites)
+        public void GetFramesFromTextureProperties(int width, int height, int numberOfHeightSprites)
         {
-            int widthOfFrame = width / numberOfWidthSprites;
+            int widthOfFrame = width / this.frameCount;
             int heightOfFrame = height / numberOfHeightSprites;
 
             for (int y = 0; y <= height - heightOfFrame; y += heightOfFrame)
