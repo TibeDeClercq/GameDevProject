@@ -20,10 +20,10 @@ namespace GameDevProject
     public enum State { MainMenu, Level1, Level1Complete, GameOverLevel1, Level2, Level2Complete, GameOverLevel2}
     public class Game1 : Game
     {
-        private bool devMode = true;
+        private bool devMode = false;
 
         private RenderTarget2D gameRenderTarget;
-        public static float scale = 5f;
+        public static float scale = 2.5f;
 
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
@@ -254,24 +254,24 @@ namespace GameDevProject
             string[,] map = {
                                 { "A1", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A3"},
                                 { "B1", "E1", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "E2", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B4", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "A5", "B1", "B3"},
-                                { "B1", "B3", "F4", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B4", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "C5", "B1", "B3"},
-                                { "B1", "B3", "D5", "F8", "G1", "G1", "G1", "G1", "G1", "G1", "B4", "G1", "G1", "G1", "G1", "G1", "G1", "D1", "D2", "D2", "D2", "D2", "D3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "D4", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B4", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "A1", "A3", "G1", "G1", "G1", "G1", "G1", "G1", "E8", "D7", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B4", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3", "F4", "F4", "F4", "F4", "F4", "F4", "F4", "F4", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "E8", "D7", "D1", "D2", "D2", "C3", "D5", "D6", "D7", "D1", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D3", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "F4", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "D5", "D6", "D6", "D6", "D7", "D1", "D2", "D2", "D2", "D2", "D2", "D3", "D5", "F8", "G1", "G1", "G1", "G1", "G1", "G1", "A1", "A2", "A2", "A2", "A3", "D5", "F8", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "B4", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "E3", "E3", "E3", "B3", "G1", "G1", "G1", "G1", "A1", "A3", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "F4", "G1", "G1", "G1", "F4", "B4", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "F4", "B1", "E3", "E3", "E3", "B3", "G1", "G1", "G1", "G1", "B1", "B3", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D3", "D5", "D6", "D7", "B1", "B3"},
                                 { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
                                 { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "D1", "D2", "D2", "D2", "D2", "D2", "D3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "A1", "A3", "D5", "D6", "D7", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "A1", "A2", "A3", "D5", "G1", "G1", "G1", "A1", "A2", "A3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "B1", "E3", "B3", "F4", "F4", "F4", "F4", "B1", "E3", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "F4", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3", "F4", "F4", "F4", "B1", "B3"},
-                                { "B1", "F1", "A2", "A2", "A2", "A2", "F2", "E3", "F1", "A2", "A2", "A2", "A2", "F2", "E3", "F1", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "F2", "F1", "A2", "A2", "A2", "F2", "B3"},
+                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
+                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
+                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
+                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
+                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
+                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
+                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
+                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
+                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
+                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
+                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
+                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
+                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
+                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
+                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
+                                { "B1", "F1", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "F2", "B3"},
                                 { "C1", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C3"}
                              };
 
@@ -361,14 +361,14 @@ namespace GameDevProject
         private void AddEnemyTextures()
         {
             this.type1EnemyTextures = new List<Texture2D>();
-            this.type1EnemyTextures.Add(this.Content.Load<Texture2D>("SpritesheetsEnemies/Enemy2Walk"));
-            this.type1EnemyTextures.Add(this.Content.Load<Texture2D>("SpritesheetsEnemies/Enemy2Dead"));
-            this.type1EnemyTextures.Add(this.Content.Load<Texture2D>("SpritesheetsEnemies/Enemy2Idle"));
+            this.type1EnemyTextures.Add(this.Content.Load<Texture2D>("SpritesheetsEnemies/Enemy1Walk"));
+            this.type1EnemyTextures.Add(this.Content.Load<Texture2D>("SpritesheetsEnemies/Enemy1Dead"));
+            this.type1EnemyTextures.Add(this.Content.Load<Texture2D>("SpritesheetsEnemies/Enemy1Idle"));
 
             this.type2EnemyTextures = new List<Texture2D>();
-            this.type2EnemyTextures.Add(this.Content.Load<Texture2D>("SpritesheetsEnemies/Enemy1Walk"));
-            this.type2EnemyTextures.Add(this.Content.Load<Texture2D>("SpritesheetsEnemies/Enemy1Dead"));
-            this.type2EnemyTextures.Add(this.Content.Load<Texture2D>("SpritesheetsEnemies/Enemy1Idle"));
+            this.type2EnemyTextures.Add(this.Content.Load<Texture2D>("SpritesheetsEnemies/Enemy2Walk"));
+            this.type2EnemyTextures.Add(this.Content.Load<Texture2D>("SpritesheetsEnemies/Enemy2Dead"));
+            this.type2EnemyTextures.Add(this.Content.Load<Texture2D>("SpritesheetsEnemies/Enemy2Idle"));
         }
 
         private void AddItemTextures()
