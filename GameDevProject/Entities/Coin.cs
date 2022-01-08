@@ -66,7 +66,7 @@ namespace GameDevProject.Entities
             {
                 SpeedChanged = true;
                 AnimationFrame currentframe = this.animations[0].CurrentFrame;
-                this.animations[0] = new Animation(SpinSpeed);
+                this.animations[0] = new Animation(SpinSpeed, COIN_FRAMES);
                 SetAnimations();
                 SetHitboxes();
                 this.animations[0].CurrentFrame = currentframe;
@@ -78,12 +78,15 @@ namespace GameDevProject.Entities
         #region Animation Methods
         private void AddAnimations()
         {
-            this.animations.Add(new Animation(COIN_FPS));
+            this.animations.Add(new Animation(COIN_FPS, COIN_FRAMES));
         }
 
         private void SetAnimations()
         {
-            this.animations[0].GetFramesFromTextureProperties(textures[0].Width, textures[0].Height, COIN_FRAMES, 1);
+            for (int i = 0; i < this.animations.Count; i++)
+            {
+                this.animations[i].GetFramesFromTextureProperties(textures[i].Width, textures[i].Height, 1);
+            }
         }
 
         private void SetHitboxes()

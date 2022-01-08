@@ -136,22 +136,20 @@ namespace GameDevProject.Entities
         #region Animation Methods
         private void AddAnimations()
         {
-            this.animations.Add(new Animation(IDLE_FPS));
-            this.animations.Add(new Animation(WALK_FPS));
-            this.animations.Add(new Animation(JUMP_FPS));
-            this.animations.Add(new Animation(SPIN_FPS));
-            this.animations.Add(new Animation(SLEEP_FPS));
-            this.animations.Add(new Animation(DEAD_FPS));
+            this.animations.Add(new Animation(IDLE_FPS, IDLE_FRAMES));
+            this.animations.Add(new Animation(WALK_FPS, WALK_FRAMES ));
+            this.animations.Add(new Animation(JUMP_FPS, JUMP_FRAMES));
+            this.animations.Add(new Animation(SPIN_FPS, SPIN_FRAMES));
+            this.animations.Add(new Animation(SLEEP_FPS, SLEEP_FRAMES));
+            this.animations.Add(new Animation(DEAD_FPS, DEAD_FRAMES));
         }
 
         private void SetAnimations()
         {
-            this.animations[0].GetFramesFromTextureProperties(textures[0].Width, textures[0].Height, IDLE_FRAMES, 1);
-            this.animations[1].GetFramesFromTextureProperties(textures[1].Width, textures[1].Height, WALK_FRAMES, 1);
-            this.animations[2].GetFramesFromTextureProperties(textures[2].Width, textures[2].Height, JUMP_FRAMES, 1);
-            this.animations[3].GetFramesFromTextureProperties(textures[3].Width, textures[3].Height, SPIN_FRAMES, 1);
-            this.animations[4].GetFramesFromTextureProperties(textures[4].Width, textures[4].Height, SLEEP_FRAMES, 1);
-            this.animations[5].GetFramesFromTextureProperties(textures[5].Width, textures[5].Height, DEAD_FRAMES, 1);
+            for (int i = 0; i < this.animations.Count; i++)
+            {
+                this.animations[i].GetFramesFromTextureProperties(textures[i].Width, textures[i].Height, 1);
+            }
         }
 
         private void SetHitboxes()
