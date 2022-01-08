@@ -132,8 +132,11 @@ namespace GameDevProject.Managers
             {
                 if (tile.IsBottomCollide && movable.HitboxRectangle.Intersects(tile.HitboxRectangle))
                 {
-                    //Debug.WriteLine("Collided with a tile from the bottom");
-                    return true;
+                    if((movable.HitboxRectangle.Y <= tile.HitboxRectangle.Y + tile.HitboxRectangle.Height) && (movable.HitboxRectangle.Y >= tile.HitboxRectangle.Y + tile.HitboxRectangle.Height - 1))
+                    {
+                        //Debug.WriteLine("Collided with a tile from the bottom");
+                        return true;
+                    }
                 }
             }
             return false;
