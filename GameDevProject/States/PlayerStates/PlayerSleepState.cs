@@ -9,7 +9,7 @@ using System.Text;
 
 namespace GameDevProject.States.PlayerStates
 {
-    class PlayerSleepState : IEntityState
+    class PlayerSleepState : IPlayerState
     {
         #region Public methods
         public void Draw(SpriteBatch spriteBatch, List<Texture2D> textures, Vector2 position, List<Animation> animations, SpriteEffects spriteEffects)

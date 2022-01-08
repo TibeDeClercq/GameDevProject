@@ -21,7 +21,7 @@ namespace GameDevProject.Entities
         public AttackManager AttackManager;
         public MovementManager MovementManager;
 
-        private IEntityState playerState;
+        private IPlayerState playerState;
 
         private const int IDLE_FRAMES = 2;
         private const int WALK_FRAMES = 4;

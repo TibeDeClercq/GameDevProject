@@ -59,6 +59,11 @@ namespace GameDevProject.Managers
             }
 
         }
+
+        public static void Drop(IMovable movable, World world)
+        {
+            CanDropDown(movable, world);
+        }
         #endregion
 
         #region Private methods
@@ -101,12 +106,15 @@ namespace GameDevProject.Managers
                 if (tile.IsTopCollide && movable.HitboxRectangle.Intersects(tile.HitboxRectangle) && MovableLowerThanTile(movable, tile))
                 {
                     //Debug.WriteLine("Collided with a tile from the top");
-                    if (MovableLowerThanTile(movable, tile))
-                    {
-                        //Correct the position
-                        movable.Position = new Vector2(movable.HitboxRectangle.X, tile.HitboxRectangle.Y - movable.HitboxRectangle.Height);
-                    }
+                    movable.Position = new Vector2(movable.HitboxRectangle.X, tile.HitboxRectangle.Y - movable.HitboxRectangle.Height);
                     return true;
+                }
+                if (tile.CanDropDown && movable.HitboxRectangle.Intersects(tile.HitboxRectangle))
+                {
+                    if (movable.Position.Y < tile.Position.Y)
+                    {
+                        tile.IsTopCollide = true;
+                    }
                 }
             }
             return false;
@@ -127,11 +135,22 @@ namespace GameDevProject.Managers
 
         private static bool MovableLowerThanTile(IMovable movable, Tile tile)
         {
-            if (tile.HitboxRectangle.Y >= movable.HitboxRectangle.Y + movable.HitboxRectangle.Height - 3)
+            if (tile.HitboxRectangle.Y >= movable.HitboxRectangle.Y + movable.HitboxRectangle.Height - 4)
             {
                 return true;
             }
             return false;
+        }
+
+        private static void CanDropDown(IMovable movable, World world)
+        {
+            foreach (Tile tile in world.GetTiles())
+            {
+                if(tile.CanDropDown && movable.HitboxRectangle.Intersects(tile.HitboxRectangle))
+                {
+                    tile.IsTopCollide = false;
+                }
+            }
         }
         #endregion
     }

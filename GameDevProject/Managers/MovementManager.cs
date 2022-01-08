@@ -49,9 +49,14 @@ namespace GameDevProject.Managers
                         {
                             SoundManager.PlaySound(Sound.EnemyJump);
                         }
-                        movable.Acceleration = new Vector2(0, -2.7f); // power of the jump
+                        movable.Acceleration = new Vector2(0, -3.0f); // power of the jump
                         movable.IsJumping = true;
                     }
+                }
+
+                if (input.DirectionInput.Y == -1)
+                {
+                    PhysicsManager.Drop(movable, world);
                 }
             }            
 
