@@ -23,7 +23,7 @@ namespace GameDevProject
         private bool devMode = true;
 
         private RenderTarget2D gameRenderTarget;
-        public static int scale = 3;
+        public static float scale = 3f;
 
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
@@ -223,8 +223,8 @@ namespace GameDevProject
         {
             this.gameRenderTarget = new RenderTarget2D(this.GraphicsDevice, this.gameState.GetWindowWidth(this.ActiveLevel), this.gameState.GetWindowHeight(this.ActiveLevel));
 
-            this.graphics.PreferredBackBufferHeight = Game1.scale * this.gameState.GetWindowHeight(this.ActiveLevel);
-            this.graphics.PreferredBackBufferWidth = Game1.scale * this.gameState.GetWindowWidth(this.ActiveLevel);
+            this.graphics.PreferredBackBufferHeight = (int)System.Math.Round((decimal)(Game1.scale * this.gameState.GetWindowHeight(this.ActiveLevel)));
+            this.graphics.PreferredBackBufferWidth = (int)System.Math.Round((decimal)(Game1.scale * this.gameState.GetWindowWidth(this.ActiveLevel)));
             this.graphics.ApplyChanges();
         }
         #endregion
@@ -418,7 +418,7 @@ namespace GameDevProject
         {
             this.GraphicsDevice.SetRenderTarget(null);
             this.spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-            this.spriteBatch.Draw(this.gameRenderTarget, new Rectangle(0, 0, Game1.scale * this.gameState.GetWindowWidth(this.ActiveLevel), Game1.scale * this.gameState.GetWindowHeight(this.ActiveLevel)), Color.White);
+            this.spriteBatch.Draw(this.gameRenderTarget, new Rectangle(0, 0, (int)System.Math.Round((decimal)(Game1.scale * this.gameState.GetWindowWidth(this.ActiveLevel))), (int)System.Math.Round((decimal)(Game1.scale * this.gameState.GetWindowHeight(this.ActiveLevel)))), Color.White);
             
             this.spriteBatch.End();
         }
