@@ -20,7 +20,7 @@ namespace GameDevProject
     public enum State { MainMenu, Level1, Level1Complete, GameOverLevel1, Level2, Level2Complete, GameOverLevel2}
     public class Game1 : Game
     {
-        private bool devMode = false;
+        private bool devMode = true;
 
         private RenderTarget2D gameRenderTarget;
         public static float scale = 2.5f;
@@ -229,7 +229,7 @@ namespace GameDevProject
         private List<Enemy> GetLevel1Enemies(Player player)
         {
             List<Enemy> enemies = new List<Enemy>();
-            enemies.Add(new Type1Enemy(this.type1EnemyTextures, player, new Vector2(26, 19)));
+            enemies.Add(new Type1Enemy(this.type1EnemyTextures, player, new Vector2(29, 19)));
             enemies.Add(new Type2Enemy(this.type2EnemyTextures, player, new Vector2(28, 13)));
             enemies.Add(new Type2Enemy(this.type2EnemyTextures, player, new Vector2(14, 13)));
             enemies.Add(new Type1Enemy(this.type1EnemyTextures, player, new Vector2(11, 13)));
@@ -308,6 +308,11 @@ namespace GameDevProject
         }
         private void SetRenderer()
         {
+            if (this.gameRenderTarget != null)
+            {
+                this.gameRenderTarget.Dispose();
+            }
+
             this.gameRenderTarget = new RenderTarget2D(this.GraphicsDevice, this.gameState.GetWindowWidth(this.ActiveLevel), this.gameState.GetWindowHeight(this.ActiveLevel));
 
             this.graphics.PreferredBackBufferHeight = (int)System.Math.Round((decimal)(Game1.scale * this.gameState.GetWindowHeight(this.ActiveLevel)));
