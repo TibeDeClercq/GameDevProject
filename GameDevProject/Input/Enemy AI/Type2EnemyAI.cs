@@ -16,10 +16,11 @@ namespace GameDevProject.Input.EnemyAI
         private bool canJump = false;
         #endregion
 
-        public Type2EnemyAI(Player player, Type2Enemy enemy)
+        public Type2EnemyAI(Player player, Type2Enemy enemy, float detectionDistance)
         {
             this.player = player;
             this.enemy = enemy;
+            this.detectionDistance = detectionDistance;
         }
 
         public bool IsDestinationInput => false;
@@ -28,7 +29,7 @@ namespace GameDevProject.Input.EnemyAI
         {
             InputParameters inputParameters = new InputParameters();
 
-            switch (LocatePlayer(this.player, this.enemy))
+            switch (LocatePlayer(this.player, this.enemy, detectionDistance))
             {
                 case -1:
                     inputParameters.DirectionInput.X -= 1;

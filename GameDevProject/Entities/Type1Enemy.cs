@@ -29,7 +29,7 @@ namespace GameDevProject.Entities
             this.Gravity = new Vector2(0, 0.1f);
             this.HitboxRectangle = new Rectangle((int)this.Position.X, (int)this.Position.Y, 32, 32);
             this.Position = new Vector2((coordinates.X * 16) - 16, (coordinates.Y * 16) - this.HitboxRectangle.Height);
-            this.InputReader = new Type1EnemyAI(player, this);
+            this.InputReader = new Type1EnemyAI(player, this, 150);
             this.Health = 1;
             
             this.DeathDuration = TimeSpan.FromSeconds(1);
