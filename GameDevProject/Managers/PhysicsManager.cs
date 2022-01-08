@@ -62,7 +62,7 @@ namespace GameDevProject.Managers
 
         public static void Drop(IMovable movable, World world)
         {
-            CanDropDown(movable, world);
+            ChangeDropDownTile(movable, world);
         }
         #endregion
 
@@ -142,7 +142,7 @@ namespace GameDevProject.Managers
             return false;
         }
 
-        private static void CanDropDown(IMovable movable, World world)
+        private static void ChangeDropDownTile(IMovable movable, World world)
         {
             foreach (Tile tile in world.GetTiles())
             {
