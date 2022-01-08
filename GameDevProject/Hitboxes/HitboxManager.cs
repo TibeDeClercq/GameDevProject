@@ -13,6 +13,7 @@ namespace GameDevProject.Hitboxes
     {
         public List<IHitbox> items;
         public List<Hitbox> hitboxes;
+        private List<Texture2D> textures;
 
         public void DrawHitboxes(SpriteBatch spriteBatch)
         {
@@ -25,31 +26,31 @@ namespace GameDevProject.Hitboxes
         //in hitbox manager.
         private void CreateHitboxes(GraphicsDeviceManager graphics)
         {
-            foreach (IHitbox item in items)
+            for (int i = 0; i < items.Count; i++)
             {
-                int itemWidth = item.HitboxRectangle.Width;
-                int itemHeight = item.HitboxRectangle.Height;
-                Vector2 position = new Vector2(item.HitboxRectangle.X, item.HitboxRectangle.Y);
+                int itemWidth = items[i].HitboxRectangle.Width;
+                int itemHeight = items[i].HitboxRectangle.Height;
+                Vector2 position = new Vector2(items[i].HitboxRectangle.X, items[i].HitboxRectangle.Y);
 
-                Texture2D texture = new Texture2D(graphics.GraphicsDevice, itemWidth, itemHeight);
+                this.textures.Add(new Texture2D(graphics.GraphicsDevice, itemWidth, itemHeight));
                 int pixels = itemWidth * itemHeight;
                 Color[] outline = new Color[pixels];
 
-                for (int i = 0; i < pixels; i++)
+                for (int j = 0; j < pixels; j++)
                 {
-                    if (i < itemWidth || i % itemWidth == 0 || i % itemWidth == itemWidth - 1 || i > pixels - itemWidth)
+                    if (j < itemWidth || j % itemWidth == 0 || j % itemWidth == itemWidth - 1 || j > pixels - itemWidth)
                     {
-                        outline[i] = Color.White;
+                        outline[j] = Color.White;
                     }
                     else
                     {
-                        outline[i] = Color.Transparent;
+                        outline[j] = Color.Transparent;
                     }
                 }
 
-                texture.SetData(outline);
+                textures[i].SetData(outline);
 
-                hitboxes.Add(new Hitbox(texture, position));
+                hitboxes.Add(new Hitbox(textures[i], position));
             }
         }
 
@@ -57,6 +58,7 @@ namespace GameDevProject.Hitboxes
         {
             this.hitboxes = new List<Hitbox>();
             this.items = new List<IHitbox>();
+            this.CreateNewTextures();
 
             if(entities != null)
             {
@@ -75,6 +77,18 @@ namespace GameDevProject.Hitboxes
             }
 
             this.CreateHitboxes(graphics);
+        }
+
+        private void CreateNewTextures()
+        {
+            if(textures != null)
+            {
+                foreach (Texture2D texture in textures)
+                {
+                    texture.Dispose();
+                }
+            }
+            this.textures = new List<Texture2D>();
         }
     }
 }
