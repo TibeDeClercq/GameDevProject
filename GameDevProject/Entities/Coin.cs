@@ -42,6 +42,7 @@ namespace GameDevProject.Entities
 
             AddAnimations();
             SetAnimations();
+            SetHitboxes();
 
             this.coinState = new CoinDefaultState();
         }
@@ -55,7 +56,7 @@ namespace GameDevProject.Entities
 
         public override void Update(GameTime gameTime, World world)
         {
-            this.coinState.Update(gameTime, animations);
+            this.coinState.Update(gameTime, animations, this);
             this.ChangeSpinSpeed();
         }        
 
@@ -67,6 +68,7 @@ namespace GameDevProject.Entities
                 AnimationFrame currentframe = this.animations[0].CurrentFrame;
                 this.animations[0] = new Animation(SpinSpeed);
                 SetAnimations();
+                SetHitboxes();
                 this.animations[0].CurrentFrame = currentframe;
 
             }
@@ -82,6 +84,11 @@ namespace GameDevProject.Entities
         private void SetAnimations()
         {
             this.animations[0].GetFramesFromTextureProperties(textures[0].Width, textures[0].Height, COIN_FRAMES, 1);
+        }
+
+        private void SetHitboxes()
+        {
+            this.animations[0].Hitbox = new Rectangle(0, 0, 16, 16);
         }
         #endregion
     }

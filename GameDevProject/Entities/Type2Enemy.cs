@@ -46,6 +46,7 @@ namespace GameDevProject.Entities
 
             AddAnimations();
             SetAnimations();
+            SetHitboxes();
         }
         #endregion
 
@@ -70,6 +71,13 @@ namespace GameDevProject.Entities
             this.animations[0].GetFramesFromTextureProperties(textures[0].Width, textures[0].Height, WALK_FRAMES, 1);
             this.animations[1].GetFramesFromTextureProperties(textures[1].Width, textures[1].Height, DEAD_FRAMES, 1);
             this.animations[2].GetFramesFromTextureProperties(textures[2].Width, textures[2].Height, IDLE_FRAMES, 1);
+        }
+
+        private void SetHitboxes()
+        {
+            this.animations[0].Hitbox = new Rectangle(5, 15, 35, 30);
+            this.animations[1].Hitbox = new Rectangle(5, 15, 35, 30);
+            this.animations[2].Hitbox = new Rectangle(5, 15, 35, 30);
         }
         #endregion
     }

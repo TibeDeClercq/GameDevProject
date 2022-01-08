@@ -68,7 +68,7 @@ namespace GameDevProject.Entities
         {
             this.Move(gameTime, world);            
             this.ChangeState();
-            this.enemyState.Update(gameTime, this.animations);
+            this.enemyState.Update(gameTime, this.animations, this);
         }
         #endregion
 

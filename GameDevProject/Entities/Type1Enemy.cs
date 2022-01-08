@@ -24,7 +24,7 @@ namespace GameDevProject.Entities
         public Type1Enemy(List<Texture2D> textures, Player player, Vector2 coordinates)
         {           
             this.textures = textures;
-            this.MaxVelocity = new Vector2(1, 2);
+            this.MaxVelocity = new Vector2(0, 2);
             this.Velocity = new Vector2(0, 0);
             this.Gravity = new Vector2(0, 0.1f);
             this.HitboxRectangle = new Rectangle((int)this.Position.X, (int)this.Position.Y, 32, 32);
@@ -36,7 +36,8 @@ namespace GameDevProject.Entities
             this.DeathTimer = TimeSpan.Zero;           
 
             AddAnimations();
-            SetAnimations();                        
+            SetAnimations();
+            SetHitboxes();
         }
         #endregion        
 
@@ -53,6 +54,12 @@ namespace GameDevProject.Entities
             this.animations[0].GetFramesFromTextureProperties(textures[0].Width, textures[0].Height, WALK_FRAMES, 1);
             this.animations[1].GetFramesFromTextureProperties(textures[1].Width, textures[1].Height, DEAD_FRAMES, 1);
             this.animations[2].GetFramesFromTextureProperties(textures[2].Width, textures[2].Height, IDLE_FRAMES, 1);
+        }
+        private void SetHitboxes()
+        {
+            this.animations[0].Hitbox = new Rectangle(5, 15, 35, 30);
+            this.animations[1].Hitbox = new Rectangle(5, 15, 35, 30);
+            this.animations[2].Hitbox = new Rectangle(5, 15, 35, 30);
         }
         #endregion
     }
