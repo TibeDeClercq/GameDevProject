@@ -8,16 +8,16 @@ using System.Text;
 
 namespace GameDevProject.States.EnemyStates
 {
-    class EnemyIdleState : IEntityState
+    class EnemyWalkState : IEntityState
     {
         public void Draw(SpriteBatch spriteBatch, List<Texture2D> textures, Vector2 position, List<Animation> animations, SpriteEffects spriteEffects)
         {
-            spriteBatch.Draw(textures[2], position, animations[2].CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0, 0), new Vector2(1, 1), spriteEffects, 0f);
+            spriteBatch.Draw(textures[0], position, animations[0].CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0, 0), new Vector2(1, 1), spriteEffects, 0f);
         }
 
         public void Update(GameTime gameTime, List<Animation> animations)
         {
-            animations[2].Update(gameTime);
+            animations[0].Update(gameTime);
         }
     }
 }

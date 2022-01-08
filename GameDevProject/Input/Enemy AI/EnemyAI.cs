@@ -10,9 +10,6 @@ namespace GameDevProject.Input.EnemyAI
         protected Player player;
         protected Enemy enemy;
 
-        protected const int MOVEMENT_LIMITER = 2;
-        protected int timer = 0;
-
         protected int LocatePlayer(Player player, Enemy enemy)
         {
             if (player.Position.X - enemy.Position.X > 0.01f)

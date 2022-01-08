@@ -16,6 +16,7 @@ namespace GameDevProject.Interfaces
         public Vector2 Velocity { get; set; }
         public Vector2 MaxVelocity { get; set; }
         public Vector2 Acceleration { get; set; }
+        public Vector2 Gravity { get; set; }
         public IInputReader InputReader { get; set; }
         public SpriteEffects SpriteEffects { get; set; }
         

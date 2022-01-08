@@ -47,6 +47,7 @@ namespace GameDevProject.Entities
         public SpriteEffects SpriteEffects { get; set; }
         public Vector2 Velocity { get; set; }
         public Vector2 Acceleration { get; set; }
+        public Vector2 Gravity { get; set; }
         public Rectangle HitboxRectangle { get; set; }
 
         public void Move(GameTime gameTime, World world)
@@ -88,6 +89,7 @@ namespace GameDevProject.Entities
 
             this.MaxVelocity = new Vector2(1, 1);
             this.Acceleration = new Vector2(0, 0);
+            this.Gravity = new Vector2(0, 0.1f);
             this.HitboxRectangle = new Rectangle(0, 0, 45, 30);
             this.Position = new Vector2((coordinates.X * 16) - 16, (coordinates.Y * 16) - this.HitboxRectangle.Height);
             this.Velocity = new Vector2(0,0);
@@ -128,8 +130,6 @@ namespace GameDevProject.Entities
             this.ChangeState();
             this.playerState.Update(gameTime, animations, this);
             ScoreManager.Score = Score;
-
-            Debug.WriteLine($"Player Score: {Score}");
         }
         #endregion
 
