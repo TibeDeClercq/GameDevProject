@@ -24,7 +24,7 @@ namespace GameDevProject.Entities
 
         private const int WALK_FPS = 10;
         private const int DEAD_FPS = 15;
-        private const int IDLE_FPS = 10;
+        private const int IDLE_FPS = 6;
         #endregion
 
         #region Constructor
