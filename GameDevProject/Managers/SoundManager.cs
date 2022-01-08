@@ -17,9 +17,16 @@ namespace GameDevProject.Managers
 
         public static void PlaySound(Sound sound)
         {
-            if (sound != Sound.PlayerWalk && sound != Sound.EnemyWalk && sound != Sound.Dungeon)
+            if (sound != Sound.PlayerWalk && sound != Sound.EnemyWalk && sound != Sound.Dungeon && sound != Sound.Coin)
             {
                 SoundEffects[(int)sound].Play();
+            }
+
+            if (sound == Sound.Coin)
+            {
+                SoundEffectInstance coin = SoundEffects[(int)sound].CreateInstance();
+                coin.Volume = 0.3f;
+                coin.Play();
             }
 
             if (sound == Sound.PlayerWalk && playerWalkSound == null)
