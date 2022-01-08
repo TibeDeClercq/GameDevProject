@@ -75,12 +75,16 @@ namespace GameDevProject.Managers
                 {
                     if (tile.IsLeftCollide && !MovableLowerThanTile(movable, tile))
                     {
-                        if(movable.HitboxRectangle.X + movable.HitboxRectangle.Width >= tile.HitboxRectangle.X) //Herwerken, nog een aantal bugs
+                        if ((movable.HitboxRectangle.X + movable.HitboxRectangle.Width >= tile.HitboxRectangle.X) && (movable.HitboxRectangle.X + movable.HitboxRectangle.Width <= tile.HitboxRectangle.X + 1)) //Herwerken, nog een aantal bugs
                         {
                             movable.Position = new Vector2(tile.Position.X - movable.HitboxRectangle.Width, movable.Position.Y);
                         }
                         else
                         {
+                            if (tile.IsRightCollide)
+                            {
+                                movable.Position = new Vector2(movable.Position.X + 1, movable.Position.Y);
+                            }
                             return true;
                         }
                         //Debug.WriteLine("Collided with a tile from the left");
@@ -98,7 +102,10 @@ namespace GameDevProject.Managers
                 {
                     if (tile.IsRightCollide && !MovableLowerThanTile(movable, tile))
                     {
-                        return true;
+                        if ((movable.HitboxRectangle.X <= tile.HitboxRectangle.X + tile.HitboxRectangle.Width) && (movable.HitboxRectangle.X >= tile.HitboxRectangle.X + tile.HitboxRectangle.Width - 1))
+                        {
+                            return true;
+                        }
                     }
                 }
             }
