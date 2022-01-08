@@ -49,7 +49,7 @@ namespace GameDevProject.Managers
                         {
                             SoundManager.PlaySound(Sound.EnemyJump);
                         }
-                        movable.Acceleration = new Vector2(0, -3.0f); // power of the jump
+                        movable.Acceleration = new Vector2(0, -3.1f); // power of the jump
                         movable.IsJumping = true;
                     }
                 }
