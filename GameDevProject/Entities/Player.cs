@@ -95,7 +95,7 @@ namespace GameDevProject.Entities
             this.Velocity = new Vector2(0,0);
             this.Health = 1;
 
-            this.AttackCooldown = TimeSpan.FromSeconds(5);
+            this.AttackCooldown = TimeSpan.FromSeconds(3);
             this.AttackDuration = TimeSpan.FromSeconds(2);
             this.AttackTimer = TimeSpan.Zero;
 

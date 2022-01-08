@@ -57,7 +57,7 @@ namespace GameDevProject.States.GameStates
         {
             level.world.Draw(spriteBatch);
 
-            spriteBatch.DrawString(this.font, "Completed Level 1", new Vector2(70, 10), Color.White);
+            spriteBatch.DrawString(this.font, "Completed Level 1", new Vector2((level.world.GetWorldWidth() / 2) - 65, 8), Color.White);
             spriteBatch.DrawString(this.font, $"Score: {ScoreManager.Score}", new Vector2((level.world.GetWorldWidth() / 2) - 30, 23), Color.White);
 
             foreach (Button button in buttons)
