@@ -29,7 +29,7 @@ namespace GameDevProject.Map
         private int[] bottomCollidable = { 16, 17, 18, 19, 24, 25, 26, 27 };
         private int[] finishCollidable = { 4, 5, 6, 12, 13, 14, 20, 21, 22 };
         private int[] trapCollidable = { 43 };
-        private int[] dropDownable = { 28, 29, 30 };
+        private int[] dropDownable = { 28, 29, 30, 39, 47 };
 
         public Tile(Rectangle sourceRectangle, Vector2 position, int identifier)
         {
