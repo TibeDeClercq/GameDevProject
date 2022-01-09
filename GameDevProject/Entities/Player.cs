@@ -47,6 +47,7 @@ namespace GameDevProject.Entities
         public Vector2 Acceleration { get; set; }
         public Vector2 Gravity { get; set; }
         public Rectangle HitboxRectangle { get; set; }
+        public int IdleHitboxWidth { get; set; }
 
         public void Move(GameTime gameTime, World world)
         {
@@ -158,8 +159,9 @@ namespace GameDevProject.Entities
             }
             this.animations[0].Hitbox = new Rectangle(8, 15, 29, 30);
             this.animations[1].Hitbox = new Rectangle(2, 15, 40, 30);
-            this.animations[3].Hitbox = new Rectangle(6, 15, 38, 30);
+            this.animations[3].Hitbox = new Rectangle(6, 15, 32, 30);
 
+            this.IdleHitboxWidth = this.animations[0].Hitbox.Width - 1;
         }
         #endregion
 

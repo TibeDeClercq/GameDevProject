@@ -16,8 +16,9 @@ namespace GameDevProject.Interfaces
         public Vector2 Gravity { get; set; }
         public IInputReader InputReader { get; set; }
         public SpriteEffects SpriteEffects { get; set; }
-        
+
         //public Rectangle HitboxRectangle { get; set; }
+        public int IdleHitboxWidth { get; set; }
 
         public void Move(GameTime gameTime, World world);
     }
