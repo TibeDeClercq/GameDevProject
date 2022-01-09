@@ -3,7 +3,6 @@ using GameDevProject.Interfaces;
 using GameDevProject.Levels;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace GameDevProject.Managers
 {

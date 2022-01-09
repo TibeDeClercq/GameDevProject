@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using GameDevProject.Entities;
 using GameDevProject.Interfaces;
 using GameDevProject.Levels;
 using GameDevProject.Managers;

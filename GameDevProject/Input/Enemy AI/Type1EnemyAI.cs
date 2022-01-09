@@ -1,8 +1,5 @@
 ﻿using GameDevProject.Entities;
 using GameDevProject.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace GameDevProject.Input.EnemyAI
 {

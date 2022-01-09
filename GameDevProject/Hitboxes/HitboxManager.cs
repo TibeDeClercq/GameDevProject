@@ -3,9 +3,7 @@ using GameDevProject.Interfaces;
 using GameDevProject.Map;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace GameDevProject.Hitboxes
 {
@@ -23,7 +21,6 @@ namespace GameDevProject.Hitboxes
             }
         }
 
-        //in hitbox manager.
         private void CreateHitboxes(GraphicsDeviceManager graphics)
         {
             for (int i = 0; i < items.Count; i++)

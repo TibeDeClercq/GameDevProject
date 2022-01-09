@@ -1,11 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿using Microsoft.Xna.Framework.Input;
 using GameDevProject.Interfaces;
-using System.Diagnostics;
 
 namespace GameDevProject.Input
 {
@@ -16,32 +10,25 @@ namespace GameDevProject.Input
         {
             KeyboardState state = Keyboard.GetState();
             InputParameters inputParameters = new InputParameters();
-            //Vector2 direction = Vector2.Zero;
             if (state.IsKeyDown(Keys.Left))
             {
                 inputParameters.DirectionInput.X -= 1;
-                //direction.X -= 1;
             }
             if (state.IsKeyDown(Keys.Right))
             {
                 inputParameters.DirectionInput.X += 1;
-                //direction.X += 1;
             }
             if (state.IsKeyDown(Keys.Space))
             {
                 inputParameters.DirectionInput.Y += 1;
-                //direction.Y += 1;
             }
             if (state.IsKeyDown(Keys.Down))
             {
                 inputParameters.DirectionInput.Y -= 1;
-                //direction.Y -= 1;
             }
             if (state.IsKeyDown(Keys.C))
             {
                 inputParameters.Attack = true;
-                //Debug.WriteLine("pressed C");
-                //direction.Y += 1;
             }
             return inputParameters;
         }

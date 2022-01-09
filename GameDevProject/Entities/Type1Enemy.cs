@@ -1,5 +1,4 @@
 ﻿using GameDevProject.Entities.Animations;
-using GameDevProject.Input;
 using GameDevProject.Input.EnemyAI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

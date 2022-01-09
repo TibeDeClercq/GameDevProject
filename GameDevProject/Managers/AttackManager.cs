@@ -1,9 +1,6 @@
 ﻿using GameDevProject.Interfaces;
 using Microsoft.Xna.Framework;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 
 namespace GameDevProject.Managers
 {

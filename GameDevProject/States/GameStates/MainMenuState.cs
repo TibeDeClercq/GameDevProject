@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
-
-using GameDevProject.Entities;
+﻿using System.Collections.Generic;
 using GameDevProject.Interfaces;
 using GameDevProject.Levels;
 using GameDevProject.MenuItems;

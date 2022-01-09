@@ -1,11 +1,6 @@
-﻿using GameDevProject.Entities;
-using GameDevProject.Interfaces;
+﻿using GameDevProject.Interfaces;
 using GameDevProject.Map;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 
 namespace GameDevProject.Managers
 {
@@ -87,7 +82,6 @@ namespace GameDevProject.Managers
                             }
                             return true;
                         }
-                        //Debug.WriteLine("Collided with a tile from the left");
                     }
                 }
             }
@@ -118,7 +112,6 @@ namespace GameDevProject.Managers
             {
                 if (tile.IsTopCollide && movable.HitboxRectangle.Intersects(tile.HitboxRectangle) && MovableLowerThanTile(movable, tile))
                 {
-                    //Debug.WriteLine("Collided with a tile from the top");
                     movable.Position = new Vector2(movable.HitboxRectangle.X, tile.HitboxRectangle.Y - movable.HitboxRectangle.Height);
                     return true;
                 }
@@ -141,7 +134,6 @@ namespace GameDevProject.Managers
                 {
                     if((movable.HitboxRectangle.Y <= tile.HitboxRectangle.Y + tile.HitboxRectangle.Height) && (movable.HitboxRectangle.Y >= tile.HitboxRectangle.Y + tile.HitboxRectangle.Height - 1))
                     {
-                        //Debug.WriteLine("Collided with a tile from the bottom");
                         return true;
                     }
                 }

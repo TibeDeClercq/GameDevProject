@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using GameDevProject.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,7 +8,6 @@ using GameDevProject.Entities.Animations;
 using GameDevProject.Managers;
 using GameDevProject.States.PlayerStates;
 using GameDevProject.Map;
-using System.Diagnostics;
 
 namespace GameDevProject.Entities
 {

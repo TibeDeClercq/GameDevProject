@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
-using GameDevProject.Entities;
+﻿using GameDevProject.Entities;
 using GameDevProject.Interfaces;
 using GameDevProject.Map;
 using Microsoft.Xna.Framework;

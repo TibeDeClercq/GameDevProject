@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿using System.Collections.Generic;
 using GameDevProject.Entities;
 using GameDevProject.Managers;
 using GameDevProject.Map;
