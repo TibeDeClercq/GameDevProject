@@ -153,13 +153,12 @@ namespace GameDevProject.Entities
 
         private void SetHitboxes()
         {
-            foreach (Animation animation in animations)
-            {
-                animation.Hitbox = new Rectangle(0, 15, 45, 30);
-            }
             this.animations[0].Hitbox = new Rectangle(8, 15, 29, 30);
             this.animations[1].Hitbox = new Rectangle(2, 15, 40, 30);
+            this.animations[2].Hitbox = new Rectangle(0, 15, 45, 30);
             this.animations[3].Hitbox = new Rectangle(6, 15, 32, 30);
+            this.animations[4].Hitbox = new Rectangle(0, 15, 45, 30);
+            this.animations[5].Hitbox = new Rectangle(0, 15, 45, 30);
 
             this.IdleHitboxWidth = this.animations[0].Hitbox.Width - 1;
         }
