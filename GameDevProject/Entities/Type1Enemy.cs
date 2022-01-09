@@ -60,6 +60,8 @@ namespace GameDevProject.Entities
             this.animations[0].Hitbox = new Rectangle(0, 10, 32, 22);
             this.animations[1].Hitbox = new Rectangle(0, 10, 32, 22);
             this.animations[2].Hitbox = new Rectangle(0, 10, 28, 22);
+
+            this.IdleHitboxWidth = this.animations[2].Hitbox.Width - 1;
         }
         #endregion
     }

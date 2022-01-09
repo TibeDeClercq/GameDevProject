@@ -1,6 +1,6 @@
-﻿using GameDevProject.Interfaces;
+﻿using Microsoft.Xna.Framework;
+using GameDevProject.Interfaces;
 using GameDevProject.Map;
-using Microsoft.Xna.Framework;
 
 namespace GameDevProject.Managers
 {
@@ -70,18 +70,15 @@ namespace GameDevProject.Managers
                 {
                     if (tile.IsLeftCollide && !MovableLowerThanTile(movable, tile))
                     {
-                        if ((movable.HitboxRectangle.X + movable.HitboxRectangle.Width >= tile.HitboxRectangle.X) && (movable.HitboxRectangle.X + movable.HitboxRectangle.Width <= tile.HitboxRectangle.X + 1)) //Herwerken, nog een aantal bugs
+                        if ((movable.HitboxRectangle.X + movable.HitboxRectangle.Width >= tile.HitboxRectangle.X) && (movable.HitboxRectangle.X + movable.HitboxRectangle.Width <= tile.HitboxRectangle.X + tile.HitboxRectangle.Width - 2)) //Herwerken, nog een aantal bugs
                         {
-                            movable.Position = new Vector2(tile.Position.X - movable.HitboxRectangle.Width, movable.Position.Y);
+                            movable.Position = new Vector2(tile.Position.X - movable.IdleHitboxWidth, movable.Position.Y);
                         }
-                        else
+                        else if (tile.IsRightCollide)
                         {
-                            if (tile.IsRightCollide)
-                            {
-                                movable.Position = new Vector2(movable.Position.X + 1, movable.Position.Y);
-                            }
-                            return true;
+                            movable.Position = new Vector2(movable.Position.X + 1, movable.Position.Y);
                         }
+                        return true;
                     }
                 }
             }

@@ -35,6 +35,7 @@ namespace GameDevProject.Entities
         public Vector2 Acceleration { get; set; }
         public Vector2 Gravity { get; set; }
         public Rectangle HitboxRectangle { get; set; }
+        public int IdleHitboxWidth { get; set; }
 
         public void Move(GameTime gameTime, World world)
         {

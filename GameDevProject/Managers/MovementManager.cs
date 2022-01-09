@@ -1,8 +1,8 @@
-﻿using GameDevProject.Entities;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using GameDevProject.Entities;
 using GameDevProject.Interfaces;
 using GameDevProject.Map;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace GameDevProject.Managers
 {
@@ -58,19 +58,10 @@ namespace GameDevProject.Managers
 
             movable.Velocity += movable.Acceleration;
             movable.Position += movable.Velocity;
-            movable.HitboxRectangle = new Rectangle((int)movable.Position.X, (int)movable.Position.Y + 1, movable.HitboxRectangle.Width, movable.HitboxRectangle.Height);
-
-            WriteDiagnostics(movable);
         }
         #endregion
 
         #region Private methods
-        private void WriteDiagnostics(IMovable movable)
-        {
-            //Debug.WriteLine($"a: {movable.Acceleration.Y} | v: {movable.Velocity} | jumping? {movable.IsJumping} | Can jump? {movable.CanJump}");
-            //Debug.WriteLine($"jumping? {movable.IsJumping}");
-        }
-
         private void CheckLevelComplete(IMovable movable, World world)
         {
             foreach (Tile tile in world.GetTiles())

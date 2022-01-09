@@ -1,18 +1,17 @@
-﻿using GameDevProject.Interfaces;
+﻿using System;
 using Microsoft.Xna.Framework;
-using System;
+using GameDevProject.Interfaces;
 
 namespace GameDevProject.Managers
 {
     class AttackManager
     {
+        #region Public methods
         public void Attack(IAttacker attacker, GameTime gameTime)
         {
             if (attacker.IsAttacking)
             {
                 attacker.AttackTimer += gameTime.ElapsedGameTime;
-
-                //Debug.WriteLine($"attack done in {attacker.AttackDuration - attacker.AttackTimer} seconds");
 
                 if (attacker.AttackTimer >= attacker.AttackDuration)
                 {
@@ -40,11 +39,9 @@ namespace GameDevProject.Managers
                         attacker.CanAttack = true;
                         attacker.AttackTimer = TimeSpan.Zero;
                     }
-
-                    //Debug.WriteLine($"attack ready in {attacker.AttackCooldown - attacker.AttackTimer} seconds");
-
                 }
             }
         }
+        #endregion
     }
 }

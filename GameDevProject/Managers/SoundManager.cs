@@ -1,17 +1,20 @@
-﻿using Microsoft.Xna.Framework.Audio;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework.Audio;
 
 namespace GameDevProject.Managers
 {
     enum Sound {Coin, Spike, Jump, EnemyJump, Spin, Death, Victory, Defeat, PlayerWalk, EnemyWalk, Dungeon}
     static class SoundManager
     {
+        #region Properties
         public static List<SoundEffect> SoundEffects { get; set; }
 
         private static SoundEffectInstance playerWalkSound;
         private static SoundEffectInstance enemyWalkSound;
         private static SoundEffectInstance dungeonSound;
+        #endregion
 
+        #region Public methods
         public static void PlaySound(Sound sound)
         {
             if (sound != Sound.PlayerWalk && sound != Sound.EnemyWalk && sound != Sound.Dungeon && sound != Sound.Coin)
@@ -63,5 +66,6 @@ namespace GameDevProject.Managers
                 dungeonSound = null;
             }
         }
+        #endregion
     }
 }

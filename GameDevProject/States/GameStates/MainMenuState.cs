@@ -1,28 +1,34 @@
 ﻿using System.Collections.Generic;
-using GameDevProject.Interfaces;
-using GameDevProject.Levels;
-using GameDevProject.MenuItems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using GameDevProject.Interfaces;
+using GameDevProject.Levels;
+using GameDevProject.MenuItems;
 
 namespace GameDevProject.States.GameStates
 {
     class MainMenuState : IGameState
     {
-        private SpriteFont font;
-
-        private List<Button> buttons;
-
+        #region Properties
         public bool CanClick;
+        private SpriteFont font;
+        private List<Button> buttons;
+        #endregion
+
+        #region Constructor
         public MainMenuState(SpriteFont font)
         {
             this.font = font;
 
             this.buttons = new List<Button>();
+
             this.buttons.Add(new Button(new Vector2(4, 6), new Vector2(4, 2), "Level 1"));
             this.buttons.Add(new Button(new Vector2(15, 6), new Vector2(4, 2), "Level 2"));
         }
+        #endregion
+
+        #region Public properties
         public void Update(Level level, GameTime gameTime)
         {
             MouseState mouse = Mouse.GetState();
@@ -30,15 +36,15 @@ namespace GameDevProject.States.GameStates
             {
                 CanClick = true;
             }
-            foreach (Button button in buttons)
+            foreach (Button button in this.buttons)
             {
-                if (mouse.X / Game1.scale >= button.Position.X && mouse.X / Game1.scale <= button.Position.X + button.Size.X)
+                if (mouse.X / Game1.Scale >= button.Position.X && mouse.X / Game1.Scale <= button.Position.X + button.Size.X)
                 {
-                    if (mouse.Y / Game1.scale >= button.Position.Y && mouse.Y / Game1.scale <= button.Position.Y + button.Size.Y)
+                    if (mouse.Y / Game1.Scale >= button.Position.Y && mouse.Y / Game1.Scale <= button.Position.Y + button.Size.Y)
                     {
-                        if(mouse.LeftButton == ButtonState.Pressed && CanClick)
+                        if (mouse.LeftButton == ButtonState.Pressed && CanClick)
                         {
-                            if(button == buttons[0])
+                            if (button == buttons[0])
                             {
                                 Game1.State = State.Level1;
                             }
@@ -54,11 +60,11 @@ namespace GameDevProject.States.GameStates
 
         public void Draw(Level level, SpriteBatch spriteBatch)
         {
-            level.world.Draw(spriteBatch);
+            level.World.Draw(spriteBatch);
 
-            spriteBatch.DrawString(this.font, "BLOB", new Vector2((level.world.GetWorldWidth() / 2) - 20, 7), Color.White); //Each letter is 5 pixels
+            spriteBatch.DrawString(this.font, "BLOB", new Vector2((level.World.GetWorldWidth() / 2) - 20, 7), Color.White); //Each letter is 5 pixels
 
-            foreach (Button button in buttons)
+            foreach (Button button in this.buttons)
             {
                 spriteBatch.DrawString(this.font, button.Text, button.TextPosition, Color.White);
             }
@@ -66,12 +72,13 @@ namespace GameDevProject.States.GameStates
 
         public int GetWindowHeight(Level level)
         {
-            return level.world.GetWorldHeight(); 
+            return level.World.GetWorldHeight();
         }
 
         public int GetWindowWidth(Level level)
         {
-            return level.world.GetWorldWidth(); 
+            return level.World.GetWorldWidth();
         }
+        #endregion
     }
 }
