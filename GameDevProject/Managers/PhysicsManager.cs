@@ -1,6 +1,6 @@
-﻿using GameDevProject.Interfaces;
+﻿using Microsoft.Xna.Framework;
+using GameDevProject.Interfaces;
 using GameDevProject.Map;
-using Microsoft.Xna.Framework;
 
 namespace GameDevProject.Managers
 {

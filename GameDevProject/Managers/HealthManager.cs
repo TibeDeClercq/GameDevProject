@@ -1,8 +1,8 @@
-﻿using GameDevProject.Entities;
+﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework;
+using GameDevProject.Entities;
 using GameDevProject.Interfaces;
 using GameDevProject.Levels;
-using Microsoft.Xna.Framework;
-using System.Collections.Generic;
 
 namespace GameDevProject.Managers
 {

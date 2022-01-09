@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework.Graphics;
 using GameDevProject.Entities;
 using GameDevProject.Managers;
 using GameDevProject.Map;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace GameDevProject.Levels
 {

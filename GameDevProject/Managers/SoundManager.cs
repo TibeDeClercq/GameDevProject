@@ -1,5 +1,5 @@
-﻿using Microsoft.Xna.Framework.Audio;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework.Audio;
 
 namespace GameDevProject.Managers
 {

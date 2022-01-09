@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using GameDevProject.Interfaces;
-using GameDevProject.Levels;
-using GameDevProject.MenuItems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using GameDevProject.Interfaces;
+using GameDevProject.Levels;
+using GameDevProject.MenuItems;
 
 namespace GameDevProject.States.GameStates
 {

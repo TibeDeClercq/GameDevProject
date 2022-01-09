@@ -1,16 +1,15 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-
+using Microsoft.Xna.Framework.Audio;
 using GameDevProject.Entities;
 using GameDevProject.Input;
-using System.Collections.Generic;
 using GameDevProject.Managers;
 using GameDevProject.Interfaces;
 using GameDevProject.Levels;
 using GameDevProject.States.GameStates;
 using GameDevProject.Hitboxes;
-using Microsoft.Xna.Framework.Audio;
 
 namespace GameDevProject
 {

@@ -1,6 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using System;
-
+﻿using System;
+using Microsoft.Xna.Framework;
 using GameDevProject.Interfaces;
 
 namespace GameDevProject.Map

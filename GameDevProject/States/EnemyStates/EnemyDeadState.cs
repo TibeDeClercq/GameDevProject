@@ -1,9 +1,9 @@
-﻿using GameDevProject.Entities;
-using GameDevProject.Entities.Animations;
-using GameDevProject.Interfaces;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
+using GameDevProject.Entities;
+using GameDevProject.Entities.Animations;
+using GameDevProject.Interfaces;
 
 namespace GameDevProject.States.EnemyStates
 {

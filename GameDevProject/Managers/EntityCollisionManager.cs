@@ -1,7 +1,7 @@
-﻿using GameDevProject.Entities;
+﻿using System.Collections.Generic;
+using GameDevProject.Entities;
 using GameDevProject.Interfaces;
 using GameDevProject.Map;
-using System.Collections.Generic;
 
 namespace GameDevProject.Managers
 {

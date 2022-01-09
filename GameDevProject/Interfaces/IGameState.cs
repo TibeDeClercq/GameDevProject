@@ -1,6 +1,6 @@
-﻿using GameDevProject.Levels;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using GameDevProject.Levels;
 
 namespace GameDevProject.Interfaces
 {
