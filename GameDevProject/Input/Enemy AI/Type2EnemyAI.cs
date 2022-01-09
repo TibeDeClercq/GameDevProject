@@ -1,28 +1,31 @@
-﻿using GameDevProject.Entities;
-using GameDevProject.Interfaces;
+﻿using System;
+
 using Microsoft.Xna.Framework;
-using System;
+
+using GameDevProject.Entities;
+using GameDevProject.Interfaces;
 
 namespace GameDevProject.Input.EnemyAI
 {
     class Type2EnemyAI : EnemyAI, IInputReader
     {
         #region Properties
-        private TimeSpan JumpRate = TimeSpan.FromSeconds(1);
-        private TimeSpan Timer = TimeSpan.Zero;
-
+        private TimeSpan jumpRate = TimeSpan.FromSeconds(1);
+        private TimeSpan timer = TimeSpan.Zero;
         private bool canJump = false;
+        public bool IsDestinationInput => false;
         #endregion
 
+        #region Constructor
         public Type2EnemyAI(Player player, Type2Enemy enemy, float detectionDistance)
         {
             this.player = player;
             this.enemy = enemy;
             this.detectionDistance = detectionDistance;
         }
+        #endregion
 
-        public bool IsDestinationInput => false;
-
+        #region Public Methods
         public InputParameters ReadInput()
         {
             InputParameters inputParameters = GiveDirection();
@@ -34,18 +37,19 @@ namespace GameDevProject.Input.EnemyAI
 
             return inputParameters;
         }
+        #endregion
 
         #region Private Methods
         public void TryJump(GameTime gameTime)
         {
-            if (JumpRate > Timer)
+            if (jumpRate > timer)
             {
-                Timer += gameTime.ElapsedGameTime;
+                timer += gameTime.ElapsedGameTime;
                 canJump = false;
             }
             else
             {
-                Timer = TimeSpan.Zero;
+                timer = TimeSpan.Zero;
                 canJump = true;                
             }
         }

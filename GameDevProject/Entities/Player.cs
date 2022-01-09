@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using GameDevProject.Interfaces;
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -8,6 +8,7 @@ using GameDevProject.Entities.Animations;
 using GameDevProject.Managers;
 using GameDevProject.States.PlayerStates;
 using GameDevProject.Map;
+using GameDevProject.Interfaces;
 
 namespace GameDevProject.Entities
 {
@@ -171,10 +172,6 @@ namespace GameDevProject.Entities
             {
                 this.playerState = new PlayerSpinState();
             }
-            //else if (IsIdle())
-            //{
-            //    this.playerState = new PlayerIdleState();
-            //}
             else if (IsWalking())
             {
                 SoundManager.PlaySound(Sound.PlayerWalk);
@@ -189,11 +186,6 @@ namespace GameDevProject.Entities
             {
                 this.playerState = new PlayerDeadState();
             }
-        }
-
-        private bool IsIdle()
-        {
-            return this.Velocity == Vector2.Zero;
         }
 
         private bool IsWalking()

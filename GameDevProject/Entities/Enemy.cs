@@ -1,10 +1,13 @@
-﻿using GameDevProject.Interfaces;
+﻿using System;
+
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+
+using GameDevProject.Interfaces;
 using GameDevProject.Managers;
 using GameDevProject.Map;
 using GameDevProject.States.EnemyStates;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+
 
 namespace GameDevProject.Entities
 {
@@ -39,12 +42,12 @@ namespace GameDevProject.Entities
 
         public void Move(GameTime gameTime, World world)
         {
-            if (timer >= MOVEMENT_LIMITER)
+            if (this.timer >= MOVEMENT_LIMITER)
             {
                 this.MovementManager.Move(this, gameTime, world);
-                timer = 0;
+                this.timer = 0;
             }
-            timer++;
+            this.timer++;
         }
 
         #endregion

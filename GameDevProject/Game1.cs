@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Audio;
+
 using GameDevProject.Entities;
 using GameDevProject.Input;
 using GameDevProject.Managers;
@@ -17,6 +19,7 @@ namespace GameDevProject
     public enum State { MainMenu, Level1, Level1Complete, GameOverLevel1, Level2, Level2Complete, GameOverLevel2}
     public class Game1 : Game
     {
+        #region Properties
         //Devmode => show hitboxes
         private bool devMode = false;
 
@@ -51,6 +54,7 @@ namespace GameDevProject
         //Gamestate
         private IGameState gameState;
         public static State State;
+        #endregion
 
         public Game1()
         {
@@ -111,7 +115,7 @@ namespace GameDevProject
             if (devMode)
             {
                 this.hitboxManager = new HitboxManager();
-                this.hitboxManager.hitboxes = new List<Hitbox>();
+                this.hitboxManager.Hitboxes = new List<Hitbox>();
             }
         }
 

@@ -1,18 +1,19 @@
-﻿using Microsoft.Xna.Framework;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+
+using Microsoft.Xna.Framework;
 
 namespace GameDevProject.Entities.Animations
 {
     class Animation
     {
         public AnimationFrame CurrentFrame { get; set; }
+        public Rectangle Hitbox { get; set; }
+
         private List<AnimationFrame> frames;
         private int counter = 0;
         private double secondCounter = 0;
         private int fps = 0;
         private int frameCount = 0;
-
-        public Rectangle Hitbox { get; set; }
 
         public Animation(int fps, int frameCount)
         {

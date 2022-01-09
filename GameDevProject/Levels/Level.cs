@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+
 using Microsoft.Xna.Framework.Graphics;
+
 using GameDevProject.Entities;
 using GameDevProject.Managers;
 using GameDevProject.Map;
@@ -8,14 +10,14 @@ namespace GameDevProject.Levels
 {
     class Level
     {
+        #region Properties
         public World World;
-
         public List<Entity> Entities;
-
         public HealthManager HealthManager;
-
         public EntityCollisionManager CollisionManager;
+        #endregion
 
+        #region Constructor
         public Level(Texture2D worldTileSet, List<Entity> entities, string[,] map)
         {
             this.World = new World(worldTileSet, map);
@@ -32,5 +34,6 @@ namespace GameDevProject.Levels
         {
             this.World = new World(worldTileSet, map);
         }
+        #endregion
     }
 }

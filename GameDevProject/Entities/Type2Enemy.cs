@@ -1,10 +1,12 @@
-﻿using GameDevProject.Entities.Animations;
-using GameDevProject.Input.EnemyAI;
-using GameDevProject.Map;
+﻿using System;
+using System.Collections.Generic;
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
+
+using GameDevProject.Entities.Animations;
+using GameDevProject.Input.EnemyAI;
+using GameDevProject.Map;
 
 namespace GameDevProject.Entities
 {

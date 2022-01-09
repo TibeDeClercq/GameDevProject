@@ -1,33 +1,65 @@
-﻿using GameDevProject.Entities;
-using GameDevProject.Interfaces;
-using GameDevProject.Map;
+﻿using System.Collections.Generic;
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
+
+using GameDevProject.Entities;
+using GameDevProject.Interfaces;
+using GameDevProject.Map;
 
 namespace GameDevProject.Hitboxes
 {
     class HitboxManager
     {
-        public List<IHitbox> items;
-        public List<Hitbox> hitboxes;
+        #region Properties
+        public List<IHitbox> Items;
+        public List<Hitbox> Hitboxes;
         private List<Texture2D> textures;
+        #endregion
 
+        #region Public Methods
         public void DrawHitboxes(SpriteBatch spriteBatch)
         {
-            foreach (Hitbox hitbox in hitboxes)
+            foreach (Hitbox hitbox in Hitboxes)
             {
                 spriteBatch.Draw(hitbox.Texture, hitbox.Position, Color.White);
             }
         }
 
+        public void AddWantedHitboxes(List<Entity> entities, World world, GraphicsDeviceManager graphics)
+        {
+            this.Hitboxes = new List<Hitbox>();
+            this.Items = new List<IHitbox>();
+            this.CreateNewTextures();
+
+            if (entities != null)
+            {
+                foreach (IHitbox entity in entities)
+                {
+                    Items.Add(entity);
+                }
+                foreach (IHitbox tile in world.GetTiles())
+                {
+                    Tile Tile = (Tile)tile;
+                    if (Tile.IsTopCollide || Tile.IsRightCollide || Tile.IsLeftCollide || Tile.IsBottomCollide || Tile.IsFinishCollide)
+                    {
+                        Items.Add(tile);
+                    }
+                }
+            }
+
+            this.CreateHitboxes(graphics);
+        }
+        #endregion
+
+        #region Private Methods
         private void CreateHitboxes(GraphicsDeviceManager graphics)
         {
-            for (int i = 0; i < items.Count; i++)
+            for (int i = 0; i < Items.Count; i++)
             {
-                int itemWidth = items[i].HitboxRectangle.Width;
-                int itemHeight = items[i].HitboxRectangle.Height;
-                Vector2 position = new Vector2(items[i].HitboxRectangle.X, items[i].HitboxRectangle.Y);
+                int itemWidth = Items[i].HitboxRectangle.Width;
+                int itemHeight = Items[i].HitboxRectangle.Height;
+                Vector2 position = new Vector2(Items[i].HitboxRectangle.X, Items[i].HitboxRectangle.Y);
 
                 this.textures.Add(new Texture2D(graphics.GraphicsDevice, itemWidth, itemHeight));
                 int pixels = itemWidth * itemHeight;
@@ -47,34 +79,9 @@ namespace GameDevProject.Hitboxes
 
                 textures[i].SetData(outline);
 
-                hitboxes.Add(new Hitbox(textures[i], position));
+                Hitboxes.Add(new Hitbox(textures[i], position));
             }
-        }
-
-        public void AddWantedHitboxes(List<Entity> entities, World world, GraphicsDeviceManager graphics)
-        {
-            this.hitboxes = new List<Hitbox>();
-            this.items = new List<IHitbox>();
-            this.CreateNewTextures();
-
-            if(entities != null)
-            {
-                foreach (IHitbox entity in entities)
-                {
-                    items.Add(entity);
-                }
-                foreach (IHitbox tile in world.GetTiles())
-                {
-                    Tile Tile = (Tile)tile;
-                    if (Tile.IsTopCollide || Tile.IsRightCollide || Tile.IsLeftCollide || Tile.IsBottomCollide || Tile.IsFinishCollide)
-                    {
-                        items.Add(tile);
-                    }
-                }
-            }
-
-            this.CreateHitboxes(graphics);
-        }
+        }        
 
         private void CreateNewTextures()
         {
@@ -87,5 +94,6 @@ namespace GameDevProject.Hitboxes
             }
             this.textures = new List<Texture2D>();
         }
+        #endregion
     }
 }

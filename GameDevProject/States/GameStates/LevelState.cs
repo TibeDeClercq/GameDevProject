@@ -1,6 +1,8 @@
 ﻿using System;
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+
 using GameDevProject.Entities;
 using GameDevProject.Interfaces;
 using GameDevProject.Levels;

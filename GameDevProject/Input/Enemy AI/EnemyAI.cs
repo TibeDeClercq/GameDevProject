@@ -4,10 +4,13 @@ namespace GameDevProject.Input.EnemyAI
 {
     class EnemyAI
     {
+        #region Properties
         protected Player player;
         protected Enemy enemy;
         protected float detectionDistance;
+        #endregion
 
+        #region Private Methods
         protected int LocatePlayer(Player player, Enemy enemy, float detectionDistance)
         {
             if (player.Position.Y - enemy.Position.Y < 32 && player.Position.Y - enemy.Position.Y > -90)
@@ -43,5 +46,6 @@ namespace GameDevProject.Input.EnemyAI
 
             return inputParameters;
         }
+        #endregion
     }
 }

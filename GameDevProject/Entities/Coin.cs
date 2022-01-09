@@ -1,11 +1,14 @@
-﻿using GameDevProject.Entities.Animations;
+﻿using System;
+using System.Collections.Generic;
+
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+
+using GameDevProject.Entities.Animations;
 using GameDevProject.Interfaces;
 using GameDevProject.Map;
 using GameDevProject.States.CoinStates;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
+
 
 namespace GameDevProject.Entities
 {
@@ -18,13 +21,13 @@ namespace GameDevProject.Entities
         public TimeSpan DeathDuration { get; set; }
         #endregion
 
-        #region Private Properties
+        #region Properties
         private IEntityState coinState;
         private const int COIN_FRAMES = 14;
         private const int COIN_FPS = 15;
 
         public int SpinSpeed = 84;
-        private bool SpeedChanged = false;
+        private bool speedChanged = false;
         #endregion
 
         #region Constructor
@@ -61,9 +64,9 @@ namespace GameDevProject.Entities
 
         private void ChangeSpinSpeed()
         {
-            if (this.Health <= 0 && !SpeedChanged)
+            if (this.Health <= 0 && !speedChanged)
             {
-                SpeedChanged = true;
+                speedChanged = true;
                 AnimationFrame currentframe = this.animations[0].CurrentFrame;
                 this.animations[0] = new Animation(SpinSpeed, COIN_FRAMES);
                 SetAnimations();

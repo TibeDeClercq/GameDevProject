@@ -1,11 +1,16 @@
 ﻿using Microsoft.Xna.Framework.Input;
+
 using GameDevProject.Interfaces;
 
 namespace GameDevProject.Input
 {
     class KeyboardReader : IInputReader
     {
+        #region Properties
         public bool IsDestinationInput => false;
+        #endregion
+
+        #region Public Methods
         public InputParameters ReadInput()
         {
             KeyboardState state = Keyboard.GetState();
@@ -32,5 +37,6 @@ namespace GameDevProject.Input
             }
             return inputParameters;
         }
+        #endregion
     }
 }
