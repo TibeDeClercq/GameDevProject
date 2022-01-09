@@ -19,21 +19,7 @@ namespace GameDevProject.Input.EnemyAI
 
         public InputParameters ReadInput()
         {
-            InputParameters inputParameters = new InputParameters();
-
-            switch (LocatePlayer(this.player, this.enemy, this.detectionDistance))
-            {
-                case -1:
-                    inputParameters.DirectionInput.X -= 1;
-                    break;
-                case 1:
-                    inputParameters.DirectionInput.X += 1;
-                    break;
-                case 0:
-                    inputParameters.DirectionInput.X = 0;
-                    break;
-            }
-
+            InputParameters inputParameters = GiveDirection();
             return inputParameters;
         }        
     }
