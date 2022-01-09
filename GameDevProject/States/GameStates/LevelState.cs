@@ -50,6 +50,7 @@ namespace GameDevProject.States.GameStates
 
             spriteBatch.DrawString(this.font, $"Score: {ScoreManager.Score}", new Vector2(32, 11), Color.White);
             spriteBatch.DrawString(this.font, $"Time: {Math.Round(ScoreManager.GameTimer.TotalSeconds, 2)}", new Vector2((level.World.GetWorldWidth() - 80), 11), Color.White);
+            spriteBatch.DrawString(this.font, $"Attack: C", new Vector2(32, level.World.GetWorldHeight() - 20), Color.White);
 
             if (player != null && !player.IsAttacking && player.AttackTimer != TimeSpan.Zero)
             {
