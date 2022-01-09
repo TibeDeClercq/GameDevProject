@@ -66,12 +66,12 @@ namespace GameDevProject.States.GameStates
 
         public int GetWindowHeight(Level level)
         {
-            return level.world.GetWorldHeight(); //getWorldHeight
+            return level.world.GetWorldHeight(); 
         }
 
         public int GetWindowWidth(Level level)
         {
-            return level.world.GetWorldWidth(); //getWorldHeight
+            return level.world.GetWorldWidth(); 
         }
     }
 }

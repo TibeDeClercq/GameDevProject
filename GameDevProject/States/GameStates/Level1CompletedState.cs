@@ -13,9 +13,7 @@ namespace GameDevProject.States.GameStates
     class Level1CompletedState : IGameState
     {
         private SpriteFont font;
-
         private List<Button> buttons;
-
 
         public Level1CompletedState(SpriteFont font)
         {
@@ -67,12 +65,12 @@ namespace GameDevProject.States.GameStates
 
         public int GetWindowHeight(Level level)
         {
-            return level.world.GetWorldHeight(); //getWorldHeight
+            return level.world.GetWorldHeight(); 
         }
 
         public int GetWindowWidth(Level level)
         {
-            return level.world.GetWorldWidth(); //getWorldHeight
+            return level.world.GetWorldWidth(); 
         }
     }
 }
