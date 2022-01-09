@@ -14,30 +14,42 @@ using Microsoft.Xna.Framework.Audio;
 
 namespace GameDevProject
 {
+    //public gamestate enum to change the gamestate in other classes
     public enum State { MainMenu, Level1, Level1Complete, GameOverLevel1, Level2, Level2Complete, GameOverLevel2}
     public class Game1 : Game
     {
-        private bool devMode = true;
+        //Devmode => show hitboxes
+        private bool devMode = false;
 
-        private RenderTarget2D gameRenderTarget;
-        public static float scale = 2.5f;
+        //Scale => Size of the game
+        public static float Scale = 2.5f;
 
+        //Managers
+        private HitboxManager hitboxManager;
+        private LevelManager levelManager;
         private GraphicsDeviceManager graphics;
+
+        //RenderTarget
+        private RenderTarget2D gameRenderTarget;
+
+        //SpriteBatch
         private SpriteBatch spriteBatch;
 
+        //Textures
+        private Texture2D worldTileset;
         private List<Texture2D> playerTextures;
         private List<Texture2D> type1EnemyTextures;
         private List<Texture2D> type2EnemyTextures;
         private List<Texture2D> coinTextures;
 
+        //Active level
         private Level ActiveLevel;
-        private Texture2D worldTileset;
-
+        
+        //Fonts
         private SpriteFont font;
         private SpriteFont scoreFont;
 
-        private HitboxManager hitboxManager;
-
+        //Gamestate
         private IGameState gameState;
         public static State State;
 
@@ -72,7 +84,7 @@ namespace GameDevProject
             {
                 this.Exit();
             }
-            this.DevViewUpdate();
+            this.DevViewUpdate(); //If devView is true, show hitboxes
             this.ChangeGameState();
             this.gameState.Update(this.ActiveLevel, gameTime);
             base.Update(gameTime);
@@ -88,6 +100,8 @@ namespace GameDevProject
         #region Initialize
         private void SetFirstScreen()
         {
+            this.levelManager = new LevelManager();
+
             Game1.State = State.MainMenu;
             this.gameState = new MainMenuState(font);
             this.LoadMainMenu();
@@ -104,21 +118,7 @@ namespace GameDevProject
 
         private void LoadMainMenu()
         {
-            string[,] map = {
-                                { "A1", "A2", "A2", "A2", "A2", "A2", "A3", "A1", "A2", "A2", "A2", "A2", "A2", "A3", "A1", "A2", "A2", "A2", "A2", "A2", "A3"},
-                                { "B1", "E1", "C2", "C2", "C2", "C2", "C3", "C1", "C2", "C2", "C2", "C2", "C2", "C3", "C1", "C2", "C2", "C2", "C2", "E2", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "A1", "A2", "A2", "A3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "A1", "A2", "A2", "A3", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "C1", "C2", "C2", "C3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "C1", "C2", "C2", "C3", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "F1", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "F2", "B3"},
-                                { "C1", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C3"}
-                             };
-
-            this.ActiveLevel = new Level(this.worldTileset, map);
+            this.ActiveLevel = new Level(this.worldTileset, levelManager.GetMainMenuMap());
         }
 
         private void LoadLevel1()
@@ -127,65 +127,12 @@ namespace GameDevProject
 
             Player player = new Player(this.playerTextures, new KeyboardReader(), new Vector2(3, 19));
 
-            string[,] map = {
-                                { "A1", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A3"},
-                                { "B1", "E1", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "E2", "E1", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "E2", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3", "G1", "A6", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "E8", "D7", "A1", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A3", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3", "G1", "B6", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "C1", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "E2", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3", "G1", "C6", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "D5", "F8", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3", "D2", "D2", "D2", "D2", "D3", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "E8", "D7", "B1", "B3"},
-                                { "B1", "F1", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A3", "D5", "F8", "G1", "G1", "G1", "G1", "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "E1", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C3", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3", "D5", "D6", "D7", "A1", "A2", "A2", "F2", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "E8", "D7", "B1", "B3", "G1", "G1", "G1", "C1", "C2", "C2", "C2", "C3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "D1", "D2", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "A1", "A2", "A2", "A2", "A3", "D5", "D6", "D6", "D7", "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "D1", "D2", "D3", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "E3", "E3", "E3", "B3", "G1", "G1", "G1", "G1", "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "A1", "A3", "G1", "G1", "G1", "B1", "E3", "E3", "E3", "B3", "G1", "G1", "G1", "G1", "B1", "B3", "G1", "G1", "G1", "A1", "A2", "A2", "A2", "A3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "B1", "B3", "F4", "F4", "F4", "B1", "E3", "E3", "E3", "F1", "A2", "A2", "A2", "A2", "F2", "B3", "F4", "F4", "F4", "B1", "E3", "E3", "E3", "B3", "F4", "F4", "F4", "F4", "F4", "F4", "F4", "F4", "F4", "B1", "B3"},
-                                { "B1", "F1", "A2", "A2", "A2", "F2", "F1", "A2", "A2", "A2", "F2", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "F1", "A2", "A2", "A2", "F2", "E3", "E3", "E3", "F1", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "F2", "B3"},
-                                { "C1", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C3"}
-                             };            
-
-            entities.AddRange(GetLevel1Enemies(player));
-            entities.AddRange(GetLevel1Coins());
             entities.Add(player);
-
-            this.ActiveLevel = new Level(this.worldTileset, entities, map);
+            entities.AddRange(levelManager.GetLevel1Enemies(player, type1EnemyTextures, type2EnemyTextures));
+            entities.AddRange(levelManager.GetLevel1Coins(coinTextures));
+            
+            this.ActiveLevel = new Level(this.worldTileset, entities, levelManager.GetLevel1Map());
         }
-        private List<Coin> GetLevel1Coins()
-        {
-            List<Coin> coins = new List<Coin>();
-            coins.Add(new Coin(this.coinTextures, new Vector2(11, 15)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(11, 4)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(14, 4)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(17, 4)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(16, 18)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(17, 18)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(18, 18)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(19, 18)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(26, 16)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(28, 16)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(35, 14)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(38, 11)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(33, 7)));
-
-            return coins;
-        }
-        private List<Enemy> GetLevel1Enemies(Player player)
-        {
-            List<Enemy> enemies = new List<Enemy>();
-            enemies.Add(new Type1Enemy(this.type1EnemyTextures, player, new Vector2(17, 18)));
-            enemies.Add(new Type1Enemy(this.type1EnemyTextures, player, new Vector2(4, 10)));
-            enemies.Add(new Type2Enemy(this.type2EnemyTextures, player, new Vector2(26, 11)));
-
-            return enemies;
-        }
-
 
         private void LoadLevel2()
         {
@@ -193,136 +140,20 @@ namespace GameDevProject
 
             Player player = new Player(this.playerTextures, new KeyboardReader(), new Vector2(3, 19));
 
-            entities.AddRange(GetLevel2Enemies(player));
-            entities.AddRange(GetLevel2Coins());
             entities.Add(player);
+            entities.AddRange(levelManager.GetLevel2Enemies(player, type1EnemyTextures, type2EnemyTextures));
+            entities.AddRange(levelManager.GetLevel2Coins(coinTextures));
 
-            string[,] map = {
-                                { "A1", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A3"},
-                                { "B1", "E1", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "E2", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B4", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "A5", "B1", "B3"},
-                                { "B1", "B3", "F4", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B4", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "C5", "B1", "B3"},
-                                { "B1", "B3", "D5", "F8", "G1", "G1", "G1", "G1", "G1", "G1", "B4", "G1", "G1", "G1", "G1", "G1", "G1", "D1", "D2", "D2", "D2", "D2", "D3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "D1", "D3", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B4", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "A1", "A3", "G1", "G1", "G1", "G1", "G1", "G1", "E8", "D7", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B4", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3", "F4", "F4", "F4", "F4", "F4", "F4", "F4", "F4", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "E8", "D7", "D1", "D2", "D2", "C3", "D5", "D6", "D7", "D1", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D3", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "F4", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "D5", "D6", "D6", "D6", "D7", "D1", "D2", "D2", "D2", "D2", "D2", "D3", "D5", "F8", "G1", "G1", "G1", "G1", "G1", "G1", "A1", "A2", "A2", "A2", "A3", "D5", "F8", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "B4", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "E3", "E3", "E3", "B3", "G1", "G1", "G1", "G1", "A1", "A3", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "F4", "G1", "G1", "G1", "F4", "B4", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "F4", "B1", "E3", "E3", "E3", "B3", "G1", "G1", "G1", "G1", "B1", "B3", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D2", "D3", "D5", "D6", "D7", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "D1", "D2", "D2", "D2", "D2", "D2", "D3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "A1", "A3", "D5", "D6", "D7", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "A1", "A2", "A3", "D5", "G1", "G1", "G1", "A1", "A2", "A3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "B1", "E3", "B3", "F4", "F4", "F4", "F4", "B1", "E3", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "F4", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3", "F4", "F4", "F4", "B1", "B3"},
-                                { "B1", "F1", "A2", "A2", "A2", "A2", "F2", "E3", "F1", "A2", "A2", "A2", "A2", "F2", "E3", "F1", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "F2", "F1", "A2", "A2", "A2", "F2", "B3"},
-                                { "C1", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C3"}                                
-                             };
-
-            this.ActiveLevel = new Level(this.worldTileset, entities, map);
-        }
-        private List<Coin> GetLevel2Coins()
-        {
-            List<Coin> coins = new List<Coin>();
-            coins.Add(new Coin(this.coinTextures, new Vector2(10, 16)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(13, 16)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(21, 16)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(25, 16)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(21, 19)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(22, 18)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(23, 19)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(24, 18)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(25, 19)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(36, 18)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(37, 18)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(38, 18)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(37, 12)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(25, 10)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(22, 11)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(10, 12)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(10, 13)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(9, 12)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(9, 13)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(6, 12)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(5, 12)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(4, 12)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(6, 13)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(5, 13)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(4, 13)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(4, 3)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(4, 4)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(8, 4)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(9, 4)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(10, 4)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(8, 5)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(9, 5)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(10, 5)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(8, 6)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(9, 6)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(10, 6)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(19, 6)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(22, 6)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(20, 3)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(21, 3)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(27, 6)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(30, 5)));
-            coins.Add(new Coin(this.coinTextures, new Vector2(34, 4)));
-
-            return coins;
-        }
-        private List<Enemy> GetLevel2Enemies(Player player)
-        {
-            List<Enemy> enemies = new List<Enemy>();
-            enemies.Add(new Type1Enemy(this.type1EnemyTextures, player, new Vector2(29, 19)));
-            enemies.Add(new Type2Enemy(this.type2EnemyTextures, player, new Vector2(28, 13)));
-            enemies.Add(new Type2Enemy(this.type2EnemyTextures, player, new Vector2(14, 13)));
-            enemies.Add(new Type1Enemy(this.type1EnemyTextures, player, new Vector2(11, 13)));
-            enemies.Add(new Type1Enemy(this.type1EnemyTextures, player, new Vector2(4, 10)));
-            enemies.Add(new Type2Enemy(this.type2EnemyTextures, player, new Vector2(9, 7)));
-            enemies.Add(new Type1Enemy(this.type1EnemyTextures, player, new Vector2(19, 7)));
-            enemies.Add(new Type1Enemy(this.type1EnemyTextures, player, new Vector2(22, 7)));
-            enemies.Add(new Type1Enemy(this.type1EnemyTextures, player, new Vector2(22, 7)));
-
-            return enemies;
+            this.ActiveLevel = new Level(this.worldTileset, entities, levelManager.GetLevel2Map());
         }
 
         private void LoadGameOver()
         {
-            string[,] map = {
-                                { "A1", "A2", "A2", "A2", "A2", "A3", "A1", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A3", "A1", "A2", "A2", "A2", "A2", "A3"},
-                                { "B1", "E1", "C2", "C2", "C2", "C3", "B1", "E4", "E4", "E4", "E4", "E4", "E4", "E4", "B3", "C1", "C2", "C2", "C2", "E2", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "C1", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C3", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "A1", "A2", "A2", "A3", "G1", "G1", "G1", "G1", "G1", "A1", "A2", "A2", "A2", "A2", "A3", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "C1", "C2", "C2", "C3", "G1", "G1", "G1", "G1", "G1", "C1", "C2", "C2", "C2", "C2", "C3", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "F1", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "F2", "B3"},
-                                { "C1", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C3"}
-                             };
-
-            this.ActiveLevel = new Level(this.worldTileset, map);
+            this.ActiveLevel = new Level(this.worldTileset, levelManager.GetGameOverMap());
         }
         private void LoadLevelCompleted()
         {
-            string[,] map = {
-                                { "A1", "A2", "A2", "A2", "A2", "A3", "A1", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A3", "A1", "A2", "A2", "A2", "A2", "A3"},
-                                { "B1", "E1", "C2", "C2", "C2", "C3", "B1", "E4", "E4", "E4", "E4", "E4", "E4", "E4", "B3", "C1", "C2", "C2", "C2", "E2", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "C1", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C3", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "A1", "A2", "A2", "A2", "A3", "G1", "G1", "G1", "G1", "A1", "A2", "A2", "A2", "A2", "A3", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "C1", "C2", "C2", "C2", "C3", "G1", "G1", "G1", "G1", "C1", "C2", "C2", "C2", "C2", "C3", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "B3", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "G1", "B1", "B3"},
-                                { "B1", "F1", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "F2", "B3"},
-                                { "C1", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C2", "C3"}
-                             };
-
-            this.ActiveLevel = new Level(this.worldTileset, map);
+            this.ActiveLevel = new Level(this.worldTileset, levelManager.GetLevelCompletedMap());
         }
         private void ClearLevel()
         {
@@ -337,8 +168,8 @@ namespace GameDevProject
 
             this.gameRenderTarget = new RenderTarget2D(this.GraphicsDevice, this.gameState.GetWindowWidth(this.ActiveLevel), this.gameState.GetWindowHeight(this.ActiveLevel));
 
-            this.graphics.PreferredBackBufferHeight = (int)System.Math.Round((decimal)(Game1.scale * this.gameState.GetWindowHeight(this.ActiveLevel)));
-            this.graphics.PreferredBackBufferWidth = (int)System.Math.Round((decimal)(Game1.scale * this.gameState.GetWindowWidth(this.ActiveLevel)));
+            this.graphics.PreferredBackBufferHeight = (int)System.Math.Round((decimal)(Game1.Scale * this.gameState.GetWindowHeight(this.ActiveLevel)));
+            this.graphics.PreferredBackBufferWidth = (int)System.Math.Round((decimal)(Game1.Scale * this.gameState.GetWindowWidth(this.ActiveLevel)));
             this.graphics.ApplyChanges();
         }
         #endregion
@@ -534,7 +365,7 @@ namespace GameDevProject
         {
             this.GraphicsDevice.SetRenderTarget(null);
             this.spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-            this.spriteBatch.Draw(this.gameRenderTarget, new Rectangle(0, 0, (int)System.Math.Round((decimal)(Game1.scale * this.gameState.GetWindowWidth(this.ActiveLevel))), (int)System.Math.Round((decimal)(Game1.scale * this.gameState.GetWindowHeight(this.ActiveLevel)))), Color.White);
+            this.spriteBatch.Draw(this.gameRenderTarget, new Rectangle(0, 0, (int)System.Math.Round((decimal)(Game1.Scale * this.gameState.GetWindowWidth(this.ActiveLevel))), (int)System.Math.Round((decimal)(Game1.Scale * this.gameState.GetWindowHeight(this.ActiveLevel)))), Color.White);
             
             this.spriteBatch.End();
         }

@@ -30,9 +30,9 @@ namespace GameDevProject.States.GameStates
             MouseState mouse = Mouse.GetState();
             foreach (Button button in buttons)
             {
-                if (mouse.X / Game1.scale >= button.Position.X && mouse.X / Game1.scale <= button.Position.X + button.Size.X)
+                if (mouse.X / Game1.Scale >= button.Position.X && mouse.X / Game1.Scale <= button.Position.X + button.Size.X)
                 {
-                    if (mouse.Y / Game1.scale >= button.Position.Y && mouse.Y / Game1.scale <= button.Position.Y + button.Size.Y)
+                    if (mouse.Y / Game1.Scale >= button.Position.Y && mouse.Y / Game1.Scale <= button.Position.Y + button.Size.Y)
                     {
                         if (mouse.LeftButton == ButtonState.Pressed)
                         {
