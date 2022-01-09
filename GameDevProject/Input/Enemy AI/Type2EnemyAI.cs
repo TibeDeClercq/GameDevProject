@@ -2,10 +2,10 @@
 
 using Microsoft.Xna.Framework;
 
-using GameDevProject.Entities;
-using GameDevProject.Interfaces;
+using Blob.Entities;
+using Blob.Interfaces;
 
-namespace GameDevProject.Input.EnemyAI
+namespace Blob.Input.EnemyAI
 {
     class Type2EnemyAI : EnemyAI, IInputReader
     {

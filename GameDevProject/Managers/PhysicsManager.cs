@@ -1,9 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 
-using GameDevProject.Interfaces;
-using GameDevProject.Map;
+using Blob.Interfaces;
+using Blob.Map;
 
-namespace GameDevProject.Managers
+namespace Blob.Managers
 {
     class PhysicsManager
     {

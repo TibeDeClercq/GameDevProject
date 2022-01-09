@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GameDevProject
+namespace Blob
 {
     public static class Program
     {

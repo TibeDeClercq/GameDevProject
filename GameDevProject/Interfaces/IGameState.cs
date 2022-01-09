@@ -1,8 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using GameDevProject.Levels;
+using Blob.Levels;
 
-namespace GameDevProject.Interfaces
+namespace Blob.Interfaces
 {
     interface IGameState
     {

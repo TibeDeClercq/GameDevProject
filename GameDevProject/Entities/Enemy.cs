@@ -3,13 +3,13 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-using GameDevProject.Interfaces;
-using GameDevProject.Managers;
-using GameDevProject.Map;
-using GameDevProject.States.EnemyStates;
+using Blob.Interfaces;
+using Blob.Managers;
+using Blob.Map;
+using Blob.States.EnemyStates;
 
 
-namespace GameDevProject.Entities
+namespace Blob.Entities
 {
     class Enemy : Entity, IMovable, IHitbox, IKillable
     {

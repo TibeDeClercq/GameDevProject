@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace GameDevProject.MenuItems
+namespace Blob.MenuItems
 {
     class Button
     {

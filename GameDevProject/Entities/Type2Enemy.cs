@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-using GameDevProject.Entities.Animations;
-using GameDevProject.Input.EnemyAI;
-using GameDevProject.Map;
+using Blob.Entities.Animations;
+using Blob.Input.EnemyAI;
+using Blob.Map;
 
-namespace GameDevProject.Entities
+namespace Blob.Entities
 {
     class Type2Enemy : Enemy
     {

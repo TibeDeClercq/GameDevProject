@@ -1,8 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Input;
 
-using GameDevProject.Interfaces;
+using Blob.Interfaces;
 
-namespace GameDevProject.Input
+namespace Blob.Input
 {
     class KeyboardReader : IInputReader
     {

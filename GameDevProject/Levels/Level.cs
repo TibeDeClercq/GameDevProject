@@ -2,11 +2,11 @@
 
 using Microsoft.Xna.Framework.Graphics;
 
-using GameDevProject.Entities;
-using GameDevProject.Managers;
-using GameDevProject.Map;
+using Blob.Entities;
+using Blob.Managers;
+using Blob.Map;
 
-namespace GameDevProject.Levels
+namespace Blob.Levels
 {
     class Level
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace GameDevProject.Interfaces
+namespace Blob.Interfaces
 {
     interface IHitbox
     {

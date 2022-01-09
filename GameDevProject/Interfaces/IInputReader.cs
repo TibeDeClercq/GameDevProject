@@ -1,6 +1,6 @@
-﻿using GameDevProject.Input;
+﻿using Blob.Input;
 
-namespace GameDevProject.Interfaces
+namespace Blob.Interfaces
 {
     interface IInputReader
     {

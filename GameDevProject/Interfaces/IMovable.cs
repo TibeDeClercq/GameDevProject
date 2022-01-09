@@ -1,8 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using GameDevProject.Map;
+using Blob.Map;
 
-namespace GameDevProject.Interfaces
+namespace Blob.Interfaces
 {
     interface IMovable : IHitbox
     {

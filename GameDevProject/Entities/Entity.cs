@@ -3,10 +3,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-using GameDevProject.Entities.Animations;
-using GameDevProject.Map;
+using Blob.Entities.Animations;
+using Blob.Map;
 
-namespace GameDevProject.Entities
+namespace Blob.Entities
 {
     abstract class Entity : Interfaces.IDrawable
     {

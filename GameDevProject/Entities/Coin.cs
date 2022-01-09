@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-using GameDevProject.Entities.Animations;
-using GameDevProject.Interfaces;
-using GameDevProject.Map;
-using GameDevProject.States.CoinStates;
+using Blob.Entities.Animations;
+using Blob.Interfaces;
+using Blob.Map;
+using Blob.States.CoinStates;
 
 
-namespace GameDevProject.Entities
+namespace Blob.Entities
 {
     class Coin : Entity, IHitbox, IKillable
     {

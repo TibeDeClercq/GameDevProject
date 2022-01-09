@@ -5,15 +5,15 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Audio;
 
-using GameDevProject.Entities;
-using GameDevProject.Input;
-using GameDevProject.Managers;
-using GameDevProject.Interfaces;
-using GameDevProject.Levels;
-using GameDevProject.States.GameStates;
-using GameDevProject.Hitboxes;
+using Blob.Entities;
+using Blob.Input;
+using Blob.Managers;
+using Blob.Interfaces;
+using Blob.Levels;
+using Blob.States.GameStates;
+using Blob.Hitboxes;
 
-namespace GameDevProject
+namespace Blob
 {
     //public gamestate enum to change the gamestate in other classes
     public enum State { MainMenu, Level1, Level1Complete, GameOverLevel1, Level2, Level2Complete, GameOverLevel2}

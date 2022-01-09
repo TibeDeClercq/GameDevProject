@@ -3,7 +3,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace GameDevProject.Map
+namespace Blob.Map
 {
     class World : Interfaces.IDrawable
     {

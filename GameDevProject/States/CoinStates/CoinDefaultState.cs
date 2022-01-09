@@ -3,11 +3,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-using GameDevProject.Entities;
-using GameDevProject.Entities.Animations;
-using GameDevProject.Interfaces;
+using Blob.Entities;
+using Blob.Entities.Animations;
+using Blob.Interfaces;
 
-namespace GameDevProject.States.CoinStates
+namespace Blob.States.CoinStates
 {
     class CoinDefaultState : IEntityState
     {

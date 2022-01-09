@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-using GameDevProject.Entities.Animations;
-using GameDevProject.Managers;
-using GameDevProject.States.PlayerStates;
-using GameDevProject.Map;
-using GameDevProject.Interfaces;
+using Blob.Entities.Animations;
+using Blob.Managers;
+using Blob.States.PlayerStates;
+using Blob.Map;
+using Blob.Interfaces;
 
-namespace GameDevProject.Entities
+namespace Blob.Entities
 {
     class Player : Entity, IMovable, IAttacker, IHitbox, IKillable
     {

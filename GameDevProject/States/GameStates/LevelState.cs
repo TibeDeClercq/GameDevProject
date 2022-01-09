@@ -3,12 +3,12 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-using GameDevProject.Entities;
-using GameDevProject.Interfaces;
-using GameDevProject.Levels;
-using GameDevProject.Managers;
+using Blob.Entities;
+using Blob.Interfaces;
+using Blob.Levels;
+using Blob.Managers;
 
-namespace GameDevProject.States.GameStates
+namespace Blob.States.GameStates
 {
     class LevelState : IGameState
     {

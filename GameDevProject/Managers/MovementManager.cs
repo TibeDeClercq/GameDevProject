@@ -1,11 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-using GameDevProject.Entities;
-using GameDevProject.Interfaces;
-using GameDevProject.Map;
+using Blob.Entities;
+using Blob.Interfaces;
+using Blob.Map;
 
-namespace GameDevProject.Managers
+namespace Blob.Managers
 {
     class MovementManager
     {

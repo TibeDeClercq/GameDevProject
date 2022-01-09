@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 
-using GameDevProject.Entities;
-using GameDevProject.Interfaces;
-using GameDevProject.Map;
+using Blob.Entities;
+using Blob.Interfaces;
+using Blob.Map;
 
-namespace GameDevProject.Managers
+namespace Blob.Managers
 {
     class EntityCollisionManager
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace GameDevProject.Entities.Animations
+namespace Blob.Entities.Animations
 {
     class AnimationFrame
     {

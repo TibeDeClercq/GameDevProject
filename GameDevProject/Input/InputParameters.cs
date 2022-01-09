@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace GameDevProject.Input
+namespace Blob.Input
 {
     class InputParameters
     {

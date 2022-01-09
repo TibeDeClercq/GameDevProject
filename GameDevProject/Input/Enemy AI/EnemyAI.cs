@@ -1,6 +1,6 @@
-﻿using GameDevProject.Entities;
+﻿using Blob.Entities;
 
-namespace GameDevProject.Input.EnemyAI
+namespace Blob.Input.EnemyAI
 {
     class EnemyAI
     {

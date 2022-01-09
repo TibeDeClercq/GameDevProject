@@ -4,11 +4,11 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-using GameDevProject.Interfaces;
-using GameDevProject.Levels;
-using GameDevProject.MenuItems;
+using Blob.Interfaces;
+using Blob.Levels;
+using Blob.MenuItems;
 
-namespace GameDevProject.States.GameStates
+namespace Blob.States.GameStates
 {
     class MainMenuState : IGameState
     {

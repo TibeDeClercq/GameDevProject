@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using GameDevProject.Entities;
-using GameDevProject.Entities.Animations;
+using Blob.Entities;
+using Blob.Entities.Animations;
 
-namespace GameDevProject.Interfaces
+namespace Blob.Interfaces
 {
     interface IEntityState
     {

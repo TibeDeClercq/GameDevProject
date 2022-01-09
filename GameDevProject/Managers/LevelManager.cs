@@ -3,9 +3,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-using GameDevProject.Entities;
+using Blob.Entities;
 
-namespace GameDevProject.Managers
+namespace Blob.Managers
 {
     class LevelManager
     {

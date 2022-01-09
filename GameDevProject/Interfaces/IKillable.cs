@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GameDevProject.Interfaces
+namespace Blob.Interfaces
 {
     interface IKillable
     {

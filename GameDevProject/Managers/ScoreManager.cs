@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GameDevProject.Managers
+namespace Blob.Managers
 {
     static class ScoreManager
     {

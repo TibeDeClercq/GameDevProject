@@ -2,7 +2,7 @@
 
 using Microsoft.Xna.Framework.Audio;
 
-namespace GameDevProject.Managers
+namespace Blob.Managers
 {
     enum Sound {Coin, Spike, Jump, EnemyJump, Spin, Death, Victory, Defeat, PlayerWalk, EnemyWalk, Dungeon}
     static class SoundManager

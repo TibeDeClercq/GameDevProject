@@ -2,9 +2,9 @@
 
 using Microsoft.Xna.Framework;
 
-using GameDevProject.Interfaces;
+using Blob.Interfaces;
 
-namespace GameDevProject.Map
+namespace Blob.Map
 {
     class Tile : IHitbox
     {

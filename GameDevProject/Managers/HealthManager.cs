@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using GameDevProject.Entities;
-using GameDevProject.Interfaces;
-using GameDevProject.Levels;
+using Blob.Entities;
+using Blob.Interfaces;
+using Blob.Levels;
 
-namespace GameDevProject.Managers
+namespace Blob.Managers
 {
     class HealthManager
     {

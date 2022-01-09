@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 
-namespace GameDevProject.Interfaces
+namespace Blob.Interfaces
 {
     interface IDrawable
     {
