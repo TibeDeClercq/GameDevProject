@@ -8,7 +8,7 @@ namespace GameDevProject.Managers
     class EntityCollisionManager
     {
         #region Properties
-        private World World;
+        private World world;
         public List<Entity> Entities;
         public Entity Player;
         #endregion
@@ -17,7 +17,7 @@ namespace GameDevProject.Managers
         public EntityCollisionManager(List<Entity> entities, World world)
         {
             this.Entities = entities;
-            this.World = world;
+            this.world = world;
 
             foreach(Entity entity in entities)
             {
@@ -29,27 +29,27 @@ namespace GameDevProject.Managers
         }
         #endregion
 
-        #region Collision Methods
+        #region Public methods
         public Entity CheckCollision()
         {
             foreach (Entity entity in Entities)
             {
-                var movablePlayer = Player as IHitbox;
+                var movablePlayer = this.Player as IHitbox;
                 var movableEntity = entity as IHitbox;
-                if (movableEntity.HitboxRectangle.Intersects(movablePlayer.HitboxRectangle) && entity != Player && entity.Health > 0)
+                if (movableEntity.HitboxRectangle.Intersects(movablePlayer.HitboxRectangle) && entity != this.Player && entity.Health > 0)
                 {
                     return entity;
                 }         
             }
 
-            foreach (Tile tile in World.GetTiles())
+            foreach (Tile tile in world.GetTiles())
             {
                 if (tile.IsTrapCollide)
                 {
-                    var movablePlayer = Player as IHitbox;
+                    var movablePlayer = this.Player as IHitbox;
                     if (movablePlayer.HitboxRectangle.Intersects(tile.HitboxRectangle))
                     {
-                        return Player;
+                        return this.Player;
                     }
                 }
             }

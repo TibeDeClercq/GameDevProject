@@ -70,23 +70,15 @@ namespace GameDevProject.Managers
                 {
                     if (tile.IsLeftCollide && !MovableLowerThanTile(movable, tile))
                     {
-                        //if (tile.IsLeftCollide)
-                        //{
-                        //    movable.Position = new Vector2(movable.Position.X + 1, movable.Position.Y);
-                        //}
                         if ((movable.HitboxRectangle.X + movable.HitboxRectangle.Width >= tile.HitboxRectangle.X) && (movable.HitboxRectangle.X + movable.HitboxRectangle.Width <= tile.HitboxRectangle.X + tile.HitboxRectangle.Width - 2)) //Herwerken, nog een aantal bugs
                         {
-                            movable.Position = new Vector2(tile.Position.X - movable.IdleHitboxWidth, movable.Position.Y); //magic number is idle width - 1
-                            return true;
+                            movable.Position = new Vector2(tile.Position.X - movable.IdleHitboxWidth, movable.Position.Y);
                         }
-                        else
+                        else if (tile.IsRightCollide)
                         {
-                            if (tile.IsRightCollide)
-                            {
-                                movable.Position = new Vector2(movable.Position.X + 1, movable.Position.Y);
-                            }
-                            return true;
+                            movable.Position = new Vector2(movable.Position.X + 1, movable.Position.Y);
                         }
+                        return true;
                     }
                 }
             }

@@ -12,23 +12,28 @@ namespace GameDevProject.States.GameStates
 {
     class Level2CompletedState : IGameState
     {
+        #region Properties
         private SpriteFont font;
-
         private List<Button> buttons;
+        #endregion
 
+        #region Constructor
         public Level2CompletedState(SpriteFont font)
         {
             this.font = font;
 
             this.buttons = new List<Button>();
+
             this.buttons.Add(new Button(new Vector2(4, 6), new Vector2(6, 2), "Next level"));
             this.buttons.Add(new Button(new Vector2(13, 6), new Vector2(6, 2), "Main Menu"));
         }
+        #endregion
 
+        #region Public methods
         public void Update(Level level, GameTime gameTime)
         {
             MouseState mouse = Mouse.GetState();
-            foreach (Button button in buttons)
+            foreach (Button button in this.buttons)
             {
                 if (mouse.X / Game1.Scale >= button.Position.X && mouse.X / Game1.Scale <= button.Position.X + button.Size.X)
                 {
@@ -53,13 +58,13 @@ namespace GameDevProject.States.GameStates
 
         public void Draw(Level level, SpriteBatch spriteBatch)
         {
-            level.world.Draw(spriteBatch);
+            level.World.Draw(spriteBatch);
 
-            spriteBatch.DrawString(this.font, "Completed Level 2", new Vector2((level.world.GetWorldWidth() / 2) - 65, 8), Color.White);
-            spriteBatch.DrawString(this.font, $"Score: {ScoreManager.Score}", new Vector2((level.world.GetWorldWidth() / 2) - 30, 23), Color.White);
-            spriteBatch.DrawString(this.font, $"Time: {Math.Round(ScoreManager.GameTimer.TotalSeconds, 2)}", new Vector2((level.world.GetWorldWidth() / 2) - 40, level.world.GetWorldHeight() - 25), Color.White);
+            spriteBatch.DrawString(this.font, "Completed Level 2", new Vector2((level.World.GetWorldWidth() / 2) - 65, 8), Color.White);
+            spriteBatch.DrawString(this.font, $"Score: {ScoreManager.Score}", new Vector2((level.World.GetWorldWidth() / 2) - 30, 23), Color.White);
+            spriteBatch.DrawString(this.font, $"Time: {Math.Round(ScoreManager.GameTimer.TotalSeconds, 2)}", new Vector2((level.World.GetWorldWidth() / 2) - 40, level.World.GetWorldHeight() - 25), Color.White);
 
-            foreach (Button button in buttons)
+            foreach (Button button in this.buttons)
             {
                 spriteBatch.DrawString(this.font, button.Text, button.TextPosition, Color.White);
             }
@@ -67,12 +72,13 @@ namespace GameDevProject.States.GameStates
 
         public int GetWindowHeight(Level level)
         {
-            return level.world.GetWorldHeight(); 
+            return level.World.GetWorldHeight(); 
         }
 
         public int GetWindowWidth(Level level)
         {
-            return level.world.GetWorldWidth(); 
+            return level.World.GetWorldWidth(); 
         }
+        #endregion
     }
 }

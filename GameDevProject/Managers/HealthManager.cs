@@ -8,17 +8,22 @@ namespace GameDevProject.Managers
 {
     class HealthManager
     {
-        private EntityCollisionManager CollisionManager;
+        #region Properties
+        private EntityCollisionManager collisionManager;
+        #endregion
 
+        #region Constructor
         public HealthManager(EntityCollisionManager collisionManager)
         {
-            this.CollisionManager = collisionManager;
+            this.collisionManager = collisionManager;
         }
+        #endregion
 
-        public void UpdateHealth(Level level ,GameTime gameTime)
+        #region public methods
+        public void UpdateHealth(Level level, GameTime gameTime)
         {
-            Entity entity = CollisionManager.CheckCollision();
-            Player player = CollisionManager.Player as Player;
+            Entity entity = this.collisionManager.CheckCollision();
+            Player player = this.collisionManager.Player as Player;
 
             if (entity != null)
             {
@@ -34,7 +39,6 @@ namespace GameDevProject.Managers
                     player.Score++;
                     entity.Health--;
                 }
-
                 if (entity.Health > 0 && player.IsAttacking && !(entity is Coin))
                 {
                     SoundManager.PlaySound(Sound.Death);
@@ -48,14 +52,15 @@ namespace GameDevProject.Managers
                         SoundManager.PlaySound(Sound.Death);
                         player.Health--;
                     }
-                }               
+                }
             }
 
-            Kill(CollisionManager, gameTime);
+            Kill(this.collisionManager, gameTime);
             ClearDeadEntities(level);
         }
+        #endregion
 
-        #region Private Methods
+        #region Private methods
         private void Kill(EntityCollisionManager collisionManager ,GameTime gameTime)
         {
             foreach(Entity entity in collisionManager.Entities)
@@ -81,7 +86,7 @@ namespace GameDevProject.Managers
 
         private void ClearDeadEntities(Level level)
         {
-            var entities = new List<Entity>(level.entities);
+            var entities = new List<Entity>(level.Entities);
 
             foreach (Entity entity in entities)
             {
@@ -104,8 +109,8 @@ namespace GameDevProject.Managers
                                     break;
                             }
                         }
-                        level.entities.Remove(entity);
-                        level.collisionManager.Entities.Remove(entity);
+                        level.Entities.Remove(entity);
+                        level.CollisionManager.Entities.Remove(entity);
                     }
                 }
             }

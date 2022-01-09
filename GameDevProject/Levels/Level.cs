@@ -8,29 +8,29 @@ namespace GameDevProject.Levels
 {
     class Level
     {
-        public World world;
+        public World World;
 
-        public List<Entity> entities;
+        public List<Entity> Entities;
 
-        public HealthManager healthManager;
+        public HealthManager HealthManager;
 
-        public EntityCollisionManager collisionManager;
+        public EntityCollisionManager CollisionManager;
 
         public Level(Texture2D worldTileSet, List<Entity> entities, string[,] map)
         {
-            this.world = new World(worldTileSet, map);
-            this.collisionManager = new EntityCollisionManager(entities, this.world);
-            this.healthManager = new HealthManager(this.collisionManager);            
+            this.World = new World(worldTileSet, map);
+            this.CollisionManager = new EntityCollisionManager(entities, this.World);
+            this.HealthManager = new HealthManager(this.CollisionManager);            
 
-            this.entities = new List<Entity>();
+            this.Entities = new List<Entity>();
             foreach (Entity entity in entities)
             {
-                this.entities.Add(entity);
+                this.Entities.Add(entity);
             }
         }
         public Level(Texture2D worldTileSet, string[,] map)
         {
-            this.world = new World(worldTileSet, map);
+            this.World = new World(worldTileSet, map);
         }
     }
 }

@@ -9,6 +9,7 @@ namespace GameDevProject.Managers
 {
     class LevelManager
     {
+        #region Public methods
         public string[,] GetMainMenuMap()
         {
             string[,] map = {
@@ -222,5 +223,6 @@ namespace GameDevProject.Managers
 
             return map;
         }
+        #endregion
     }
 }

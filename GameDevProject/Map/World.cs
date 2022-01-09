@@ -1,16 +1,12 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace GameDevProject.Map
 {
-    class World : Interfaces.IDrawable //op betere locatie zetten?
+    class World : Interfaces.IDrawable
     {
         #region Properties
-        private string name;
-        private int id;
-
         private string[,] worldTemplate;
 
         private List<Rectangle> tileRectangles; //List of all rectangles
@@ -33,12 +29,19 @@ namespace GameDevProject.Map
 
             this.CreateRectangles(136, 136, 8, 8);
             this.AddTiles();
-
-            //this.WriteDiagnostics();
         }
         #endregion
 
-        #region Methods
+        #region Public methods
+        public List<Tile> GetTiles()
+        {
+            List<Tile> tileList = new List<Tile>();
+            foreach (Tile tile in this.tiles)
+            {
+                tileList.Add(tile);
+            }
+            return tileList;
+        }
         public int GetWorldWidth()
         {
             int width = this.tiles.GetLength(1) * 16;
@@ -60,7 +63,9 @@ namespace GameDevProject.Map
                 spriteBatch.Draw(tilesheet, tile.Position, tile.SourceRectangle, Color.White);
             }
         }
+        #endregion
 
+        #region Private methods
         private void CreateRectangles(int width, int height, int numberOfWidthTiles, int numberOfHeightTiles)
         {
             int widthOfFrame = width / numberOfWidthTiles; //17
@@ -83,47 +88,6 @@ namespace GameDevProject.Map
                     int index = (this.worldTemplate[y, x].ToCharArray()[0] - 'A') * 8 + (this.worldTemplate[y, x].ToCharArray()[1] - '1');
                     this.tiles[y, x] = new Tile(this.tileRectangles[index], new Vector2(x * 16, y * 16), index);
                 }
-            }
-        }
-        public List<Tile> GetTiles()
-        {
-            List<Tile> tileList = new List<Tile>();
-            foreach (Tile tile in this.tiles)
-            {
-                tileList.Add(tile);
-            }
-            return tileList;
-        }
-
-        private void WriteDiagnostics()
-        {
-            foreach (Tile tile in GetTiles())
-            {
-                if (tile.IsLeftCollide)
-                {
-                    Debug.WriteLine($"tile {tile.Identifier} is a floor");
-                }
-                if (tile.IsRightCollide)
-                {
-                    Debug.WriteLine($"tile {tile.Identifier} is a ceiling");
-                }
-                if (tile.IsBottomCollide)
-                {
-                    Debug.WriteLine($"tile {tile.Identifier} is a floor");
-                }
-                if (tile.IsTopCollide)
-                {
-                    Debug.WriteLine($"tile {tile.Identifier} is a ceiling");
-                }
-                if (tile.IsBackground)
-                {
-                    Debug.WriteLine($"tile {tile.Identifier} is a background");
-                }
-            }
-
-            foreach (Tile tile in GetTiles())
-            {
-                Debug.WriteLine($"{tile.SourceRectangle.X}, {tile.SourceRectangle.Y}");
             }
         }
         #endregion

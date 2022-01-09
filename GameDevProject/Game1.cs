@@ -252,7 +252,7 @@ namespace GameDevProject
         {
             if (this.ActiveLevel != null && devMode)
             {
-                this.hitboxManager.AddWantedHitboxes(this.ActiveLevel.entities, this.ActiveLevel.world, graphics);
+                this.hitboxManager.AddWantedHitboxes(this.ActiveLevel.Entities, this.ActiveLevel.World, graphics);
             }
         }
         private void ChangeGameState()
