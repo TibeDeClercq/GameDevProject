@@ -13,7 +13,7 @@ namespace Blob.Entities
 {
     class Type1Enemy : Enemy
     {
-        #region Enemy Properties
+        #region Type1Enemy Properties
         private const int WALK_FRAMES = 4;
         private const int DEAD_FRAMES = 10;
         private const int IDLE_FRAMES = 4;

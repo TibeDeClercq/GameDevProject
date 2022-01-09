@@ -12,7 +12,7 @@ namespace Blob.Entities
 {
     class Type2Enemy : Enemy
     {
-        #region Enemy Properties
+        #region Type2Enemy Properties
         private Type2EnemyAI enemyAI;
 
         private const int WALK_FRAMES = 7;

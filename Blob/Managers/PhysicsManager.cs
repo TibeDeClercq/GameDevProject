@@ -8,7 +8,7 @@ namespace Blob.Managers
     class PhysicsManager
     {
         #region Public methods
-        public static void MoveRight(IMovable movable, World world)
+        public void MoveRight(IMovable movable, World world)
         {
             if (!IntersectsFromLeft(movable, world))
             {
@@ -16,7 +16,7 @@ namespace Blob.Managers
             }
         }
 
-        public static void MoveLeft(IMovable movable, World world)
+        public void MoveLeft(IMovable movable, World world)
         {
             if (!IntersectsFromRight(movable, world))
             {
@@ -24,7 +24,7 @@ namespace Blob.Managers
             }
         }
 
-        public static void AddGravity(IMovable movable, World world)
+        public void AddGravity(IMovable movable, World world)
         {
             if (!IntersectsFromTop(movable, world))
             {
@@ -42,7 +42,7 @@ namespace Blob.Managers
             }
         }
 
-        public static void AddJump(IMovable movable, World world)
+        public void AddJump(IMovable movable, World world)
         {
             if (movable.IsJumping)
             {
@@ -56,7 +56,7 @@ namespace Blob.Managers
 
         }
 
-        public static void Drop(IMovable movable, World world)
+        public void Drop(IMovable movable, World world)
         {
             ChangeDropDownTile(movable, world);
         }

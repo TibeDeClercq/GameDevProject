@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -8,10 +9,9 @@ using Blob.Managers;
 using Blob.Map;
 using Blob.States.EnemyStates;
 
-
 namespace Blob.Entities
 {
-    class Enemy : Entity, IMovable, IHitbox, IKillable
+    abstract class Enemy : Entity, IMovable, IKillable
     {
         #region Properties
         public MovementManager MovementManager;

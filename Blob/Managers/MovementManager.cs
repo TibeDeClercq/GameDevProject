@@ -9,6 +9,17 @@ namespace Blob.Managers
 {
     class MovementManager
     {
+        #region Properties
+        private PhysicsManager physicsManager;
+        #endregion
+
+        #region Constructor
+        public MovementManager()
+        {
+            this.physicsManager = new PhysicsManager();
+        }
+        #endregion
+
         #region Public methods
         public void Move(IMovable movable, GameTime gameTime, World world)
         {
@@ -17,8 +28,8 @@ namespace Blob.Managers
             var input = movable.InputReader.ReadInput();
 
             movable.Velocity = new Vector2(0, 0);
-            PhysicsManager.AddGravity(movable, world);
-            PhysicsManager.AddJump(movable, world);
+            this.physicsManager.AddGravity(movable, world);
+            this.physicsManager.AddJump(movable, world);
 
             var entity = movable as Entity;
             if (entity.Health > 0)
@@ -26,12 +37,12 @@ namespace Blob.Managers
                 if (input.DirectionInput.X == -1)
                 {
                     movable.SpriteEffects = SpriteEffects.FlipHorizontally;
-                    PhysicsManager.MoveLeft(movable, world);
+                    this.physicsManager.MoveLeft(movable, world);
                 }
                 if (input.DirectionInput.X == 1)
                 {
                     movable.SpriteEffects = SpriteEffects.None;
-                    PhysicsManager.MoveRight(movable, world);
+                    this.physicsManager.MoveRight(movable, world);
                 }
 
                 if (input.DirectionInput.Y == 1)
@@ -53,7 +64,7 @@ namespace Blob.Managers
 
                 if (input.DirectionInput.Y == -1)
                 {
-                    PhysicsManager.Drop(movable, world);
+                    this.physicsManager.Drop(movable, world);
                 }
             }            
 

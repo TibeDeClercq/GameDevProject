@@ -12,7 +12,7 @@ using Blob.Interfaces;
 
 namespace Blob.Entities
 {
-    class Player : Entity, IMovable, IAttacker, IHitbox, IKillable
+    class Player : Entity, IMovable, IAttacker, IKillable
     {
         #region Player properties
         public int Score { get; set; } = 0;

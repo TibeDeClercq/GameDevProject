@@ -18,8 +18,5 @@ namespace Blob.Interfaces
         public SpriteEffects SpriteEffects { get; set; }
 
         public void Move(GameTime gameTime, World world);
-
-        //IHitbox overerving
-        //public Rectangle HitboxRectangle { get; set; }
     }
 }
